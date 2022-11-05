@@ -57,9 +57,8 @@ class Example(tk.Frame):
         frame = ttk.Frame(self)
         frame.place(x=510, y=0)
 
-        self.tree = ttk.Treeview(frame, columns=('intDoctorId', 'txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=36, show='headings')
+        self.tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=36, show='headings')
 
-        self.tree.column('intDoctorId', minwidth=0, width=0)
         self.tree.column('txtProductName', width=150, anchor=tk.CENTER)
         self.tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
         self.tree.column('txtProductProteins', width=80, anchor=tk.CENTER)
