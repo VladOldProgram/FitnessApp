@@ -113,3 +113,5 @@ class Example(tk.Frame):
         value = sender.get(idx)
 
         self.var.set(value)
+
+    ##test
