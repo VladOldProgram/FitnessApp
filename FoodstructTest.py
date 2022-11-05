@@ -5,7 +5,7 @@ import pandas as pd
 
 
 
-url = 'https://foodstruct.com/ru/food/манго'
+url = 'https://foodstruct.com/ru/food/РѕРіСѓСЂРµС†'
 page = requests.get(url)
 
 soup = BeautifulSoup(page.text, 'lxml')
