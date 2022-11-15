@@ -8,7 +8,7 @@ from NutritionDiary import Example as NutritionDiary
 class MainInterface:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title('Fitness App')
+        self.window.title('FitnessApp')
         self.window.geometry("1600x840")
         self.create_widgets()
         style = ttk.Style() #создаем стиль, чтобы изменить вид вкладок
