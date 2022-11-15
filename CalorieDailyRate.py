@@ -96,17 +96,19 @@ class Example(tk.Frame):
         tk.Label(self, 
                 text="""Уровень активности:""",
                 justify = tk.LEFT,
-                padx = 80).pack()
+                padx = 200).pack()
         for activ, val in activity:
             position = {"padx":300, "pady":0, "anchor":tk.NW}
             self.activiity=tk.Radiobutton(self, 
                     text=activ,
                     indicatoron = 0,
-                    width = 20,
-                    padx = 60, 
+                    width = 30,
+                    padx = 180, 
                     variable=v, 
                     command=ShowChoice,
                     value=val).pack(position)
+
+
                 
         #нередактируемое поле с информацией об уровне активности
         activity_definition = ''
@@ -135,3 +137,4 @@ class Example(tk.Frame):
 
     # def on_append(self):
     #     print('Hello World!')
+
