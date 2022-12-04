@@ -13,6 +13,9 @@ class Example(tk.Frame):
 
     def init_ui(self): # Хранение и инициализация всех объектов графического интерфейса
 
+        label_txtMealWeight = tk.Label(self, text='КБЖУ готового блюда', font='Arial 15 bold')
+        label_txtMealWeight.place(x=710, y=0)
+
         clear_table_button = tk.Button(self, text='Очистить таблицу', font=("Arial", 10), command=self.delete_all)
         clear_table_button.place(x=750, y=770)
         delete_line_button = tk.Button(self, text='Удалить запись из таблицы', font=("Arial", 10))
@@ -65,6 +68,8 @@ class Example(tk.Frame):
         label_info_dish.place(x=140, y=10)
         results_dish_calories = tk.Label(frame_info_dish, text='Итог для', font=("Arial", 10))
         results_dish_calories.place(x=130, y=60)
+        # results_dish_calories = tk.Label(frame_info_dish, text=, font=("Arial", 10))
+        # results_dish_calories.place(x=150, y=60)
         results_dish_calories = tk.Label(frame_info_dish, text='гр.', font=("Arial", 10))
         results_dish_calories.place(x=250, y=60)
         results_dish_calories = tk.Label(frame_info_dish, text='Итог для 100 гр.', font=("Arial", 10))
@@ -98,10 +103,11 @@ class Example(tk.Frame):
         entry_txtNameMeal.bind("<FocusOut>", lambda args: focus_out_entry_box(entry_txtNameMeal, entry_text))
         entry_txtNameMeal.place(x=50, y=760, width=300)
 
+        # таблица добавленных продуктов
         frame = ttk.Frame(self)
-        frame.place(x=510, y=0)
+        frame.place(x=500, y=40)
 
-        tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=36, show='headings')
+        tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
 
         tree.column('txtProductName', width=150, anchor=tk.CENTER)
         tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
@@ -120,7 +126,7 @@ class Example(tk.Frame):
         tree.pack()
          
         scroll = tk.Scrollbar(command=tree.yview)  # Линейка прокрутки для списка
-        scroll.place(x=1560, y=20, height=725)
+        scroll.place(x=1560, y=50, height=695)
         tree.config(yscrollcommand=scroll.set)     
 
     def delete_all(self):
@@ -154,5 +160,3 @@ class Example(tk.Frame):
         value = sender.get(idx)
 
         self.var.set(value)
-
-    ##test
