@@ -106,6 +106,11 @@ class Example(tk.Frame):
         self.tree.heading('txtProductCarbohydrates', text='Углеводы, гр.')
         self.tree.heading('txtProductCalories', text='Калории, ккал.')
 
+        scroll = tk.Scrollbar(frame, command=self.tree.yview)  # Линейка прокрутки для списка
+        scroll.place(x=1560, y=50, height=695)
+        self.tree.config(yscrollcommand=scroll.set)  
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
         self.tree.pack()
 
 
