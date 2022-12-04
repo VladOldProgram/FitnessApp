@@ -43,13 +43,3 @@ class MainInterface:
 if __name__ == '__main__':
     root = MainInterface()
     root.window.mainloop()
-        #то, что будет отображаться на самой вкладке и ширина вкладки(^числоs)
-        self.notebook.add(ready_meal_tab, text=f'{"Подсчет КБЖУ готового блюда": ^46s}')#46
-        self.notebook.add(calorie_dayli_rate_tab, text=f'{"Подсчет суточной нормы калорий": ^42s}')#42
-        self.notebook.add(nutrition_diary_tab, text=f'{"Дневник питания": ^60s}')#60
-        self.notebook.pack(expand=True, fill=tk.BOTH)
-
-
-if __name__ == '__main__':
-    root = MainInterface()
-    root.window.mainloop()
