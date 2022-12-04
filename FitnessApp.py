@@ -10,6 +10,7 @@ class MainInterface:
         self.window = tk.Tk()
         self.window.title('FitnessApp')
         self.window.geometry("1600x840")
+        self.window.resizable(False, False)
         self.create_widgets()
         style = ttk.Style() #создаем стиль, чтобы изменить вид вкладок
         style.theme_create( "MyStyle", parent="alt", settings={
