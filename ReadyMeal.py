@@ -106,29 +106,32 @@ class Example(tk.Frame):
         # таблица добавленных продуктов
         frame = ttk.Frame(self)
         frame.place(x=500, y=40)
+        
+        self.tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
 
-        tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
+        self.tree.column('txtProductName', width=150, anchor=tk.CENTER)
+        self.tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
+        self.tree.column('txtProductProteins', width=80, anchor=tk.CENTER)
+        self.tree.column('txtProductFats', width=80, anchor=tk.CENTER)
+        self.tree.column('txtProductCarbohydrates', width=80, anchor=tk.CENTER)
+        self.tree.column('txtProductCalories', width=95, anchor=tk.CENTER)
 
-        tree.column('txtProductName', width=150, anchor=tk.CENTER)
-        tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
-        tree.column('txtProductProteins', width=80, anchor=tk.CENTER)
-        tree.column('txtProductFats', width=80, anchor=tk.CENTER)
-        tree.column('txtProductCarbohydrates', width=80, anchor=tk.CENTER)
-        tree.column('txtProductCalories', width=95, anchor=tk.CENTER)
+        self.tree.heading('txtProductName', text='Продукт')
+        self.tree.heading('txtProductWeight', text='Вес, гр.')
+        self.tree.heading('txtProductProteins', text='Белки, гр.')
+        self.tree.heading('txtProductFats', text='Жиры, гр.')
+        self.tree.heading('txtProductCarbohydrates', text='Углеводы, гр.')
+        self.tree.heading('txtProductCalories', text='Калории, ккал.')
 
-        tree.heading('txtProductName', text='Продукт')
-        tree.heading('txtProductWeight', text='Вес, гр.')
-        tree.heading('txtProductProteins', text='Белки, гр.')
-        tree.heading('txtProductFats', text='Жиры, гр.')
-        tree.heading('txtProductCarbohydrates', text='Углеводы, гр.')
-        tree.heading('txtProductCalories', text='Калории, ккал.')
-
-        tree.pack()
-         
-        scroll = tk.Scrollbar(command=tree.yview)  # Линейка прокрутки для списка
+        
+        scroll = tk.Scrollbar(frame, command=self.tree.yview)  # Линейка прокрутки для списка
         scroll.place(x=1560, y=50, height=695)
-        tree.config(yscrollcommand=scroll.set)     
+        self.tree.config(yscrollcommand=scroll.set)  
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
+        self.tree.pack()
+
+    
     def delete_all(self):
         answer = mb.askyesno(message='Вы уверены, что хотите очистить таблицу?')
 
