@@ -1,9 +1,9 @@
 from tkinter import Tk, ttk
 import tkinter as tk
 
-from ReadyMeal import Example as ReadyMeal
-from CalorieDailyRate import Example as CalorieDayliRate
-from NutritionDiary import Example as NutritionDiary
+from dish_nutrients_form import Example as ReadyMeal
+from daily_calories_standart_form import Example as CalorieDayliRate
+from food_diary_form import Example as NutritionDiary
 
 class MainInterface:
     def __init__(self):
