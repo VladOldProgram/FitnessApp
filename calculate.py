@@ -3,18 +3,17 @@ def calculate_daily_calories_standart(
     weight: float, 
     age: int, 
     sex: bool, 
-    activity_level_coefficient: int
+    activity_level_coefficient: float
 ):
     if (not isinstance(height, float)
         or not isinstance(weight, float)
         or not isinstance(age, int)
         or not isinstance(sex, bool)
-        or not isinstance(activity_level_coefficient, int)
+        or not isinstance(activity_level_coefficient, float)
         or height <= 0.0
         or weight <= 0.0
         or age <= 0
-        or activity_level_coefficient < 0
-        or activity_level_coefficient > 4
+        or activity_level_coefficient <= 0.0
     ):
         return TypeError
 
