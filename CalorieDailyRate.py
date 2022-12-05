@@ -97,8 +97,8 @@ class Example(tk.Frame):
             activity_level_description_label.config(
                 state=DISABLED)  # запрет на ввод текста
 
-        woman_pictures = Label(self, image=self.image_men_puctires)
-        woman_pictures.place(x=80, y=140)
+        man_pictures = Label(self, image=self.image_men_puctires)
+        man_pictures.place(x=80, y=140)
         # Текстовое поле с описанием уровня активности
         activity_level_description_label = Text(
             self, wrap=WORD, font=("Arial", 14))
