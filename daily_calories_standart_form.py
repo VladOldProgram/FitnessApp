@@ -6,7 +6,7 @@ from tkinter import ttk, Button
 from tkinter.ttk import Radiobutton
 from PIL import ImageTk
 from tkinter import *
-
+from calculate import * 
 
 class Example(tk.Frame):
     def __init__(self, parent):
@@ -23,7 +23,6 @@ class Example(tk.Frame):
             file="assets\images\\female.png")
         self.image_men_puctires = ImageTk.PhotoImage(
             file="assets\images\male.png")
-
 
         sex = True
 
@@ -46,7 +45,6 @@ class Example(tk.Frame):
             return sex
         
             
-
         # Женщина
         switch_female_button = Button(self, image=self.image_woman)
         switch_female_button.place(x=300, y=10)
@@ -72,27 +70,17 @@ class Example(tk.Frame):
             activity_level_description_label.delete(1.0, END)
             sel = selected_activity_level.get()
             if sel == 0:
-                activity_level_description_label.insert(
-                    1.0, activity_level_descriptions[0])
-            else:
-                if sel == 1:
-                    activity_level_description_label.insert(
-                        1.0, activity_level_descriptions[1])
-                else:
-                    if sel == 2:
-                        activity_level_description_label.insert(
-                            1.0, activity_level_descriptions[2])
-                    else:
-                        if sel == 3:
-                            activity_level_description_label.insert(
-                                1.0, activity_level_descriptions[3])
-                        else:
-                            if sel == 4:
-                                activity_level_description_label.insert(
-                                    1.0, activity_level_descriptions[4])
+                activity_level_description_label.insert(1.0, activity_level_descriptions[0])
+            elif sel == 1:
+                activity_level_description_label.insert(1.0, activity_level_descriptions[1])
+            elif sel == 2:
+                activity_level_description_label.insert(1.0, activity_level_descriptions[2])
+            elif sel == 3:
+                activity_level_description_label.insert(1.0, activity_level_descriptions[3])
+            elif sel == 4:
+                activity_level_description_label.insert(1.0, activity_level_descriptions[4])
 
-            activity_level_description_label.config(
-                state=DISABLED)  # запрет на ввод текста
+            activity_level_description_label.config(state=DISABLED)  # запрет на ввод текста
 
         def clear_inputs():
             height_text_input.delete("0", END)
@@ -111,6 +99,7 @@ class Example(tk.Frame):
 
         man_pictures = Label(self, image=self.image_men_puctires)
         man_pictures.place(x=80, y=140)
+        
 
         # Текстовое поле с описанием уровня активности
         activity_level_description_label = Text(
@@ -125,50 +114,26 @@ class Example(tk.Frame):
 
         print_calories = 0.0
 
-        def calculate_daily_calorie_standart(height, weight, age, activity_level, sex):
-            h = float(height.get())
-            w = float(weight.get())
-            a = int(age.get())
-            level = int(activity_level.get())
-            print('level: ', level)
-            print('sex', sex)
-
-            if sex == True:  # Мужчина
-                result = 66 + (5 * h) + (13.7 * w) - (6.8 * a)
-                if level == 0:
-                    calories = 1.2 * result
-                if level == 1:
-                    calories = 1.375 * result
-                if level == 2:
-                    calories = 1.55 * result
-                if level == 3:
-                    calories = 1.7 * result
-                if level == 4:
-                    calories = 1.9 * result
-            else:  # Женщина
-                result = 655 + (1.8 * h) + (9.6 * w) - (4.7 * a)
-                if level == 0:
-                    calories = 1.2 * result
-                if level == 1:
-                    calories = 1.375 * result
-                if level == 2:
-                    calories = 1.55 * result
-                if level == 3:
-                    calories = 1.7 * result
-                if level == 4:
-                    calories = 1.9 * result
-
-            print(round(calories, 2))
-            daily_calories_standart_label.configure(text=round(calories, 2))
-            daily_calories_standart_label.pack()
-            return round(calories, 2)
-
-        def save_and_calculate_daily_calories_standart():
-            js = calculate_daily_calorie_standart(
-                height_text_input, weight_text_input, age_text_input, selected_activity_level, sex)
+        def calculate_and_save_daily_calories_standart():
+            if selected_activity_level.get() == 0:
+                activity_level_coefficient = 1.2
+            if selected_activity_level.get() == 1:
+                activity_level_coefficient = 1.375 
+            if selected_activity_level.get() == 2:
+                activity_level_coefficient = 1.55 
+            if selected_activity_level.get() == 3:
+                activity_level_coefficient = 1.7 
+            if selected_activity_level.get() == 4:
+                activity_level_coefficient = 1.9
+            
+            js = calculate_daily_calories_standart(
+                float(height_text_input.get()), float(weight_text_input.get()), int(age_text_input.get()), sex, activity_level_coefficient)
             print('js = ', js)
+            
+            daily_calories_standart_label.configure(text=round(js, 2))
+            daily_calories_standart_label.pack()
             data = {
-                "daily_calorie_standart": js,
+                "daily_calorie_standart": round(js, 2),
                 "sex": sex,
                 "height": float(height_text_input.get()),
                 "weight": float(weight_text_input.get()),
@@ -178,57 +143,6 @@ class Example(tk.Frame):
             with open('json\daily_calories_standart.json ', 'w') as outfile:
                 json.dump(data, outfile)
 
-        
-        # вызов функции расчета суточной нормы калорий
-        calculate_daily_calories_standart_button = Button(self,
-                                                          text='Рассчитать', font=("Arial", 14),
-                                                          command=lambda: save_and_calculate_daily_calories_standart())
-        calculate_daily_calories_standart_button.place(x=370, y=650)
-
-        clear_inputs_button = Button(
-            self, text='Очистить \n поля ввода', font=("Arial", 14), command=clear_inputs)
-        clear_inputs_button.place(x=100, y=730)
-
-        labelframe = tk.LabelFrame(
-            self, width=270, height=40, text='Суточная норма калорий', font=("Arial", 14), )
-        labelframe.place(x=100, y=640)
-        daily_calories_standart_label = tk.Label(
-            labelframe, text=print_calories, font=("Arial", 14))
-
-        # поля с выводом текста
-        label_height = tk.Label(self, text='Рост(см.)', font=("Arial", 12))
-        label_height.place(x=325, y=280)
-        label_weight = tk.Label(self, text='Вес(кг.)', font=("Arial", 12))
-        label_weight.place(x=115, y=580)
-        label_age = tk.Label(self, text='Возраст', font=("Arial", 12))
-        label_age.place(x=330, y=546)
-        label_age = tk.Label(self, text='лет', font=("Arial", 12))
-        label_age.place(x=510, y=546)
-
-        def cliker(event):
-            if event.char.isnumeric() or event.char == '.':  # надо проверить что точка одна?
-                my_label = Label(self, text="что: " + event.char)
-                my_label.place(x=500, y=580)
-                my_label.pack()
-
-        # поля для ввода параметров
-        height_text_input = ttk.Entry(
-            self, font=("Arial", 12), width=15)  # рост
-        height_text_input.place(x=300, y=260)
-        height_text_input.bind("<Key>", cliker)
-
-        weight_text_input = ttk.Entry(
-            self, font=("Arial", 12), width=15)  # вес
-        weight_text_input.place(x=80, y=550)
-        age_text_input = ttk.Entry(self, font=(
-            "Arial", 12), width=11)  # возраст
-        age_text_input.place(x=400, y=550)
-
-        # берем данные из json
-        # with open('CalorieDailyRate.json', 'r') as file:
-        #    data = json.load(file)
-        # print(data['activity'])
-        # брать из json
         activity = [("минимальный", 0),
                     ("низкий", 1),
                     ("умеренный", 2),
@@ -257,3 +171,49 @@ class Example(tk.Frame):
         activity_level_vertical_menu = tk.Radiobutton(self, text=activity[4][0], font=(
             "Arial", 16), indicatoron=0, width=20, padx=60, variable=selected_activity_level, command=switch_activity_level_description, value=4)
         activity_level_vertical_menu.place(x=670, y=360)
+
+
+        # вызов функции расчета суточной нормы калорий
+        calculate_daily_calories_standart_button = Button(self,
+                                                          text='Рассчитать', font=("Arial", 14),
+                                                          command=lambda: calculate_and_save_daily_calories_standart())
+        calculate_daily_calories_standart_button.place(x=370, y=650)
+
+        clear_inputs_button = Button(
+            self, text='Очистить \n поля ввода', font=("Arial", 14), command=clear_inputs)
+        clear_inputs_button.place(x=100, y=730)
+
+        labelframe = tk.LabelFrame(
+            self, width=270, height=40, text='Суточная норма калорий', font=("Arial", 14), )
+        labelframe.place(x=100, y=640)
+        daily_calories_standart_label = tk.Label(
+            labelframe, text=print_calories, font=("Arial", 14))
+
+        # поля с выводом текста
+        label_height = tk.Label(self, text='Рост(см.)', font=("Arial", 12))
+        label_height.place(x=325, y=280)
+        label_weight = tk.Label(self, text='Вес(кг.)', font=("Arial", 12))
+        label_weight.place(x=115, y=580)
+        label_age = tk.Label(self, text='Возраст', font=("Arial", 12))
+        label_age.place(x=330, y=546)
+        label_age = tk.Label(self, text='лет', font=("Arial", 12))
+        label_age.place(x=510, y=546)
+
+        #def cliker(event):
+        #    if event.char.isnumeric() or event.char == '.':  # надо проверить что точка одна?
+        #        my_label = Label(self, text="что: " + event.char)
+        #        my_label.place(x=500, y=580)
+        #        my_label.pack()
+
+        # поля для ввода параметров
+        height_text_input = ttk.Entry(
+            self, font=("Arial", 12), width=15)  # рост
+        height_text_input.place(x=300, y=260)
+        #height_text_input.bind("<Key>", cliker)
+
+        weight_text_input = ttk.Entry(
+            self, font=("Arial", 12), width=15)  # вес
+        weight_text_input.place(x=80, y=550)
+        age_text_input = ttk.Entry(self, font=(
+            "Arial", 12), width=11)  # возраст
+        age_text_input.place(x=400, y=550)
