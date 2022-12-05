@@ -17,24 +17,35 @@ class Example(tk.Frame):
 
     def init_ui(self):
 
-        self.image_woman = ImageTk.PhotoImage(file="images\Woman_button.png")
-        self.image_men = ImageTk.PhotoImage(file="images\Man_button.png")
+        self.image_woman = ImageTk.PhotoImage(file="assets\images\\female_button.png")
+        self.image_men = ImageTk.PhotoImage(file="assets\images\male_button.png")
         self.image_women_puctires = ImageTk.PhotoImage(
-            file="images\Women_pictures.png")
+            file="assets\images\\female.png")
         self.image_men_puctires = ImageTk.PhotoImage(
-            file="images\Man_pictures.png")
+            file="assets\images\male.png")
+
+
+        sex = True
 
         def switch_female(event):
+            print("Девушка")
             global sex
             sex = False
             woman_pictures = Label(self, image=self.image_women_puctires)
             woman_pictures.place(x=80, y=140)
+            print('sex = ', sex)
+            return sex
 
         def switch_male(event):
+            print("Парень")
             global sex
             sex = True
             man_pictures = Label(self, image=self.image_men_puctires)
             man_pictures.place(x=80, y=140)
+            print('sex = ', sex)
+            return sex
+        
+            
 
         # Женщина
         switch_female_button = Button(self, image=self.image_woman)
@@ -100,6 +111,7 @@ class Example(tk.Frame):
 
         man_pictures = Label(self, image=self.image_men_puctires)
         man_pictures.place(x=80, y=140)
+
         # Текстовое поле с описанием уровня активности
         activity_level_description_label = Text(
             self, wrap=WORD, font=("Arial", 14))
@@ -119,6 +131,7 @@ class Example(tk.Frame):
             a = int(age.get())
             level = int(activity_level.get())
             print('level: ', level)
+            print('sex', sex)
 
             if sex == True:  # Мужчина
                 result = 66 + (5 * h) + (13.7 * w) - (6.8 * a)
@@ -162,10 +175,10 @@ class Example(tk.Frame):
                 "age": int(age_text_input.get()),
                 "activity": int(selected_activity_level.get())
             }
-            with open('JsonFiles\daily_calories_standart.json ', 'w') as outfile:
+            with open('json\daily_calories_standart.json ', 'w') as outfile:
                 json.dump(data, outfile)
 
-        sex = True
+        
         # вызов функции расчета суточной нормы калорий
         calculate_daily_calories_standart_button = Button(self,
                                                           text='Рассчитать', font=("Arial", 14),
@@ -244,66 +257,3 @@ class Example(tk.Frame):
         activity_level_vertical_menu = tk.Radiobutton(self, text=activity[4][0], font=(
             "Arial", 16), indicatoron=0, width=20, padx=60, variable=selected_activity_level, command=switch_activity_level_description, value=4)
         activity_level_vertical_menu.place(x=670, y=360)
-
-        # self.button = tk.Button(self, text='Append', command=self.on_append)
-        # self.button.pack()
-
-        # self.pack()
-
-        # радиобаттон
-        # position = {"padx":600, "pady":6, "anchor":tk.NW}
-
-        # sex = [
-        #     {"name": "Женщина", "img": tk.PhotoImage(file="./images/Woman.png")},
-        #     {"name": "Мужчина", "img": tk.PhotoImage(file="./images/Man.png")},
-        # ]
-
-        # lang = tk.StringVar(value=sex[0]["name"])    # по умолчанию будет выбран элемент с value=woman
-
-        # header = tk.Label(textvariable=lang)
-        # header.pack(**position)
-
-        # for l in sex:
-        #     btn = ttk.Radiobutton(value=l["name"], text=l["name"], variable=lang, image=l["img"], compound="top")
-        #     btn.pack(**position)
-
-        # def change():
-        #     if var.get() == 0:
-        #         label['bg'] = 'red'
-        #     elif var.get() == 1:
-        #         label['bg'] = 'green'
-        #     elif var.get() == 2:
-        #         label['bg'] = 'blue'
-
-        # button = Button(text="Изменить",
-        #         command=change)
-        # label = Label(width=20, height=10)
-
-        # поля с выводом текста
-        # self.radio_woman = ttk.Radiobutton(self, text='Женщина', value=0)
-        # self.radio_woman.place(x=100, y=30)
-        # self.radio_man = ttk.Radiobutton(self, text='Мужчина', value=0)
-        # self.radio_man.place(x=250, y=30)
-
-        # нередактируемое поле с информацией об уровне активности
-        #activity_definition = ''
-        # print(val)
-        # for activ, val in activity:
-        #    print(val)
-        #    if (val == 0):
-        #        activity_definition = 'описание минимальной активности\n далее'
-        #labelframe2 = tk.LabelFrame(self, width=300, height=80)
-        #labelframe2.place(x=500, y=340)
-
-        #lbl_count2 = tk.Label(labelframe2, text=activity_definition, font=("Arial", 10))
-        #lbl_count2.place(x=800, y=600)
-        # lbl_count2.pack()
-
-        # нередактируемое поле с информацией о суточной норме калорий
-
-        #labelframe = tk.LabelFrame(self, width=200, height=40, text='Суточная норма калорий')
-        #labelframe.place(x=100, y=700)
-        #print_calories = '1000'
-
-    # def on_append(self):
-    #     print('Hello World!')
