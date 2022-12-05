@@ -113,12 +113,6 @@ class Example(tk.Frame):
         print_calories = 0.0
 
         def calculate_daily_calorie_standart(height, weight, age, activity_level, sex):
-            c = float(height.get()) + float(weight.get()) + \
-                float(age.get()) + float(activity_level.get())
-            calories = 0
-            print("sex = ", sex)
-            print('Итого: ', c)
-
             h = float(height.get())
             w = float(weight.get())
             a = int(age.get())
