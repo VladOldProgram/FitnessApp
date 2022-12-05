@@ -14,7 +14,7 @@ class Example(tk.Frame):
 
     def init_ui(self): # Хранение и инициализация всех объектов графического интерфейса
         
-        self.image_loupa = ImageTk.PhotoImage(file="images\loupa_small.png")
+        self.image_loupa = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
         self.loupa = Label(self, image=self.image_loupa)
         self.loupa.place(x=26, y=6)
 
