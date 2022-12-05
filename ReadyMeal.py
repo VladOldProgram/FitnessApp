@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk  
 from tkinter import messagebox as mb
 from PIL import ImageTk, Image
+from tkinter import *
 
 
 class Example(tk.Frame):
