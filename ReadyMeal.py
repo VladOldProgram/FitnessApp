@@ -136,8 +136,7 @@ class Example(tk.Frame):
         answer = mb.askyesno(message='Вы уверены, что хотите очистить таблицу?')
 
         if answer:
-            #удалить все значения для конкретного блюда из json!
-            self.db.delete_all()
+            self.tree.delete(*self.tree.get_children())
             mb.showinfo(message='Таблица очищена')
 
     # def delete_by(self):
