@@ -12,6 +12,10 @@ class Example(tk.Frame):
         self.init_ui()
 
     def init_ui(self): # Хранение и инициализация всех объектов графического интерфейса
+        
+        self.image_loupa = ImageTk.PhotoImage(file="images\loupa_small.png")
+        self.loupa = Label(self, image=self.image_loupa)
+        self.loupa.place(x=26, y=6)
 
         label_txtMealWeight = tk.Label(self, text='КБЖУ готового блюда', font='Arial 15 bold')
         label_txtMealWeight.place(x=710, y=0)
