@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk  
 from tkinter import messagebox as mb
+from PIL import ImageTk, Image
+from tkinter import *
 
 class Example(tk.Frame):
     def __init__(self, parent):
@@ -10,6 +12,11 @@ class Example(tk.Frame):
         self.init_ui()
 
     def init_ui(self):
+        
+        self.image_loupa = ImageTk.PhotoImage(file="images\loupa_small.png")
+        self.loupa = Label(self, image=self.image_loupa)
+        self.loupa.place(x=22, y=4)
+        
         btn_add2 = tk.Button(self, text='Удалить из дневника питания')
         btn_add2.place(x=900, y=770)
 
