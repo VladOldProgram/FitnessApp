@@ -92,6 +92,7 @@ class Example(tk.Frame):
 
             activity_level_description_label.config(
                 state=NORMAL)  # позволяем ввести текст
+            activity_level_description_label.delete(1.0, END)
             activity_level_description_label.insert(
                 1.0, activity_level_descriptions[0])
             activity_level_description_label.config(
