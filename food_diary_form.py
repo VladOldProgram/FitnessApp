@@ -13,7 +13,7 @@ class Example(tk.Frame):
 
     def init_ui(self):
         
-        self.image_loupa = ImageTk.PhotoImage(file="images\loupa_small.png")
+        self.image_loupa = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
         self.loupa = Label(self, image=self.image_loupa)
         self.loupa.place(x=22, y=4)
         
