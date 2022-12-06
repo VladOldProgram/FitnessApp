@@ -188,10 +188,13 @@ class Test_unit_tests(unittest.TestCase):
 
     def test_M13(self):
         product_name = 'Булка'
-        # url = r'https://foodstruct.com/ru/food/' + product_name
-        # response = requests.get(url)
-        # response.raise_for_status()
-        expected_result = HTTPError.response
+        expected_result = HTTPError
+        result = get_product_nutrients_data(product_name)
+        self.assertEqual(expected_result, result)
+        
+    def test_M14(self):
+        product_name = 'Авокадо'
+        expected_result = HTTPError
         result = get_product_nutrients_data(product_name)
         self.assertEqual(expected_result, result)
 
