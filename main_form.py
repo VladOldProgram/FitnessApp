@@ -2,7 +2,7 @@ from tkinter import Tk, ttk
 import tkinter as tk
 
 from dish_nutrients_form import Example as ReadyMeal
-from daily_calories_standart_form import Example as CalorieDayliRate
+from daily_calories_standart_form import Daily_calories_standart as CalorieDailyRate
 from food_diary_form import Example as NutritionDiary
 
 class MainInterface:
