@@ -8,7 +8,7 @@ from PIL import ImageTk
 from tkinter import *
 from calculate import * 
 
-class Example(tk.Frame):
+class Daily_calories_standart(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -17,12 +17,12 @@ class Example(tk.Frame):
 
     def init_ui(self):
 
-        self.image_woman = ImageTk.PhotoImage(file="assets\images\\female_button.png")
-        self.image_men = ImageTk.PhotoImage(file="assets\images\male_button.png")
+        self.image_woman = ImageTk.PhotoImage(file="assets\\images\\female_button.png")
+        self.image_men = ImageTk.PhotoImage(file="assets\\images\\male_button.png")
         self.image_women_puctires = ImageTk.PhotoImage(
-            file="assets\images\\female.png")
+            file="assets\\images\\female.png")
         self.image_men_puctires = ImageTk.PhotoImage(
-            file="assets\images\male.png")
+            file="assets\\images\\male.png")
 
         sex = True
 
