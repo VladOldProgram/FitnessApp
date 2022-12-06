@@ -1,6 +1,11 @@
 from tkinter import Tk, ttk
 import tkinter as tk
 
+# import schedule
+# import time
+# import threading
+# from FAKEFUNC import *
+
 from dish_nutrients_form import Example as ReadyMeal
 from daily_calories_standart_form import Daily_calories_standart as CalorieDailyRate
 from food_diary_form import Example as NutritionDiary
@@ -40,7 +45,15 @@ class MainInterface:
         self.notebook.add(nutrition_diary_tab, text=f'{"Дневник питания": ^60s}')#60
         self.notebook.pack(expand=True, fill=tk.BOTH)
 
-
+# def checker():
+#    while True:
+#        schedule.run_pending()
+#        time.sleep(1)
+        
 if __name__ == '__main__':
+    # schedule.every().day.at('23:59:50').do(reset_diary)
+    # checker_thread = threading.Thread(target=checker, daemon=True)
+    # checker_thread.start()
+
     root = MainInterface()
     root.window.mainloop()
