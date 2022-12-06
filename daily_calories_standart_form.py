@@ -23,8 +23,7 @@ class Daily_calories_standart(tk.Frame):
             file="assets\\images\\female.png")
         self.image_men_puctires = ImageTk.PhotoImage(
             file="assets\\images\\male.png")
-
-        sex = True
+ 
 
         def switch_female(event):
             print("Девушка")
@@ -53,6 +52,7 @@ class Daily_calories_standart(tk.Frame):
         switch_male_button = Button(self, image=self.image_men)
         switch_male_button.place(x=700, y=10)
         switch_male_button.bind("<Button-1>", switch_male)
+        
 
         #man_pictures = Button(self, image=self.image_men_puctires)
         #man_pictures.place(x=80, y=140)
