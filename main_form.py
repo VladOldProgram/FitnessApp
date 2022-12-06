@@ -31,7 +31,7 @@ class MainInterface:
 
         #то, что будет отображаться, при нажатии на вкладку
         ready_meal_tab = ReadyMeal(self.notebook)
-        calorie_dayli_rate_tab = CalorieDayliRate(self.notebook)
+        calorie_dayli_rate_tab = CalorieDailyRate(self.notebook)
         nutrition_diary_tab = NutritionDiary(self.notebook)
 
         #то, что будет отображаться на самой вкладке и ширина вкладки(^числоs)
