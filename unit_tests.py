@@ -1,8 +1,72 @@
-﻿import unittest
+import unittest
 from calculate import *
 from foodstruct import *
 
 class Test_unit_tests(unittest.TestCase):
+    def test_M0(self):
+        height = 164.0
+        weight = 51.0
+        age = 23
+        sex = False
+        activity_level_coefficient = 1.375
+        expected_result = 1831.0875
+        result = calculate_daily_calories_standart(
+            height,
+            weight,
+            age,
+            sex,
+            activity_level_coefficient
+        )
+        self.assertEqual(expected_result, result)
+
+    def test_M1(self):
+        height = -164.0
+        weight = 51.0
+        age = 23
+        sex = False
+        activity_level_coefficient = 1.375
+        expected_result = TypeError
+        result = calculate_daily_calories_standart(
+            height,
+            weight,
+            age,
+            sex,
+            activity_level_coefficient
+        )
+        self.assertEqual(expected_result, result)
+
+    def test_M2(self):
+        height = 164.0
+        weight = 51.0
+        age = 'stroka'
+        sex = False
+        activity_level_coefficient = 1.375
+        expected_result = TypeError
+        result = calculate_daily_calories_standart(
+            height,
+            weight,
+            age,
+            sex,
+            activity_level_coefficient
+        )
+        self.assertEqual(expected_result, result)
+
+    def test_M3(self):
+        height = 164.0
+        weight = []
+        age = 23
+        sex = False
+        activity_level_coefficient = 1.375
+        expected_result = TypeError
+        result = calculate_daily_calories_standart(
+            height,
+            weight,
+            age,
+            sex,
+            activity_level_coefficient
+        )
+        self.assertEqual(expected_result, result)
+
     def test_M4(self):
         expected_result = 365.0
         products = {
@@ -133,4 +197,3 @@ class Test_unit_tests(unittest.TestCase):
 
 if (__name__ == '__main__'):
     unittest.main()
-
