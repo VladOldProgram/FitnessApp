@@ -32,30 +32,17 @@ def get_product_nutrients_data(product_name: str):
     return product_nutrients_data
 
 def get_service_recommendations(product_name: str):
-    if (not isinstance(product_name, str)):
-        return TypeError
-
-    url = r'https://foodstruct.com/ru/'
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-    except HTTPError as http_err:
-        return http_err
-
-    #data = { 'food1': product_name }
-    #response = requests.post(url, data)
-    #soup = bs(response.content, 'lxml')
-    #test = soup.findChildren('div', id='search-inputs')
-    #print(test)
-    #test = soup.findChildren('div', id='similiar-results1')
-    #print(test)
-
-    url = r'https://calorizator.ru/product/all'
-    data = { 'search_theme_form': product_name }
-    response = requests.post(url, data)
-    soup = bs(response.content, 'lxml')
-    test = soup.findChildren(id='search-bar')
-    print(test)
-
-    service_recommendations = dict()
+    service_recommendations = {
+        'Американский сыр': 'https://foodstruct.com/ru/food/американский-сыр',
+        'Абрикос': 'https://foodstruct.com/ru/food/абрикос',
+        'Авокадо': 'https://foodstruct.com/ru/food/авокадо',
+        'Аннона сетчатая': 'https://foodstruct.com/ru/food/аннона-сетчатая',
+        'Апельсин': 'https://foodstruct.com/ru/food/апельсин',
+        'Апельсиновый сок': 'https://foodstruct.com/ru/food/апельсиновый-сок',
+        'Ананас': 'https://foodstruct.com/ru/food/ананас',
+        'Айва': 'https://foodstruct.com/ru/food/айва',
+        'Арбуз': 'https://foodstruct.com/ru/food/арбуз',
+        'Ананасовый сок': 'https://foodstruct.com/ru/food/ананасовый-сок'
+    }
+    
     return service_recommendations
