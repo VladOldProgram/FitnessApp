@@ -13,10 +13,6 @@ class Example(tk.Frame):
 
     def init_ui(self):
         
-        self.image_loupa = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
-        self.loupa = Label(self, image=self.image_loupa)
-        self.loupa.place(x=22, y=4)
-        
         btn_add2 = tk.Button(self, text='Удалить из дневника питания')
         btn_add2.place(x=900, y=770)
 
@@ -26,6 +22,9 @@ class Example(tk.Frame):
         # поле для добавления продукта/блюда
         frame_foodstruct_add_product = tk.LabelFrame(self, width=430, height=230)
         frame_foodstruct_add_product.place(x=30, y=10)
+        self.image_loupa = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
+        self.loupa = Label(frame_foodstruct_add_product, image=self.image_loupa)
+        self.loupa.place(x=15, y=37)
         label_foodstruct_add_product = tk.Label(frame_foodstruct_add_product, text='Добавление продукта/блюда', font=("Arial", 10))
         label_foodstruct_add_product.place(x=100, y=10)
         product_weight_stepper_input = ttk.Entry(frame_foodstruct_add_product, font=("Arial", 10), width=10)
@@ -39,7 +38,7 @@ class Example(tk.Frame):
         foodstruct_search_line.insert(0, entry_text2)
         foodstruct_search_line.bind("<FocusIn>", lambda args: focus_in_entry_box(foodstruct_search_line))
         foodstruct_search_line.bind("<FocusOut>", lambda args: focus_out_entry_box(foodstruct_search_line, entry_text2))
-        foodstruct_search_line.place(x=20, y=40, width=300)
+        foodstruct_search_line.place(x=40, y=40, width=300)
 
         # создание placeholder...
         def focus_out_entry_box(self, self_text):
@@ -59,7 +58,10 @@ class Example(tk.Frame):
         # поле для добавления сохраненного блюда
         frame_foodstruct_add_dish = tk.LabelFrame(self, width=430, height=510)
         frame_foodstruct_add_dish.place(x=30, y=260)
-        label_foodstruct_add_dish = tk.Label(frame_foodstruct_add_dish, text='Добавление продукта/блюда', font=("Arial", 10))
+        self.image_loupa2 = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
+        self.loupa2 = Label(frame_foodstruct_add_dish, image=self.image_loupa2)
+        self.loupa2.place(x=15, y=37)
+        label_foodstruct_add_dish = tk.Label(frame_foodstruct_add_dish, text='Добавление сохраненного блюда', font=("Arial", 10))
         label_foodstruct_add_dish.place(x=100, y=10)
 
         # поисковая строка сохраненных блюд
@@ -68,7 +70,7 @@ class Example(tk.Frame):
         saved_dishes_search_line .insert(0, entry_text2)
         saved_dishes_search_line .bind("<FocusIn>", lambda args: focus_in_entry_box(saved_dishes_search_line ))
         saved_dishes_search_line .bind("<FocusOut>", lambda args: focus_out_entry_box(saved_dishes_search_line , entry_text3))
-        saved_dishes_search_line .place(x=20, y=40, width=300)
+        saved_dishes_search_line .place(x=40, y=40, width=300)
 
         searchbtn2 = tk.Button(frame_foodstruct_add_dish, text="Найти", font=("Arial", 10))
         searchbtn2.place(x=360, y=35)
@@ -119,5 +121,6 @@ class Example(tk.Frame):
         scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
         self.tree.pack()
+
 
 
