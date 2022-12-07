@@ -67,39 +67,44 @@ class Example(tk.Frame):
         # поисковая строка сохраненных блюд
         saved_dishes_search_line  = tk.Entry(frame_foodstruct_add_dish, fg='Grey')
         entry_text3 = 'Поиск сохраненных блюд'
-        saved_dishes_search_line .insert(0, entry_text2)
-        saved_dishes_search_line .bind("<FocusIn>", lambda args: focus_in_entry_box(saved_dishes_search_line ))
-        saved_dishes_search_line .bind("<FocusOut>", lambda args: focus_out_entry_box(saved_dishes_search_line , entry_text3))
-        saved_dishes_search_line .place(x=40, y=40, width=300)
+        saved_dishes_search_line.insert(0, entry_text2)
+        saved_dishes_search_line.bind("<FocusIn>", lambda args: focus_in_entry_box(saved_dishes_search_line ))
+        saved_dishes_search_line.bind("<FocusOut>", lambda args: focus_out_entry_box(saved_dishes_search_line , entry_text3))
+        saved_dishes_search_line.place(x=40, y=40, width=300)
 
         searchbtn2 = tk.Button(frame_foodstruct_add_dish, text="Найти", font=("Arial", 10))
         searchbtn2.place(x=360, y=35)
 
         # таблица сохраненных блюд
-        frame = ttk.Frame(frame_foodstruct_add_dish)
-        frame.place(x=20, y=100)
+        frame_dish = ttk.Frame(frame_foodstruct_add_dish)
+        frame_dish.place(x=15, y=80)
 
-        self.tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
+        self.tree2 = ttk.Treeview(frame_dish, columns=('txtDishName', 'txtDishProteins', 'txtDishFats', 'txtDishCarbohydrates', 'txtDishCalories'), height=20, show='headings')
 
-        self.tree.column('txtProductName', width=150, anchor=tk.CENTER)
-        self.tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductProteins', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductFats', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductCarbohydrates', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductCalories', width=95, anchor=tk.CENTER)
+        self.tree2.column('txtDishName', width=70, anchor=tk.CENTER)
+        self.tree2.column('txtDishProteins', width=70, anchor=tk.CENTER)
+        self.tree2.column('txtDishFats', width=70, anchor=tk.CENTER)
+        self.tree2.column('txtDishCarbohydrates', width=80, anchor=tk.CENTER)
+        self.tree2.column('txtDishCalories', width=90, anchor=tk.CENTER)
 
-        self.tree.heading('txtProductName', text='Продукт')
-        self.tree.heading('txtProductWeight', text='Вес, гр.')
-        self.tree.heading('txtProductProteins', text='Белки, гр.')
-        self.tree.heading('txtProductFats', text='Жиры, гр.')
-        self.tree.heading('txtProductCarbohydrates', text='Углеводы, гр.')
-        self.tree.heading('txtProductCalories', text='Калории, ккал.')
+        self.tree2.heading('txtDishName', text='Блюдо')
+        self.tree2.heading('txtDishProteins', text='Белки, гр.')
+        self.tree2.heading('txtDishFats', text='Жиры, гр.')
+        self.tree2.heading('txtDishCarbohydrates', text='Углеводы, гр.')
+        self.tree2.heading('txtDishCalories', text='Калории, ккал.')
+
+        scroll = tk.Scrollbar(frame_dish, command=self.tree2.yview)  # Линейка прокрутки для списка
+        scroll.place(x=800, y=50, height=295)
+        self.tree2.config(yscrollcommand=scroll.set)  
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+        self.tree2.pack()
 
         # таблица дневника питания
-        frame = ttk.Frame(self)
-        frame.place(x=500, y=40)
+        frame_diary = ttk.Frame(self)
+        frame_diary.place(x=500, y=40)
 
-        self.tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
+        self.tree = ttk.Treeview(frame_diary, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
 
         self.tree.column('txtProductName', width=150, anchor=tk.CENTER)
         self.tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
@@ -108,19 +113,16 @@ class Example(tk.Frame):
         self.tree.column('txtProductCarbohydrates', width=80, anchor=tk.CENTER)
         self.tree.column('txtProductCalories', width=95, anchor=tk.CENTER)
 
-        self.tree.heading('txtProductName', text='Продукт')
+        self.tree.heading('txtProductName', text='Продукт/блюдо')
         self.tree.heading('txtProductWeight', text='Вес, гр.')
         self.tree.heading('txtProductProteins', text='Белки, гр.')
         self.tree.heading('txtProductFats', text='Жиры, гр.')
         self.tree.heading('txtProductCarbohydrates', text='Углеводы, гр.')
         self.tree.heading('txtProductCalories', text='Калории, ккал.')
 
-        scroll = tk.Scrollbar(frame, command=self.tree.yview)  # Линейка прокрутки для списка
+        scroll = tk.Scrollbar(frame_diary, command=self.tree.yview)  # Линейка прокрутки для списка
         scroll.place(x=1560, y=50, height=695)
         self.tree.config(yscrollcommand=scroll.set)  
         scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
         self.tree.pack()
-
-
-
