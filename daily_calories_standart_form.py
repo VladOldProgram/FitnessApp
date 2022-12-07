@@ -5,10 +5,10 @@ from calculate import *
 
 
 class Daily_calories_standart(tk.Frame):
-    def __init__(self, parent: ttk.Notebook, sex: bool):
+    def __init__(self, parent: ttk.Notebook):
         super().__init__(parent)
 
-        self.sex = sex
+        self.sex = True
 
         self.image_female_button = tk.PhotoImage(file='assets\\images\\female_button.png')
         self.image_male_button = tk.PhotoImage(file='assets\\images\\male_button.png')
