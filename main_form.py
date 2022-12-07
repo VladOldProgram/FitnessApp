@@ -1,4 +1,4 @@
-from tkinter import Tk, ttk
+from tkinter import ttk
 import tkinter as tk
 
 # import schedule
@@ -36,7 +36,7 @@ class MainInterface:
 
         #то, что будет отображаться, при нажатии на вкладку
         ready_meal_tab = ReadyMeal(self.notebook)
-        calorie_dayli_rate_tab = CalorieDailyRate(self.notebook)
+        calorie_dayli_rate_tab = CalorieDailyRate(self.notebook, True)
         nutrition_diary_tab = NutritionDiary(self.notebook)
 
         #то, что будет отображаться на самой вкладке и ширина вкладки(^числоs)
@@ -45,7 +45,6 @@ class MainInterface:
         self.notebook.add(nutrition_diary_tab, text=f'{"Дневник питания": ^60s}')#60
         self.notebook.pack(expand=True, fill=tk.BOTH)
 
-# Здесь функционал на будущее для ресета дневника питания в конце дня
 # def checker():
 #    while True:
 #        schedule.run_pending()
