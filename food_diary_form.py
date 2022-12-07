@@ -12,12 +12,6 @@ class Example(tk.Frame):
         self.init_ui()
 
     def init_ui(self):
-        
-        btn_add2 = tk.Button(self, text='Удалить из дневника питания')
-        btn_add2.place(x=900, y=770)
-
-        label_txtMealWeight = tk.Label(self, text='Дневник питания', font='Arial 15 bold')
-        label_txtMealWeight.place(x=710, y=0)
 
         # поле для добавления продукта/блюда
         frame_foodstruct_add_product = tk.LabelFrame(self, width=430, height=230)
@@ -56,7 +50,7 @@ class Example(tk.Frame):
         searchbtn.place(x=360, y=35)
 
         # поле для добавления сохраненного блюда
-        frame_foodstruct_add_dish = tk.LabelFrame(self, width=430, height=510)
+        frame_foodstruct_add_dish = tk.LabelFrame(self, width=430, height=540)
         frame_foodstruct_add_dish.place(x=30, y=260)
         self.image_loupa2 = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
         self.loupa2 = Label(frame_foodstruct_add_dish, image=self.image_loupa2)
@@ -79,7 +73,7 @@ class Example(tk.Frame):
         frame_dish = ttk.Frame(frame_foodstruct_add_dish)
         frame_dish.place(x=15, y=80)
 
-        self.tree2 = ttk.Treeview(frame_dish, columns=('txtDishName', 'txtDishProteins', 'txtDishFats', 'txtDishCarbohydrates', 'txtDishCalories'), height=20, show='headings')
+        self.tree2 = ttk.Treeview(frame_dish, columns=('txtDishName', 'txtDishProteins', 'txtDishFats', 'txtDishCarbohydrates', 'txtDishCalories'), height=14, show='headings')
 
         self.tree2.column('txtDishName', width=70, anchor=tk.CENTER)
         self.tree2.column('txtDishProteins', width=70, anchor=tk.CENTER)
@@ -94,13 +88,27 @@ class Example(tk.Frame):
         self.tree2.heading('txtDishCalories', text='Калории, ккал.')
 
         scroll = tk.Scrollbar(frame_dish, command=self.tree2.yview)  # Линейка прокрутки для списка
-        scroll.place(x=800, y=50, height=295)
+        scroll.place(x=800, y=50, height=235)
         self.tree2.config(yscrollcommand=scroll.set)  
         scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
         self.tree2.pack()
 
+        dish_weight_stepper_label = tk.Label(frame_foodstruct_add_dish, text='Введите вес блюда в граммах', font=("Arial", 10))
+        dish_weight_stepper_label.place(x=10, y=430)
+        dish_weight_stepper_input = ttk.Entry(frame_foodstruct_add_dish)
+        dish_weight_stepper_input.place(x=320, y=430, width=60)
+
+        btn_add3 = tk.Button(frame_foodstruct_add_dish, text='Удалить сохраненное\n блюдо из списка')
+        btn_add3.place(x=10, y=475)
+
+        btn_add4 = tk.Button(frame_foodstruct_add_dish, text='Добавить в дневник\n питания')
+        btn_add4.place(x=295, y=475)
+
         # таблица дневника питания
+        label_txtMealWeight = tk.Label(self, text='Дневник питания', font='Arial 15 bold')
+        label_txtMealWeight.place(x=710, y=0)
+
         frame_diary = ttk.Frame(self)
         frame_diary.place(x=500, y=40)
 
@@ -126,3 +134,9 @@ class Example(tk.Frame):
         scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
         self.tree.pack()
+
+        result_calories_label = tk.Label(self, text='Суммарное количество калорий', font=("Arial", 10))
+        result_calories_label.place(x=540, y=750)
+
+        btn_add2 = tk.Button(self, text='Удалить из дневника питания')
+        btn_add2.place(x=900, y=770)
