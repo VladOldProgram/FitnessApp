@@ -45,6 +45,7 @@ class MainInterface:
         self.notebook.add(nutrition_diary_tab, text=f'{"Дневник питания": ^60s}')#60
         self.notebook.pack(expand=True, fill=tk.BOTH)
 
+# Здесь функционал на будущее для ресета дневника питания в конце дня
 # def checker():
 #    while True:
 #        schedule.run_pending()
