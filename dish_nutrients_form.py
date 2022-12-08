@@ -13,6 +13,20 @@ class Example(tk.Frame):
         self.init_ui()
 
     def init_ui(self): # Хранение и инициализация всех объектов графического интерфейса
+
+        def privet():
+            def qq(event):
+                print("Нажала")
+                
+            table = ttk.Treeview(self, columns=('1'), show="", height=10)
+            table.place(x=26, y=50)
+            table.column("1",width=420)
+            listik = ["Огурецfgrgfgbfbrtfgtrdgrtdgrtgfbyrt", "Авокадоbtrbrtbrtbrtgrtr", "Булочкаtrbtrtbrtrt"]
+            table.delete(*table.get_children())
+            for x in listik:
+                table.insert('', 'end', values=x)
+            table.bind("<Double-Button-1>", qq)
+            
         
         self.image_loupa = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
         self.loupa = Label(self, image=self.image_loupa)
@@ -27,7 +41,7 @@ class Example(tk.Frame):
         delete_line_button.place(x=900, y=770)
         save_dish_button = tk.Button(self, text='Сохранить\n блюдо', font=("Arial", 10))
         save_dish_button.place(x=400, y=750)
-        searchbtn = tk.Button(self, text="Найти", font=("Arial", 10))
+        searchbtn = tk.Button(self, text="Найти", font=("Arial", 10), command=privet)
         searchbtn.place(x=380, y=10)
         calculate_dish_nutrients_button = tk.Button(self, text='Рассчитать КБЖУ готового блюда', font=("Arial", 10))
         calculate_dish_nutrients_button.place(x=120, y=400)
@@ -50,7 +64,7 @@ class Example(tk.Frame):
         # product_weight_stepper_input.place(x=140, y=55)
         product_weight_stepper_input = ttk.Entry(frame_info_product, font=("Arial", 10), width=10)
         product_weight_stepper_input.place(x=160, y=55)
-        add_product_button = tk.Button(frame_info_product, text="Добавить в список", font=("Arial", 10))
+        add_product_button = tk.Button(frame_info_product, text="Добавить в список", font=("Arial", 10), command=lambda: print('работает'))
         add_product_button.place(x=270, y=50)
         found_product_calories = tk.Label(frame_info_product, text='Калорийность', font=("Arial", 10))
         found_product_calories.place(x=20, y=100)
@@ -112,36 +126,36 @@ class Example(tk.Frame):
         frame = ttk.Frame(self)
         frame.place(x=500, y=40)
         
-        self.tree = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
+        table = ttk.Treeview(frame, columns=('txtProductName', 'txtProductWeight', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductCalories'), height=34, show='headings')
 
-        self.tree.column('txtProductName', width=150, anchor=tk.CENTER)
-        self.tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductProteins', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductFats', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductCarbohydrates', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductCalories', width=95, anchor=tk.CENTER)
+        table.column('txtProductName', width=150, anchor=tk.CENTER)
+        table.column('txtProductWeight', width=80, anchor=tk.CENTER)
+        table.column('txtProductProteins', width=80, anchor=tk.CENTER)
+        table.column('txtProductFats', width=80, anchor=tk.CENTER)
+        table.column('txtProductCarbohydrates', width=80, anchor=tk.CENTER)
+        table.column('txtProductCalories', width=95, anchor=tk.CENTER)
 
-        self.tree.heading('txtProductName', text='Продукт')
-        self.tree.heading('txtProductWeight', text='Вес, гр.')
-        self.tree.heading('txtProductProteins', text='Белки, гр.')
-        self.tree.heading('txtProductFats', text='Жиры, гр.')
-        self.tree.heading('txtProductCarbohydrates', text='Углеводы, гр.')
-        self.tree.heading('txtProductCalories', text='Калории, ккал.')
+        table.heading('txtProductName', text='Продукт')
+        table.heading('txtProductWeight', text='Вес, гр.')
+        table.heading('txtProductProteins', text='Белки, гр.')
+        table.heading('txtProductFats', text='Жиры, гр.')
+        table.heading('txtProductCarbohydrates', text='Углеводы, гр.')
+        table.heading('txtProductCalories', text='Калории, ккал.')
 
         
-        scroll = tk.Scrollbar(frame, command=self.tree.yview)  # Линейка прокрутки для списка
+        scroll = tk.Scrollbar(frame, command=table.yview)  # Линейка прокрутки для списка
         scroll.place(x=1560, y=50, height=695)
-        self.tree.config(yscrollcommand=scroll.set)  
+        table.config(yscrollcommand=scroll.set)  
         scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
-        self.tree.pack()
+        table.pack()
 
     
     def delete_all(self):
         answer = mb.askyesno(message='Вы уверены, что хотите очистить таблицу?')
 
         if answer:
-            self.tree.delete(*self.tree.get_children())
+            table.delete(*table.get_children())
             mb.showinfo(message='Таблица очищена')
 
     # def delete_by(self):
