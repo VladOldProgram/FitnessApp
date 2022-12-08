@@ -17,19 +17,19 @@ class Example(tk.Frame):
         def privet():
             def rekomend(event):
                 print("Нажала")
-                cur_row = table.focus()
-                vals = table.item(cur_row,"values")
+                cur_row = table2.focus()
+                vals = table2.item(cur_row,"values")
                 print(vals)
                 print(get.get(vals[0])) # ссылка на выбранный продукт
 
             get = get_service_recommendations('stroka') # получаем словарь продуктов
-            table = ttk.Treeview(self, columns=('1'), show="")
-            table.place(x=28, y=50)
-            table.column("1",width=400)
-            table.delete(*table.get_children())
+            table2 = ttk.Treeview(self, columns=('1'), show="")
+            table2.place(x=28, y=50)
+            table2.column("1",width=400)
+            table2.delete(*table2.get_children())
             for x in get.keys(): # проходимся по всем рекомендациям
-                table.insert('', 'end', values=[x])
-            table.bind("<Double-Button-1>", rekomend) # по двойному щелчку вызуваем функцию rekomend
+                table2.insert('', 'end', values=[x])
+            table2.bind("<Double-Button-1>", rekomend) # по двойному щелчку вызуваем функцию rekomend
             
         
         self.image_loupa = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
