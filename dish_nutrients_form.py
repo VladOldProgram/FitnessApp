@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox as mb
 from PIL import ImageTk, Image
 from tkinter import *
-
+from foodstruct import *
 
 class Example(tk.Frame):
     def __init__(self, parent):
@@ -17,13 +17,19 @@ class Example(tk.Frame):
         def privet():
             def qq(event):
                 print("Нажала")
-                
-            table = ttk.Treeview(self, columns=('1'), show="", height=10)
-            table.place(x=26, y=50)
-            table.column("1",width=420)
-            listik = ["Огурецfgrgfgbfbrtfgtrdgrtdgrtgfbyrt", "Авокадоbtrbrtbrtbrtgrtr", "Булочкаtrbtrtbrtrt"]
+                cur_row = table.focus()
+                vals = table.item(cur_row,"values")
+                print(vals)
+
+            get = get_service_recommendations('stroka') # получаем словарь продуктов
+            table = ttk.Treeview(self, columns=('1','2'), show="")
+            table.place(x=28, y=50)
+            table.column("1",width=216)
+            table.column("2",width=216)
+            #listik = ["Огурецfgrgfgbfbrtfgtrdgrtdgrtgfbyrt", "Авокадоbtrbrtbrtbrtgrtr", "Булочкаtrbtrtbrtrt"]
             table.delete(*table.get_children())
-            for x in listik:
+            for x in get:
+                print(x)
                 table.insert('', 'end', values=x)
             table.bind("<Double-Button-1>", qq)
             
