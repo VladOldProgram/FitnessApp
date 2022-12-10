@@ -65,9 +65,6 @@ class Example(tk.Frame):
         searchbtn = tk.Button(self, text="Найти", font=(
             "Arial", 10), command=search)
         searchbtn.place(x=380, y=10)
-        calculate_dish_nutrients_button = tk.Button(
-            self, text='Рассчитать КБЖУ готового блюда', font=("Arial", 10))
-        calculate_dish_nutrients_button.place(x=120, y=400)
 
         # поисковая строка
         entry_txtNameProduct = tk.Entry(self, fg='Grey')
@@ -106,6 +103,18 @@ class Example(tk.Frame):
         found_product_carbohydrates_label = Label(frame_info_product, text='')
         found_product_carbohydrates_label.place(x=150, y=250)
 
+        # поле для информации о КБЖУ готового блюда
+        frame_info_dish = tk.LabelFrame(self, width=430, height=290)
+        frame_info_dish.place(x=30, y=450)
+
+        results_dish_calories11 = tk.Label(frame_info_dish, text='', font=("Arial", 10))
+        results_dish_calories11.place(x=200, y=60)
+
+        def save_dish():
+            f = full_dish_weight_stepper_input.get()
+            print(f)
+            results_dish_calories11.config(text=f)
+
         def add_product():
             #found_product_name_label.cget("text"), found_product_calories_label.cget("text"), found_product_proteins_label.cget("text"), found_product_fats_label.cget("text"), found_product_carbohydrates_label.cget("text"), product_weight_stepper_input.get()
             m1=found_product_name_label.cget("text")
@@ -128,7 +137,8 @@ class Example(tk.Frame):
             table.insert('', 'end', values=(m1, m2,m3, m4, m5, m6))
 
 
-
+        calculate_dish_nutrients_button = tk.Button(self, text='Рассчитать КБЖУ готового блюда', font=("Arial", 10), command=save_dish)
+        calculate_dish_nutrients_button.place(x=120, y=400)
         add_product_button = tk.Button(frame_info_product, text="Добавить в список", font=("Arial", 10), command=add_product)
         
         
@@ -152,17 +162,12 @@ class Example(tk.Frame):
         full_dish_weight_stepper_input = ttk.Entry(self)
         full_dish_weight_stepper_input.place(x=300, y=360, width=60)
 
-        # поле для информации о КБЖУ готового блюда
-        frame_info_dish = tk.LabelFrame(self, width=430, height=290)
-        frame_info_dish.place(x=30, y=450)
         label_info_dish = tk.Label(
             frame_info_dish, text='КБЖУ готового блюда', font=("Arial", 10))
         label_info_dish.place(x=140, y=10)
         results_dish_calories = tk.Label(
             frame_info_dish, text='Итог для', font=("Arial", 10))
         results_dish_calories.place(x=130, y=60)
-        # results_dish_calories = tk.Label(frame_info_dish, text=, font=("Arial", 10))
-        # results_dish_calories.place(x=150, y=60)
         results_dish_calories = tk.Label(
             frame_info_dish, text='гр.', font=("Arial", 10))
         results_dish_calories.place(x=250, y=60)
