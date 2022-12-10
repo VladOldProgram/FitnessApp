@@ -20,7 +20,7 @@ def get_product_nutrients_data(product_name: str):
     for tr in product_nutrients_table.find_all('tr')[2:6]:
         row_data = tr.find_all('td')[3]
         for e in row_data:
-            e = e.text.replace('\t', '').replace('\n', '').replace('g', '').replace('kcal', '')
+            e = e.replace('\t', '').replace('\n', '').replace('g', '').replace('kcal', '')
             product_nutrients_data_list.append(e)
 
     product_nutrients_data = dict()
