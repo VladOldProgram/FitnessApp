@@ -44,7 +44,7 @@ class Example(tk.Frame):
             table2.delete(*table2.get_children())
             for x in get.keys():  # проходимся по всем рекомендациям
                 table2.insert('', 'end', values=[x])
-            # по двойному щелчку вызуваем функцию rekomend
+            # по двойному щелчку вызываем функцию rekomend
             table2.bind("<Double-Button-1>", rekomend)
 
 
@@ -212,20 +212,20 @@ class Example(tk.Frame):
 
         def delete_all():
             if not table.selection():
-                mb.showinfo('Удаление', 'Таблица пуста')
+                mb.showinfo('Удаление', 'Список продуктов пуст')
             else:
                 answer = mb.askyesno(
-                    message='Вы уверены, что хотите очистить таблицу?')
+                    message='Вы уверены, что хотите удалить все продукты из списка?')
                     
                 if answer:
                     table.delete(*table.get_children())
-                    mb.showinfo(message='Таблица очищена')
+                    mb.showinfo(message='Список продуктов очищен')
 
         def delete_by():
             if not table.selection():
                 mb.showinfo('Удаление', 'Данные для удаления не найдены')
             else:
-                answer = mb.askyesno(message='Вы уверены, что хотите удалить эти данные?')
+                answer = mb.askyesno(message='Вы уверены, что хотите удалить данные о продукте?')
                 if answer:
                     item = table.selection()[0]
                     table.delete(item)
