@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 def get_product_nutrients_data(product_name: str):
     if (not isinstance(product_name, str)):
         return TypeError
+    
+    product_name = '-'.join(product_name.split())
 
     url = 'https://foodstruct.com/ru/food/' + product_name
     try:
