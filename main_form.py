@@ -6,7 +6,7 @@ import tkinter as tk
 # import threading
 # from FAKEFUNC import *
 
-from dish_nutrients_form import Dish_nutrients_form as ReadyMeal
+from dish_nutrients_form import Example as ReadyMeal
 from daily_calories_standart_form import Daily_calories_standart as CalorieDailyRate
 from food_diary_form import Example as NutritionDiary
 
@@ -27,6 +27,9 @@ class MainInterface:
         style.configure('lefttab.TNotebook', tabposition='ws') #отображение вкладок по левой стороне
         style.configure('TNotebook.Tab', background="White") #цвет вкладок
         style.map("TNotebook.Tab", background= [("selected", "Gray")])
+
+        #style.configure('Treeview', background="white")
+
 
     def create_widgets(self):
         self.window['padx'] = 10
