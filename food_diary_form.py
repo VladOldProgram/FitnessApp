@@ -17,6 +17,7 @@ class Food_diary_form(tk.Frame):
         self.loupa.place(x=15, y=37)
         self.label_foodstruct_add_product = tk.Label(self.frame_foodstruct_add_product, text='Добавление продукта/блюда', font=("Arial", 10))
         self.label_foodstruct_add_product.place(x=100, y=10)
+        self.label_foodstruct_add_product.focus()
 
         # поисковая строка продуктов/блюд
         self.foodstruct_search_line = tk.Entry(self.frame_foodstruct_add_product, fg='Grey')
@@ -78,11 +79,11 @@ class Food_diary_form(tk.Frame):
 
         self.tree2 = ttk.Treeview(self.frame_dish, columns=('txtDishName', 'txtDishProteins', 'txtDishFats', 'txtDishCarbohydrates', 'txtDishCalories'), height=14, show='headings')
 
-        self.tree2.column('txtDishName', width=70, anchor=tk.CENTER)
-        self.tree2.column('txtDishProteins', width=90, anchor=tk.CENTER)
+        self.tree2.column('txtDishName', width=50, anchor=tk.CENTER)
+        self.tree2.column('txtDishProteins', width=80, anchor=tk.CENTER)
         self.tree2.column('txtDishFats', width=70, anchor=tk.CENTER)
         self.tree2.column('txtDishCarbohydrates', width=80, anchor=tk.CENTER)
-        self.tree2.column('txtDishCalories', width=70, anchor=tk.CENTER)
+        self.tree2.column('txtDishCalories', width=90, anchor=tk.CENTER)
 
         self.tree2.heading('txtDishName', text='Блюдо')
         self.tree2.heading('txtDishProteins', text='Белки, гр.')
@@ -102,11 +103,11 @@ class Food_diary_form(tk.Frame):
         self.dish_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_dish)
         self.dish_weight_stepper_input.place(x=320, y=430, width=60)
 
-        self.btn_add3 = tk.Button(self.frame_foodstruct_add_dish, text='Удалить сохраненное\n блюдо из списка')
-        self.btn_add3.place(x=10, y=475)
+        self.delete_saved_dish_button = tk.Button(self.frame_foodstruct_add_dish, text='Удалить сохраненное\n блюдо из списка', command=self.delete_saved_dish)
+        self.delete_saved_dish_button.place(x=10, y=475)
 
-        self.btn_add4 = tk.Button(self.frame_foodstruct_add_dish, text='Добавить в дневник\n питания')
-        self.btn_add4.place(x=295, y=475)
+        self.add_saved_dish_button = tk.Button(self.frame_foodstruct_add_dish, text='Добавить в дневник\n питания')
+        self.add_saved_dish_button.place(x=295, y=475)
 
         # таблица дневника питания
         self.label_txtMealWeight = tk.Label(self, text='Дневник питания', font='Arial 15 bold')
@@ -117,12 +118,12 @@ class Food_diary_form(tk.Frame):
 
         self.tree = ttk.Treeview(self.frame_diary, columns=('txtProductName', 'txtProductCalories', 'txtProductProteins', 'txtProductFats', 'txtProductCarbohydrates', 'txtProductWeight'), height=34, show='headings')
 
-        self.tree.column('txtProductName', width=150, anchor=tk.CENTER)
-        self.tree.column('txtProductCalories', width=80, anchor=tk.CENTER)
+        self.tree.column('txtProductName', width=120, anchor=tk.CENTER)
+        self.tree.column('txtProductCalories', width=95, anchor=tk.CENTER)
         self.tree.column('txtProductProteins', width=80, anchor=tk.CENTER)
         self.tree.column('txtProductFats', width=80, anchor=tk.CENTER)
         self.tree.column('txtProductCarbohydrates', width=80, anchor=tk.CENTER)
-        self.tree.column('txtProductWeight', width=95, anchor=tk.CENTER)
+        self.tree.column('txtProductWeight', width=80, anchor=tk.CENTER)
 
         self.tree.heading('txtProductName', text='Продукт/блюдо')
         self.tree.heading('txtProductCalories', text='Калории, ккал.')
@@ -163,19 +164,23 @@ class Food_diary_form(tk.Frame):
     def rekomend(self, event):
         print("Нажала")
         cur_row = self.table2.focus()
-        vals = self.table2.item(cur_row, "values")
-        print("Продукт = ", str(vals[0]))
-        product_data = get_product_nutrients_data(str(vals[0]))
-        print(product_data)
+        self.vals = self.table2.item(cur_row, "values")
+        print("Продукт = ", str(self.vals[0]))
+        self.product_data = get_product_nutrients_data(str(self.vals[0]))
+        print(self.product_data)
         # print(get.get(vals[0])) # ссылка на выбранный продукт
         self.table2.place(x=2000, y=2000)
 
-        self.found_product_name_label.config(text=vals[0])
-        self.found_product_calories_label.config(text=product_data['calories'])
-        self.found_product_proteins_label.config(text=product_data['proteins'])
-        self.found_product_fats_label.config(text=product_data['fats'])
-        self.found_product_carbohydrates_label.config(text=product_data['carbohydrates'])
+        self.found_product_name_label.config(text=self.vals[0])
+        self.found_product_calories_label.config(text=self.product_data['calories'])
+        self.found_product_proteins_label.config(text=self.product_data['proteins'])
+        self.found_product_fats_label.config(text=self.product_data['fats'])
+        self.found_product_carbohydrates_label.config(text=self.product_data['carbohydrates'])
 
+    def focus_in_entry_box(self, self3):
+        if self3['fg'] == 'Grey':
+            self3['fg'] = 'Black'
+            self3.delete(0, tk.END)
 
     def focus_out_entry_box(self, self1, self_text):
         if self1['fg'] == 'Black' and len(self1.get()) == 0:
@@ -183,22 +188,23 @@ class Food_diary_form(tk.Frame):
             self1['fg'] = 'Grey'
             self1.insert(0, self_text)
 
-    def focus_in_entry_box(self, self3):
-        if self3['fg'] == 'Grey':
-            self3['fg'] = 'Black'
-            self3.delete(0, tk.END)
-
 
     def add_product(self):
-            m1=self.found_product_name_label.cget("text")
-            m2=self.found_product_calories_label.cget("text")
-            m3=self.found_product_proteins_label.cget("text")
-            m4=self.found_product_fats_label.cget("text") 
-            m5=self.found_product_carbohydrates_label.cget("text")
-            m6=self.product_weight_stepper_input.get()
-            l = [m1,m2,m3,m4,m5,m6]
-            print("лист ", l)
-            self.tree.insert('', 'end', values=(m1, m2,m3, m4, m5, m6))
+        m1 = str(self.vals[0])
+        m2 = self.product_data["calories"]
+        m3 = self.product_data["proteins"]
+        m4 = self.product_data["fats"]
+        m5 = self.product_data["carbohydrates"]
+        m6 = float(self.product_weight_stepper_input.get()) # вес
+        
+        self.product_data["calories"] = round(float(self.product_data["calories"]) * m6 / 100, 2)
+        self.product_data["proteins"] = round(float(self.product_data["proteins"]) * m6 / 100, 2)
+        self.product_data["fats"] = round(float(self.product_data["fats"]) * m6 / 100, 2)
+        self.product_data["carbohydrates"] = round(float(self.product_data["carbohydrates"]) * m6 / 100, 2)
+
+        self.tree.insert('', 'end', values=(m1, self.product_data["calories"], self.product_data["proteins"], self.product_data["fats"], self.product_data["carbohydrates"], m6))
+        
+        self.product_weight_stepper_input.delete(0, tk.END)
 
     def delete_all(self):
         if self.tree == '':
@@ -221,5 +227,17 @@ class Food_diary_form(tk.Frame):
                 self.tree.delete(item)
                 self.tree.config(height=34)
                 mb.showinfo(message='Данные удалены')
+
+    def delete_saved_dish(self):
+        if not self.tree.selection():
+            mb.showinfo('Удаление', 'Данные для удаления не найдены')
+        else:
+            answer = mb.askyesno(message='Вы уверены, что хотите удалить данные  о продукте/блюде?')
+            if answer:
+                item = self.tree.selection()[0]
+                self.tree.delete(item)
+                self.tree.config(height=14)
+                mb.showinfo(message='Данные удалены')
+
 
 
