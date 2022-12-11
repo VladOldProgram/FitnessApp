@@ -28,7 +28,8 @@ class MainInterface:
         style.configure('TNotebook.Tab', background="White") #цвет вкладок
         style.map("TNotebook.Tab", background= [("selected", "Gray")])
 
-        #style.configure('Treeview', background="white")
+        style.configure('Treeview', background="white")
+        style.map('Treeview', background=[("selected", "cornflower blue")])
 
 
     def create_widgets(self):
