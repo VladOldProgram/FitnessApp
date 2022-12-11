@@ -6,9 +6,9 @@ import tkinter as tk
 # import threading
 # from FAKEFUNC import *
 
-from dish_nutrients_form import Example as ReadyMeal
+from dish_nutrients_form import Dish_nutrients_form as ReadyMeal
 from daily_calories_standart_form import Daily_calories_standart as CalorieDailyRate
-from food_diary_form import Example as NutritionDiary
+from food_diary_form import Food_diary_form as NutritionDiary
 
 class MainInterface:
     def __init__(self):
