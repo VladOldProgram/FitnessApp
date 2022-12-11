@@ -216,7 +216,7 @@ class Example(tk.Frame):
 
 
         def delete_all():
-            if not table.selection():
+            if table == '':
                 mb.showinfo('Удаление', 'Список продуктов пуст')
             else:
                 answer = mb.askyesno(
@@ -269,4 +269,3 @@ class Example(tk.Frame):
         delete_line_button = tk.Button(
             self, text='Удалить запись из таблицы', font=("Arial", 10), command=delete_by)
         delete_line_button.place(x=900, y=770)
-
