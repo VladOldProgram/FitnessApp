@@ -109,8 +109,10 @@ class Daily_calories_standart(tk.Frame):
         self.age_label_2 = tk.Label(self, text='лет', font=("Arial", 10))
         self.age_label_2.place(x=510, y=546)
 
-        self.height_entry = tk.Entry(self, font=("Arial", 10), width=15)
+        self.height_entry = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
+        #self.height_entry['validatecommand'] = (self.height_entry.register(self.char_is_validate), '%P', '%d')
         self.height_entry.place(x=300, y=260)
+
         self.weight_entry = tk.Entry(self, font=("Arial", 10), width=15)
         self.weight_entry.place(x=100, y=490)
         self.age_entry = tk.Entry(self, font=("Arial", 10), width=11)
@@ -137,6 +139,15 @@ class Daily_calories_standart(tk.Frame):
             command=self.clear_inputs
         )
         self.clear_inputs_button.place(x=100, y=730)
+
+    #def testVal(self, inStr, acttyp):
+    #    if acttyp == '1':
+    #        if not inStr.isdigit():
+    #            return False
+    #    return True
+
+    def char_is_validate(self, char, why_d, where_i, what_S):
+        return True
 
     def switch_female(self, event):
         self.sex = False
@@ -173,11 +184,6 @@ class Daily_calories_standart(tk.Frame):
              activity_level_coefficient
         )
         daily_calories_standart = round(daily_calories_standart, 2)
-
-
-        # result_calories_label4.config(text = daily_calories_standart)
-
-
         
         self.daily_calories_standart = daily_calories_standart
         self.daily_calories_standart_label.configure(text=daily_calories_standart)
