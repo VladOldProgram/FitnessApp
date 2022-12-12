@@ -7,11 +7,14 @@ from foodstruct import *
 from calculate import *
 import json
 import os.path
+from json import JSONDecodeError
 
 
 class Food_diary_form(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
+        
+        #self.json_create()
 
         # поле для добавления продукта/блюда
         self.frame_foodstruct_add_saved_dish_to_diary = tk.LabelFrame(self, width=430, height=230)
@@ -186,29 +189,33 @@ class Food_diary_form(tk.Frame):
             self.diary_table.insert('', 'end', values=(m1, m5, m2, m3, m4, m6))
             self.foodstruct_product_weight_stepper_input.delete(0, tk.END)
 
-            self.json_create()
+            
 
-    def json_create(self):
-        with open('json\saved_dishes.json', 'w') as f:
-            print("The json file is created")
+    #def json_create(self):
+     #   with open('json\saved_dishes.json', 'w') as f:
+     #       print("The json file is created")
             
 
     def update_table_dish(self):
-
-        with open('json\saved_dishes.json') as f:
-            result = json.load(f)
-            print(type(result))
-            for i in range(len(result)):
-                print(result[i])
-                print(result[i].keys())
-                name_dish = list(result[i].keys())
-                name = name_dish[0] # название блюда
-                proteins = result[i][name_dish[0]]["proteins"]
-                fats = result[i][name_dish[0]]["fats"]
-                carbohydrates = result[i][name_dish[0]]["carbohydrates"]
-                calories = result[i][name_dish[0]]["calories"]
-
-                self.saved_dishes_table.insert('', 'end', values=(name, proteins, fats, carbohydrates, calories))
+        try:
+            with open('json\saved_dishes.json') as f:
+                try:
+                    result = json.load(f)
+                    print(type(result))
+                    for i in range(len(result)):
+                        print(result[i])
+                        print(result[i].keys())
+                        name_dish = list(result[i].keys())
+                        name = name_dish[0] # название блюда
+                        proteins = result[i][name_dish[0]]["proteins"]
+                        fats = result[i][name_dish[0]]["fats"]
+                        carbohydrates = result[i][name_dish[0]]["carbohydrates"]
+                        calories = result[i][name_dish[0]]["calories"]
+                        self.saved_dishes_table.insert('', 'end', values=(name, proteins, fats, carbohydrates, calories))
+                except JSONDecodeError:
+                    return 
+        except FileNotFoundError:
+            return
 
 
     def show_service_recommendations(self):
@@ -349,9 +356,11 @@ class Food_diary_form(tk.Frame):
 
 
     def update_daily_calories_standart(self):
-        with open("json\daily_calories_standart.json", "r") as my_file:
+
+        with open("json\daily_calories_standart.json", "w+") as my_file: 
             f = my_file.read()
             try:
                 self.result_calories_label4.configure(text=json.loads(f)["daily_calories_standart"])
             except JSONDecodeError:
                 self.result_calories_label4.configure(text=0.0)
+
