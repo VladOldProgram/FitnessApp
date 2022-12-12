@@ -4,6 +4,10 @@ from tkinter import messagebox as mb
 from PIL import ImageTk, Image
 from tkinter import *
 from foodstruct import *
+from calculate import *
+import json
+
+
 
 class Food_diary_form(tk.Frame):
     def __init__(self, parent):
@@ -106,7 +110,7 @@ class Food_diary_form(tk.Frame):
         self.delete_saved_dish_button = tk.Button(self.frame_foodstruct_add_dish, text='Удалить сохраненное\n блюдо из списка', command=self.delete_saved_dish)
         self.delete_saved_dish_button.place(x=10, y=475)
 
-        self.add_saved_dish_button = tk.Button(self.frame_foodstruct_add_dish, text='Добавить в дневник\n питания')
+        self.add_saved_dish_button = tk.Button(self.frame_foodstruct_add_dish, text='Добавить в дневник\n питания', command=self.add_saved_dish_to_diary)
         self.add_saved_dish_button.place(x=295, y=475)
 
         # таблица дневника питания
@@ -141,6 +145,15 @@ class Food_diary_form(tk.Frame):
 
         self.result_calories_label = tk.Label(self, text='Суммарное количество калорий', font=("Arial", 10))
         self.result_calories_label.place(x=500, y=750)
+        self.result_calories_label2 = tk.Label(self, text='', font=("Arial", 10))
+        self.result_calories_label2.place(x=510, y=770)
+        self.result_calories_label3 = tk.Label(self, text='из', font=("Arial", 10))
+        self.result_calories_label3.place(x=600, y=770)
+        self.result_calories_label4 = tk.Label(self, text='', font=("Arial", 10))
+        self.result_calories_label4.place(x=620, y=770)
+        self.result_calories_label4.config(text = self.get_daily_calorie_standart())
+        # self.after(200, self.update)
+    
 
         self.delete_from_diary_button = tk.Button(self, text='Удалить из дневника питания', command = self.delete_from_diary)
         self.delete_from_diary_button.place(x=900, y=770)
@@ -203,6 +216,24 @@ class Food_diary_form(tk.Frame):
         self.product_data["carbohydrates"] = round(float(self.product_data["carbohydrates"]) * m6 / 100, 2)
 
         self.diary_table.insert('', 'end', values=(m1, self.product_data["calories"], self.product_data["proteins"], self.product_data["fats"], self.product_data["carbohydrates"], m6))
+
+        # брать сумму всех калорий
+        self.dict_products = {}
+        rows = self.diary_table.get_children()
+
+        for i in range(len(rows)):
+            self.dict_products[self.diary_table.item(rows[i])["values"][0]] = {
+                "calories": float(self.diary_table.item(rows[i])["values"][1]), 
+                "proteins": float(self.diary_table.item(rows[i])["values"][2]), 
+                "fats": float(self.diary_table.item(rows[i])["values"][3]), 
+                "carbohydrates": float(self.diary_table.item(rows[i])["values"][4]), 
+                "weight": float(self.diary_table.item(rows[i])["values"][5])
+            }       
+
+        print(round(calculate_dish_calories(self.dict_products)))
+
+
+        self.result_calories_label2.config(text = round(calculate_dish_calories(self.dict_products), 2))
         
         self.foodstruct_product_weight_stepper_input.delete(0, tk.END)
 
@@ -214,6 +245,7 @@ class Food_diary_form(tk.Frame):
                 message='Вы уверены, что хотите удалить все продукты/блюда из дневника?')
                 
             if answer:
+                self.result_calories_label2.config(text = '')
                 self.diary_table.delete(*self.diary_table.get_children())
                 mb.showinfo(message='Список продуктов очищен')
 
@@ -239,5 +271,39 @@ class Food_diary_form(tk.Frame):
                 self.diary_table.config(height=14)
                 mb.showinfo(message='Данные удалены')
 
+    def get_daily_calorie_standart(self):
+        with open("json\daily_calories_standart.json", "r") as my_file:
+            f = my_file.read()
+            
+        
+        #after(2000,self.get_daily_calorie_standart()))
+        if (self.result_calories_label4.cget("text") == ''):
+            print('Пусто')
+            daily_calorie_standart = json.loads(f)["daily_calories_standart"]
+            return daily_calorie_standart
+        elif daily_calorie_standart == self.result_calories_label4.cget():
+            print('2')
+            return daily_calorie_standart
+        else:
+            print('3')
+            return self.result_calories_label4.cget()
 
+    # def update_json():
+    #     with open("json\daily_calories_standart.json", "r") as my_file:
+    #         f = my_file.read()
+        
+    #     daily_calorie_standart = json.loads(f)["daily_calories_standart"]
+
+
+    # def get_daily_calorie_standart2(self):
+    #     with open("json\saved_dishes.json", "r") as my_file:
+    #         f = my_file.read()
+
+    #     daily_calorie_standart = json.loads(f)["daily_calories_standart"]
+    #     return daily_calorie_standart
+
+    # def add_saved_dish_to_diary(self):
+    #     if self.saved_dishes_show_service_recommendations_line.get() == :
+
+    #     self.saved_dishes_table.insert('', 'end', values=(m1, self.product_data["calories"], self.product_data["proteins"], self.product_data["fats"], self.product_data["carbohydrates"], m6))
 
