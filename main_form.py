@@ -1,22 +1,33 @@
 from tkinter import ttk
 import tkinter as tk
+import json
+import schedule
+import time
+import threading
 
-# import schedule
-# import time
-# import threading
-# from FAKEFUNC import *
-
-from dish_nutrients_form import Dish_nutrients_form as ReadyMeal
-from daily_calories_standart_form import Daily_calories_standart as CalorieDailyRate
-from food_diary_form import Food_diary_form as NutritionDiary
+from dish_nutrients_form import Dish_nutrients_form
+from daily_calories_standart_form import Daily_calories_standart
+from food_diary_form import Food_diary_form
 
 class MainInterface:
+    window = tk.Tk()
+    notebook = ttk.Notebook(window, width=800, height=800, style='lefttab.TNotebook')
+    dish_nutrients_tab = Dish_nutrients_form(notebook)
+    daily_calories_standart_tab = Daily_calories_standart(notebook)
+    food_diary_tab = Food_diary_form(notebook)
+
     def __init__(self):
-        self.window = tk.Tk()
         self.window.title('FitnessApp')
         self.window.geometry("1600x840")
         self.window.resizable(False, False)
-        self.create_widgets()
+        self.window['padx'] = 10
+        self.window['pady'] = 10
+
+        #то, что будет отображаться на самой вкладке и ширина вкладки(^числоs)
+        self.notebook.add(self.dish_nutrients_tab, text=f'{"Подсчет КБЖУ готового блюда": ^46s}')#46
+        self.notebook.add(self.daily_calories_standart_tab, text=f'{"Подсчет суточной нормы калорий": ^42s}')#42
+        self.notebook.add(self.food_diary_tab, text=f'{"Дневник питания": ^60s}')#60
+        self.notebook.pack(expand=True, fill=tk.BOTH)
         style = ttk.Style() #создаем стиль, чтобы изменить вид вкладок
         style.theme_create( "MyStyle", parent="alt", settings={
         "TNotebook": {"configure": {"padding": [0, 0, 0, 0] } },
@@ -31,33 +42,19 @@ class MainInterface:
         style.configure('Treeview', background="white")
         style.map('Treeview', background=[("selected", "cornflower blue")])
 
+def checker():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
-    def create_widgets(self):
-        self.window['padx'] = 10
-        self.window['pady'] = 10
+def update_daily_calories_standart():
+    root.food_diary_tab.update_daily_calories_standart()
 
-        self.notebook = ttk.Notebook(self.window, width=800, height=800, style='lefttab.TNotebook')
-
-        #то, что будет отображаться, при нажатии на вкладку
-        ready_meal_tab = ReadyMeal(self.notebook)
-        calorie_dayli_rate_tab = CalorieDailyRate(self.notebook)
-        nutrition_diary_tab = NutritionDiary(self.notebook)
-
-        #то, что будет отображаться на самой вкладке и ширина вкладки(^числоs)
-        self.notebook.add(ready_meal_tab, text=f'{"Подсчет КБЖУ готового блюда": ^46s}')#46
-        self.notebook.add(calorie_dayli_rate_tab, text=f'{"Подсчет суточной нормы калорий": ^42s}')#42
-        self.notebook.add(nutrition_diary_tab, text=f'{"Дневник питания": ^60s}')#60
-        self.notebook.pack(expand=True, fill=tk.BOTH)
-
-# def checker():
-#    while True:
-#        schedule.run_pending()
-#        time.sleep(1)
-        
 if __name__ == '__main__':
-    # schedule.every().day.at('23:59:50').do(reset_diary)
-    # checker_thread = threading.Thread(target=checker, daemon=True)
-    # checker_thread.start()
+    #schedule.every().day.at('23:59:50').do(reset_diary)
+    schedule.every(2).seconds.do(update_daily_calories_standart)
+    checker_thread = threading.Thread(target=checker, daemon=True)
+    checker_thread.start()
 
     root = MainInterface()
     root.window.mainloop()
