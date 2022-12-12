@@ -8,6 +8,7 @@ from calculate import *
 import json
 import os.path
 
+# Описывает структуру и работу первой экранной формы Подсчет КБЖУ готового блюда
 class Dish_nutrients_form(tk.Frame):
     def __init__(self, parent: ttk.Notebook):
         super().__init__(parent)
@@ -222,14 +223,14 @@ class Dish_nutrients_form(tk.Frame):
                     self.dish_ingredients_table.config(height=34)
                     mb.showinfo(message='Данные удалены')
 
-    # создание placeholder...(Аня - напиши что за метод)
+    # Добавляет строку-заполнитель поисковой строки (название)
     def focus_out_entry_box(self, self1, self_text):
         if self1['fg'] == 'Black' and len(self1.get()) == 0:
             self1.delete(0, tk.END)
             self1['fg'] = 'Grey'
             self1.insert(0, self_text)
 
-    # создание placeholder...(Аня - напиши что за метод)
+    # Убирает строку-заполнитель поисковой строки (название)
     def focus_in_entry_box(self, self3):
         if self3['fg'] == 'Grey':
             self3['fg'] = 'Black'
@@ -243,7 +244,6 @@ class Dish_nutrients_form(tk.Frame):
 
         self.dict_products = {}
         self.dict_products_zapacnoy = {}
-
         rows = self.dish_ingredients_table.get_children()
 
         for i in range(len(rows)):
@@ -285,28 +285,13 @@ class Dish_nutrients_form(tk.Frame):
                     }
                 print("Словарь 1 раз =", self.dict_products)
 
-        """
-        for i in range(len(rows)):
-            self.dict_products[self.dish_ingredients_table.item(rows[i])["values"][0]] = {
-                "calories": float(self.dish_ingredients_table.item(rows[i])["values"][1]),
-                "proteins": float(self.dish_ingredients_table.item(rows[i])["values"][2]),
-                "fats": float(self.dish_ingredients_table.item(rows[i])["values"][3]),
-                "carbohydrates": float(self.dish_ingredients_table.item(rows[i])["values"][4]),
-                "weight": float(self.dish_ingredients_table.item(rows[i])["values"][5])
-                }"""
-
         print("словарь таблица - ", self.dict_products)
 
         self.result_100_gramm_proteins = round(calculate_dish_proteins(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100, 2)
         self.result_100_gramm_fats = round(calculate_dish_fats(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100, 2)
         self.result_100_gramm_carbohydrates = round(calculate_dish_carbohydrates(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100, 2)
         self.result_100_gramm_calories = round(calculate_dish_calories(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100,2)
-
-        #print("100_протеины = ", self.result_100_gramm_proteins) 
-        #print("100_жиры = ", self.result_100_gramm_fats) 
-        #print("100_углеводы = ", self.result_100_gramm_carbohydrates) 
-        #print("100_калории= ", self.result_100_gramm_calories) 
-
+     
         if os.path.exists('json\saved_dishes.json') == FALSE:
             self.create_json()
         else:
@@ -392,7 +377,6 @@ class Dish_nutrients_form(tk.Frame):
     def add_product(self):
         m1 = str(self.vals[0]) # продукт
         m6 = float(self.product_weight_stepper_input.get()) # вес продукта
-        
         m2 = round(float(self.product_data["calories"]) * m6 / 100, 2)
         m3 = round(float(self.product_data["proteins"]) * m6 / 100, 2)
         m4 = round(float(self.product_data["fats"]) * m6 / 100, 2)
