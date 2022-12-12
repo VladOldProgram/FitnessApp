@@ -25,7 +25,6 @@ def calculate_daily_calories_standart(
 
     return daily_calories_standart
 
-
 def complex_dict_is_correct(products: dict[str, dict[str, float]]):
     if (not isinstance(products, dict)):
         return False
@@ -81,13 +80,12 @@ def calculate_dish_carbohydrates(products: dict[str, dict[str, float]]):
 
     return dish_carbohydrates
 
-
 def calculate_dish_weight(products: dict[str, dict[str, float]]):
     if (not complex_dict_is_correct(products)):
         return TypeError
 
-    weight = 0.0
+    dish_weight = 0.0
     for key in products.keys():
-        weight += products[key]['weight']
+        dish_weight += products[key]['weight']
 
-    return weight
+    return dish_weight
