@@ -276,7 +276,7 @@ class Food_diary_form(tk.Frame):
             f = my_file.read()
             
         
-        #after(2000,self.get_daily_calorie_standart()))
+        #не работает!! нужно, чтобы суточная норма калорий обновлялась, если только ввели ее на 2 форме, не перезаходя в приложение
         if (self.result_calories_label4.cget("text") == ''):
             print('Пусто')
             daily_calorie_standart = json.loads(f)["daily_calories_standart"]
@@ -295,15 +295,4 @@ class Food_diary_form(tk.Frame):
     #     daily_calorie_standart = json.loads(f)["daily_calories_standart"]
 
 
-    # def get_daily_calorie_standart2(self):
-    #     with open("json\saved_dishes.json", "r") as my_file:
-    #         f = my_file.read()
-
-    #     daily_calorie_standart = json.loads(f)["daily_calories_standart"]
-    #     return daily_calorie_standart
-
-    # def add_saved_dish_to_diary(self):
-    #     if self.saved_dishes_show_service_recommendations_line.get() == :
-
-    #     self.saved_dishes_table.insert('', 'end', values=(m1, self.product_data["calories"], self.product_data["proteins"], self.product_data["fats"], self.product_data["carbohydrates"], m6))
 
