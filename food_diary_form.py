@@ -351,4 +351,7 @@ class Food_diary_form(tk.Frame):
     def update_daily_calories_standart(self):
         with open("json\daily_calories_standart.json", "r") as my_file:
             f = my_file.read()
-            self.result_calories_label4.configure(text=json.loads(f)["daily_calories_standart"])
+            try:
+                self.result_calories_label4.configure(text=json.loads(f)["daily_calories_standart"])
+            except JSONDecodeError:
+                self.result_calories_label4.configure(text=0.0)
