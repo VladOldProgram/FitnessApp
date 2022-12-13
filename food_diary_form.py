@@ -38,7 +38,8 @@ class Food_diary_form(tk.Frame):
         self.show_service_recommendationsbtn = tk.Button(self.frame_foodstruct_add_saved_dish_to_diary, text="Найти", font=("Arial", 10), command = self.show_service_recommendations)
         self.show_service_recommendationsbtn.place(x=360, y=35)
 
-        self.foodstruct_product_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_saved_dish_to_diary, font=("Arial", 10), width=10)
+        self.foodstruct_product_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_saved_dish_to_diary, font=("Arial", 10), width=10, validate='key')
+        self.foodstruct_product_weight_stepper_input['validatecommand'] = (self.foodstruct_product_weight_stepper_input.register(self.value_is_float), '%P', '%d')
         self.foodstruct_product_weight_stepper_input.place(x=320, y=105)
 
         self.found_product_name_label = Label(self.frame_foodstruct_add_saved_dish_to_diary, text='')
@@ -107,7 +108,8 @@ class Food_diary_form(tk.Frame):
 
         self.dish_weight_stepper_label = tk.Label(self.frame_foodstruct_add_dish, text='Введите вес блюда в граммах', font=("Arial", 10))
         self.dish_weight_stepper_label.place(x=10, y=430)
-        self.saved_dish_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_dish)
+        self.saved_dish_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_dish, validate='key')
+        self.saved_dish_weight_stepper_input['validatecommand'] = (self.saved_dish_weight_stepper_input.register(self.value_is_float), '%P', '%d')
         self.saved_dish_weight_stepper_input.place(x=320, y=430, width=60)
 
         self.delete_saved_dish_button = tk.Button(self.frame_foodstruct_add_dish, text='Удалить сохраненное\n блюдо из списка', command=self.delete_saved_dish)
@@ -163,6 +165,22 @@ class Food_diary_form(tk.Frame):
         self.clear_diary_button.place(x=720, y=770)
 
         self.update_table_dish()
+
+    def value_is_float(self, P, d):
+        if d == '1':
+            try:
+                float(P)
+            except ValueError:
+                return False
+            return True
+        if d == '0':
+            if len(P) == 0: 
+                return True
+            try:
+                float(P)
+            except ValueError:
+                return False
+            return True
 
     def add_saved_dish_to_diary(self):
         if not self.saved_dishes_table.selection():
