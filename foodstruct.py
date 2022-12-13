@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 
 def get_product_nutrients_data(product_name: str):
-    if (not isinstance(product_name, str)):
+    if (not isinstance(product_name, str) or product_name == ''):
         return TypeError
     
     product_name = '-'.join(product_name.split())
@@ -34,17 +34,26 @@ def get_product_nutrients_data(product_name: str):
     return product_nutrients_data
 
 def get_service_recommendations(product_name: str):
-    service_recommendations = {
-        'Американский сыр': 'https://foodstruct.com/ru/food/американский-сыр',
-        'Абрикос': 'https://foodstruct.com/ru/food/абрикос',
-        'Авокадо': 'https://foodstruct.com/ru/food/авокадо',
-        'Аннона сетчатая': 'https://foodstruct.com/ru/food/аннона-сетчатая',
-        'Апельсин': 'https://foodstruct.com/ru/food/апельсин',
-        'Апельсиновый сок': 'https://foodstruct.com/ru/food/апельсиновый-сок',
-        'Ананас': 'https://foodstruct.com/ru/food/ананас',
-        'Айва': 'https://foodstruct.com/ru/food/айва',
-        'Арбуз': 'https://foodstruct.com/ru/food/арбуз',
-        'Ананасовый сок': 'https://foodstruct.com/ru/food/ананасовый-сок'
-    }
+    if (not isinstance(product_name, str) or product_name == ''): 
+        return TypeError
+
+    product_name = '-'.join(product_name.split())
+
+    url = 'https://foodstruct.com/search_multilang.php?lang=ru&q=' + product_name
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except HTTPError as http_err:
+        return http_err
+
+    soup = BeautifulSoup(response.text, 'lxml')
+    service_recommendations = {}
+    i = 0
+    for child in soup.body.children:
+        child_text = child.get_text()
+        service_recommendations[child_text] = '-'.join(child_text.split())
+        if (i == 9):
+            break
+        i += 1
     
     return service_recommendations
