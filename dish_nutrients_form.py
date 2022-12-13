@@ -43,7 +43,9 @@ class Dish_nutrients_form(tk.Frame):
         self.label_info_product.place(x=90, y=10)
         
         # Поле ввода веса продукта для добавления в список
-        self.product_weight_stepper_input = ttk.Entry(self.frame_info_product, font=('Arial', 10), width=10)
+        self.product_weight_stepper_input = ttk.Entry(self.frame_info_product, font=('Arial', 10), width=10, validate='key')
+        self.product_weight_stepper_input['validatecommand'] = (self.product_weight_stepper_input.register(self.value_is_float), '%P', '%d')
+
         self.product_weight_stepper_input.place(x=160, y=55)
 
         # Лейбл с названием продукта
@@ -91,7 +93,8 @@ class Dish_nutrients_form(tk.Frame):
         self.full_dish_weight_stepper_label.place(x=50, y=360)
 
         # Поле ввода веса готового блюда
-        self.full_dish_weight_stepper_input = ttk.Entry(self)
+        self.full_dish_weight_stepper_input = ttk.Entry(self, validate='key')
+        self.full_dish_weight_stepper_input['validatecommand'] = (self.full_dish_weight_stepper_input.register(self.value_is_float), '%P', '%d')
         self.full_dish_weight_stepper_input.place(x=300, y=360, width=60)
 
         # поле для информации о КБЖУ готового блюда
@@ -208,6 +211,22 @@ class Dish_nutrients_form(tk.Frame):
 
         self.results_dish_calories11 = tk.Label(self.frame_info_dish, text='', font=('Arial', 10))
         self.results_dish_calories11.place(x=200, y=60)
+
+    def value_is_float(self, P, d):
+        if d == '1':
+            try:
+                float(P)
+            except ValueError:
+                return False
+            return True
+        if d == '0':
+            if len(P) == 0: 
+                return True
+            try:
+                float(P)
+            except ValueError:
+                return False
+            return True
 
     # Удаляет все строки таблицы ингредиентов блюда
     def clear_table(self):
