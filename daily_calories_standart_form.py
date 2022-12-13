@@ -2,10 +2,16 @@ import json
 from tkinter import ttk
 import tkinter as tk
 from calculate import * 
+from json import JSONDecodeError
+import json
 
 class Daily_calories_standart(tk.Frame):
+    daily_calories_standart = 0.0
+
     def __init__(self, parent: ttk.Notebook):
         super().__init__(parent)
+
+        self.daily_calories_standart = self.get_daily_calories_standart()
 
         self.sex = True
 
@@ -43,7 +49,7 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_label.place(x=743, y=215)
         self.activity_level_vertical_menu = tk.Radiobutton(
             self, 
-            text='минимальный', 
+            text='Минимальный', 
             font=('Arial', 10), 
             indicatoron=0, 
             width=20, 
@@ -55,7 +61,7 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_vertical_menu.place(x=670, y=240)
         self.activity_level_vertical_menu = tk.Radiobutton(
             self, 
-            text='низкий', 
+            text='Низкий', 
             font=('Arial', 10), 
             indicatoron=0, 
             width=20, 
@@ -67,7 +73,7 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_vertical_menu.place(x=670, y=265)
         self.activity_level_vertical_menu = tk.Radiobutton(
             self, 
-            text='умеренный', 
+            text='Умеренный', 
             font=('Arial', 10), 
             indicatoron=0, 
             width=20, 
@@ -79,7 +85,7 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_vertical_menu.place(x=670, y=290)
         self.activity_level_vertical_menu = tk.Radiobutton(
             self, 
-            text='высокий', 
+            text='Высокий', 
             font=('Arial', 10), 
             indicatoron=0, 
             width=20, 
@@ -90,7 +96,7 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_vertical_menu.place(x=670, y=315)
         self.activity_level_vertical_menu = tk.Radiobutton(
             self, 
-            text='экстремальный', 
+            text='Экстремальный', 
             font=('Arial', 10), 
             indicatoron=0, 
             width=20, 
@@ -109,8 +115,10 @@ class Daily_calories_standart(tk.Frame):
         self.age_label_2 = tk.Label(self, text='лет', font=("Arial", 10))
         self.age_label_2.place(x=510, y=546)
 
-        self.height_entry = tk.Entry(self, font=("Arial", 10), width=15)
+        self.height_entry = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
+        #self.height_entry['validatecommand'] = (self.height_entry.register(self.char_is_validate), '%P', '%d')
         self.height_entry.place(x=300, y=260)
+
         self.weight_entry = tk.Entry(self, font=("Arial", 10), width=15)
         self.weight_entry.place(x=100, y=490)
         self.age_entry = tk.Entry(self, font=("Arial", 10), width=11)
@@ -119,7 +127,6 @@ class Daily_calories_standart(tk.Frame):
         self.label_frame = tk.LabelFrame(self, width=165, height=50, text='Суточная норма калорий', font=("Arial", 10))
         self.label_frame.place(x=120, y=640)
         self.label_frame.pack_propagate(False)
-        self.daily_calories_standart = 0.0
         self.daily_calories_standart_label = tk.Label(self.label_frame, text=self.daily_calories_standart, font=("Arial", 10))
 
         self.calculate_daily_calories_standart_button = tk.Button(
@@ -138,12 +145,25 @@ class Daily_calories_standart(tk.Frame):
         )
         self.clear_inputs_button.place(x=100, y=730)
 
-        #self.json_create()
+    def get_daily_calories_standart(self):
+        try:
+            with open('json\daily_calories_standart.json', 'r') as my_file:
+                f = my_file.read()
+                try:
+                    return(json.loads(f)['daily_calories_standart'])
+                except JSONDecodeError:
+                    return 0.0
+        except FileNotFoundError:
+            return 0.0
 
-    #def json_create(self):
-     #   with open('json\daily_calories_standart.json', 'w') as f:
-     #       print("The json file is created")
+    #def testVal(self, inStr, acttyp):
+    #    if acttyp == '1':
+    #        if not inStr.isdigit():
+    #            return False
+    #    return True
 
+    def char_is_validate(self, char, why_d, where_i, what_S):
+        return True
 
     def switch_female(self, event):
         self.sex = False
@@ -172,20 +192,19 @@ class Daily_calories_standart(tk.Frame):
         except:
             return
 
-        daily_calories_standart = calculate_daily_calories_standart(
+        self.daily_calories_standart = calculate_daily_calories_standart(
              height_f, 
              weight_f, 
              age_i, 
              self.sex, 
              activity_level_coefficient
         )
-        daily_calories_standart = round(daily_calories_standart, 2)
-
-        self.daily_calories_standart = daily_calories_standart
-        self.daily_calories_standart_label.configure(text=daily_calories_standart)
+        self.daily_calories_standart = round(self.daily_calories_standart, 2)
+        
+        self.daily_calories_standart_label.configure(text=self.daily_calories_standart)
         self.daily_calories_standart_label.pack()
         data = {
-            'daily_calories_standart': daily_calories_standart,
+            'daily_calories_standart': self.daily_calories_standart,
             'sex': self.sex,
             'height': float(self.height_entry.get()),
             'weight': float(self.weight_entry.get()),
@@ -193,7 +212,7 @@ class Daily_calories_standart(tk.Frame):
             'activity_level': int(self.selected_activity_level.get())
         }
         
-        with open('json\daily_calories_standart.json', 'w') as outfile:
+        with open('json\daily_calories_standart.json', 'w+') as outfile:
             json.dump(data, outfile)
 
     def clear_inputs(self):
