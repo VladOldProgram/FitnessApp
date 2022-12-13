@@ -4,6 +4,7 @@ import tkinter as tk
 from calculate import * 
 from json import JSONDecodeError
 import json
+import re
 
 class Daily_calories_standart(tk.Frame):
     daily_calories_standart = 0.0
@@ -116,12 +117,13 @@ class Daily_calories_standart(tk.Frame):
         self.age_label_2.place(x=510, y=546)
 
         self.height_entry = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
-        #self.height_entry['validatecommand'] = (self.height_entry.register(self.char_is_validate), '%P', '%d')
+        self.height_entry['validatecommand'] = (self.height_entry.register(self.value_is_float), '%P', '%d')
         self.height_entry.place(x=300, y=260)
-
-        self.weight_entry = tk.Entry(self, font=("Arial", 10), width=15)
+        self.weight_entry = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
+        self.weight_entry['validatecommand'] = (self.weight_entry.register(self.value_is_float), '%P', '%d')
         self.weight_entry.place(x=100, y=490)
-        self.age_entry = tk.Entry(self, font=("Arial", 10), width=11)
+        self.age_entry = tk.Entry(self, font=("Arial", 10), width=11, validate='key')
+        self.age_entry['validatecommand'] = (self.weight_entry.register(self.value_is_int), '%P', '%d')
         self.age_entry.place(x=400, y=550)
 
         self.label_frame = tk.LabelFrame(self, width=165, height=50, text='Суточная норма калорий', font=("Arial", 10))
@@ -156,13 +158,28 @@ class Daily_calories_standart(tk.Frame):
         except FileNotFoundError:
             return 0.0
 
-    #def testVal(self, inStr, acttyp):
-    #    if acttyp == '1':
-    #        if not inStr.isdigit():
-    #            return False
-    #    return True
+    def value_is_float(self, P, d):
+        if d == '1':
+            try:
+                float(P)
+            except ValueError:
+                return False
+            return True
+        if d == '0':
+            if len(P) == 0: 
+                return True
+            try:
+                float(P)
+            except ValueError:
+                return False
+            return True
 
-    def char_is_validate(self, char, why_d, where_i, what_S):
+    def value_is_int(self, P, d):
+        if d == '1':
+            try:
+                int(P)
+            except ValueError:
+                return False
         return True
 
     def switch_female(self, event):
