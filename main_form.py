@@ -1,6 +1,5 @@
 from tkinter import ttk
 import tkinter as tk
-import json
 import schedule
 import time
 import threading
@@ -47,14 +46,13 @@ def checker():
         schedule.run_pending()
         time.sleep(1)
 
-def update_daily_calories_standart():
-    root.food_diary_tab.update_daily_calories_standart()
-
 if __name__ == '__main__':
+    root = MainInterface()
     #schedule.every().day.at('23:59:50').do(reset_diary)
-    schedule.every(2).seconds.do(update_daily_calories_standart)
+    schedule.every(2).seconds.do(
+        root.food_diary_tab.update_daily_calories_standart
+    )
     checker_thread = threading.Thread(target=checker, daemon=True)
     checker_thread.start()
 
-    root = MainInterface()
     root.window.mainloop()
