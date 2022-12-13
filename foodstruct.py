@@ -51,7 +51,7 @@ def get_service_recommendations(product_name: str):
     i = 0
     for child in soup.body.children:
         child_text = child.get_text()
-        service_recommendations[child_text] = '-'.join(child_text.split())
+        service_recommendations[child_text] = 'https://foodstruct.com/ru/food/' + '-'.join(child_text.split())
         if (i == 9):
             break
         i += 1
