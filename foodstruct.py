@@ -25,7 +25,7 @@ def get_product_nutrients_data(product_name: str):
             e = e.replace('\t', '').replace('\n', '').replace('g', '').replace('kcal', '')
             product_nutrients_data_list.append(e)
 
-    product_nutrients_data = dict()
+    product_nutrients_data = {}
     product_nutrients_data['calories'] = float(product_nutrients_data_list[3])
     product_nutrients_data['proteins'] = float(product_nutrients_data_list[0])
     product_nutrients_data['fats'] = float(product_nutrients_data_list[1])
