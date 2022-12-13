@@ -7,7 +7,7 @@ def get_product_nutrients_data(product_name: str):
     if (not isinstance(product_name, str) or product_name == ''):
         return TypeError
     
-    product_name = '-'.join(product_name.split())
+    product_name = '-'.join(product_name.split()).replace(')', '').replace('(', '')
 
     url = 'https://foodstruct.com/ru/food/' + product_name
     try:
@@ -37,7 +37,7 @@ def get_service_recommendations(product_name: str):
     if (not isinstance(product_name, str) or product_name == ''): 
         return TypeError
 
-    product_name = '-'.join(product_name.split())
+    product_name = '-'.join(product_name.split()).replace(')', '').replace('(', '')
 
     url = 'https://foodstruct.com/search_multilang.php?lang=ru&q=' + product_name
     try:
