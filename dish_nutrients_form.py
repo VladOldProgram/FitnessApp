@@ -322,7 +322,7 @@ class Dish_nutrients_form(tk.Frame):
         else:
             self.add_to_json()
 
-        self.weight_dish = calculate_dish_weight(self.dict_products)
+
         print(float(self.full_dish_weight_stepper_input.get()))
         print(self.weight_dish)
 
