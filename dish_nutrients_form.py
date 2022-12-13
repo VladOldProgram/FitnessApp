@@ -324,7 +324,7 @@ class Dish_nutrients_form(tk.Frame):
 
 
         print(float(self.full_dish_weight_stepper_input.get()))
-        print(self.weight_dish)
+
 
         self.results_full_dish_calories_label.config(text = round(self.result_100_gramm_calories * float(self.full_dish_weight_stepper_input.get()) / 100, 2))
         self.results_full_dish_proteins_label.config(text = round(self.result_100_gramm_proteins * float(self.full_dish_weight_stepper_input.get()) / 100,2))
