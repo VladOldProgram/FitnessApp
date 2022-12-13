@@ -4,7 +4,6 @@ import tkinter as tk
 from calculate import * 
 from json import JSONDecodeError
 import json
-import re
 
 class Daily_calories_standart(tk.Frame):
     daily_calories_standart = 0.0
