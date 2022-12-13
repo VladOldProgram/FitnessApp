@@ -23,6 +23,8 @@ def calculate_daily_calories_standart(
     else:
         daily_calories_standart = activity_level_coefficient * (655 + (1.8 * height) + (9.6 * weight) - (4.7 * age))
 
+    if (daily_calories_standart <= 0.0):
+        return 0.0
     return daily_calories_standart
 
 def complex_dict_is_correct(products: dict[str, dict[str, float]]):
@@ -47,8 +49,10 @@ def calculate_dish_calories(products: dict[str, dict[str, float]], w):
     dish_calories = 0.0
     for key in products.keys():
         dish_calories += (products[key]['calories'])
-
     dish_calories = round(dish_calories / float(w) * 100, 2)
+    
+    if (dish_calories <= 0.0):
+        return 0.0
     return dish_calories
 
 def calculate_dish_proteins(products: dict[str, dict[str, float]], w):
@@ -58,8 +62,10 @@ def calculate_dish_proteins(products: dict[str, dict[str, float]], w):
     dish_proteins = 0.0
     for key in products.keys():
         dish_proteins += (products[key]['proteins'])
-
     dish_proteins = round(dish_proteins / float(w) * 100, 2)
+    
+    if (dish_proteins <= 0.0):
+        return 0.0
     return dish_proteins
 
 
@@ -70,8 +76,10 @@ def calculate_dish_fats(products: dict[str, dict[str, float]], w):
     dish_fats = 0.0
     for key in products.keys():
         dish_fats += (products[key]['fats'])
-
     dish_fats = round(dish_fats / float(w) * 100, 2)
+
+    if (dish_fats <= 0.0):
+        return 0.0
     return dish_fats
 
 def calculate_dish_carbohydrates(products: dict[str, dict[str, float]], w):
@@ -81,7 +89,9 @@ def calculate_dish_carbohydrates(products: dict[str, dict[str, float]], w):
     dish_carbohydrates = 0.0
     for key in products.keys():
         dish_carbohydrates += (products[key]['carbohydrates'])
-
     dish_carbohydrates = round(dish_carbohydrates / float(w) * 100, 2)
+
+    if (dish_carbohydrates <= 0.0):
+        return 0.0
     return dish_carbohydrates
 
