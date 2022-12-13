@@ -372,16 +372,16 @@ class Dish_nutrients_form(tk.Frame):
     # Метод вывода рекомендаций на интерфейс
     def get_selected_product_nutrients_data(self, event):
         focus = self.service_recommendations_list.focus()
-        selected_product = self.service_recommendations_list.item(focus)
-        selected_product_name = selected_product['values'][0]
-        selected_product_nutrients_data = get_product_nutrients_data(selected_product_name)
+        self.selected_product = self.service_recommendations_list.item(focus)
+        self.selected_product_name = self.selected_product['values'][0]
+        self.selected_product_nutrients_data = get_product_nutrients_data(self.selected_product_name)
         self.service_recommendations_list.place(x=2000, y=2000)
 
-        self.found_product_name_label.config(text=selected_product_name)
-        self.found_product_calories_label.config(text=selected_product_nutrients_data['calories'])
-        self.found_product_proteins_label.config(text=selected_product_nutrients_data['proteins'])
-        self.found_product_fats_label.config(text=selected_product_nutrients_data['fats'])
-        self.found_product_carbohydrates_label.config(text=selected_product_nutrients_data['carbohydrates'])
+        self.found_product_name_label.config(text=self.selected_product_name)
+        self.found_product_calories_label.config(text=self.selected_product_nutrients_data['calories'])
+        self.found_product_proteins_label.config(text=self.selected_product_nutrients_data['proteins'])
+        self.found_product_fats_label.config(text=self.selected_product_nutrients_data['fats'])
+        self.found_product_carbohydrates_label.config(text=self.selected_product_nutrients_data['carbohydrates'])
     
     # Метод поиска продукта и рекомендаций
     def show_service_recommendations(self):
@@ -399,12 +399,12 @@ class Dish_nutrients_form(tk.Frame):
 
     # Добавляет продукт и его КБЖУ в таблицу ингредиентов готового блюда
     def add_product(self):
-        m1 = str(self.selected_product_nutrients_data[0]) # продукт
+        m1 = self.selected_product_name # название продукт
         m6 = float(self.product_weight_stepper_input.get()) # вес продукта
-        m2 = round(float(self.product_data['calories']) * m6 / 100, 2)
-        m3 = round(float(self.product_data['proteins']) * m6 / 100, 2)
-        m4 = round(float(self.product_data['fats']) * m6 / 100, 2)
-        m5 = round(float(self.product_data['carbohydrates']) * m6 / 100, 2)
+        m2 = round(float(self.selected_product_nutrients_data['calories']) * m6 / 100, 2)
+        m3 = round(float(self.selected_product_nutrients_data['proteins']) * m6 / 100, 2)
+        m4 = round(float(self.selected_product_nutrients_data['fats']) * m6 / 100, 2)
+        m5 = round(float(self.selected_product_nutrients_data['carbohydrates']) * m6 / 100, 2)
 
         self.dish_ingredients_table.insert('', 'end', values=(m1, m2, m3, m4, m5, m6))
         self.product_weight_stepper_input.delete(0, tk.END)
