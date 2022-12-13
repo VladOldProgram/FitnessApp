@@ -154,28 +154,22 @@ class Food_diary_form(tk.Frame):
         self.result_calories_label3.place(x=600, y=770)
         self.result_calories_label4 = tk.Label(self, text ='', font=("Arial", 10))
         self.result_calories_label4.place(x=620, y=770)
-        self.result_calories_label4.config(text = self.update_daily_calories_standart())
-        # self.after(200, self.update)
+        self.result_calories_label4.config(text=self.get_daily_calories_standart())
     
-        self.delete_from_diary_button = tk.Button(self, text='Удалить из дневника питания', command = self.delete_from_diary)
+        self.delete_from_diary_button = tk.Button(self, text='Удалить из дневника питания', command=self.delete_from_diary)
         self.delete_from_diary_button.place(x=900, y=770)
 
-        self.clear_diary_button = tk.Button(self, text='Очистить дневник питания', command = self.clear_diary)
+        self.clear_diary_button = tk.Button(self, text='Очистить дневник питания', command=self.clear_diary)
         self.clear_diary_button.place(x=720, y=770)
 
         self.update_table_dish()
 
-
     def add_saved_dish_to_diary(self):
-
         if not self.saved_dishes_table.selection():
             mb.showinfo('Выберите из списка сохраненных блюд')
-        
         else:
-
             #rows = self.saved_dishes_table.get_children()
             q = self.saved_dishes_table.selection()
-
             current_line = self.saved_dishes_table.item(q)["values"]
 
             m6 = float(self.saved_dish_weight_stepper_input.get()) # вес
@@ -187,14 +181,7 @@ class Food_diary_form(tk.Frame):
             m5 = round(float(current_line[4]) * m6 / 100, 2) #К
 
             self.diary_table.insert('', 'end', values=(m1, m5, m2, m3, m4, m6))
-            self.foodstruct_product_weight_stepper_input.delete(0, tk.END)
-
-            
-
-    #def json_create(self):
-     #   with open('json\saved_dishes.json', 'w') as f:
-     #       print("The json file is created")
-            
+            self.foodstruct_product_weight_stepper_input.delete(0, tk.END)          
 
     def update_table_dish(self):
         try:
@@ -216,7 +203,6 @@ class Food_diary_form(tk.Frame):
                     return 
         except FileNotFoundError:
             return
-
 
     def show_service_recommendations(self):
         get = get_service_recommendations(
@@ -257,7 +243,6 @@ class Food_diary_form(tk.Frame):
             self1['fg'] = 'Grey'
             self1.insert(0, self_text)
 
-
     def add_saved_product_to_diary(self):
         m1 = str(self.vals[0]) # продукт
         m6 = float(self.foodstruct_product_weight_stepper_input.get()) # вес
@@ -269,7 +254,6 @@ class Food_diary_form(tk.Frame):
 
         self.diary_table.insert('', 'end', values=(m1, m2, m3, m4, m5, m6))
         self.foodstruct_product_weight_stepper_input.delete(0, tk.END)
-
 
         self.dict_products = {}
         self.dict_products_zapacnoy = {}
@@ -353,14 +337,14 @@ class Food_diary_form(tk.Frame):
                 self.saved_dishes_table.delete(item)
                 self.saved_dishes_table.config(height=14)
                 mb.showinfo(message='Данные удалены')
-
-
-    def update_daily_calories_standart(self):
-
-        with open("json\daily_calories_standart.json", "w+") as my_file: 
-            f = my_file.read()
-            try:
-                self.result_calories_label4.configure(text=json.loads(f)["daily_calories_standart"])
-            except JSONDecodeError:
-                self.result_calories_label4.configure(text=0.0)
-
+                
+    def get_daily_calories_standart(self):
+        try:
+            with open('json\daily_calories_standart.json', 'r') as my_file:
+                f = my_file.read()
+                try:
+                    return json.loads(f)['daily_calories_standart']
+                except JSONDecodeError:
+                    return 0.0
+        except FileNotFoundError:
+            return 0.0
