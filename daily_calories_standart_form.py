@@ -4,6 +4,7 @@ import tkinter as tk
 from calculate import * 
 from json import JSONDecodeError
 import json
+from tkinter import messagebox as mb
 
 class Daily_calories_standart(tk.Frame):
     daily_calories_standart = 0.0
@@ -157,6 +158,7 @@ class Daily_calories_standart(tk.Frame):
         except FileNotFoundError:
             return 0.0
 
+    
     def value_is_float(self, P, d):
         if d == '1':
             try:
@@ -180,6 +182,7 @@ class Daily_calories_standart(tk.Frame):
             except ValueError:
                 return False
         return True
+  
 
     def switch_female(self, event):
         self.sex = False
@@ -206,6 +209,17 @@ class Daily_calories_standart(tk.Frame):
             weight_f = float(self.weight_entry.get())
             age_i = int(self.age_entry.get())
         except:
+            return
+
+        #Проверка введенных значений
+        if height_f < 120 or height_f > 272:
+            mb.showinfo('Уведомление', 'Рост должен быть в диапазоне от 120 до 272!')
+            return
+        elif weight_f < 40 or weight_f > 200:
+            mb.showinfo('Уведомление', 'Вес должен быть в диапазоне от 40 до 200!')
+            return
+        elif age_i < 14 or age_i > 80:
+            mb.showinfo('Уведомление', 'Возраст должен быть в диапазоне от 14 до 80!')
             return
 
         self.daily_calories_standart = calculate_daily_calories_standart(
