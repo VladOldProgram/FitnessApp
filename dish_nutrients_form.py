@@ -310,10 +310,12 @@ class Dish_nutrients_form(tk.Frame):
 
         print('словарь таблица - ', self.dict_products)
 
-        self.result_100_gramm_proteins = round(calculate_dish_proteins(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100, 2)
-        self.result_100_gramm_fats = round(calculate_dish_fats(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100, 2)
-        self.result_100_gramm_carbohydrates = round(calculate_dish_carbohydrates(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100, 2)
-        self.result_100_gramm_calories = round(calculate_dish_calories(self.dict_products) / float(self.full_dish_weight_stepper_input.get()) * 100,2)
+        weight = self.full_dish_weight_stepper_input.get()
+
+        self.result_100_gramm_proteins = calculate_dish_proteins(self.dict_products, weight) 
+        self.result_100_gramm_fats = calculate_dish_fats(self.dict_products, weight)
+        self.result_100_gramm_carbohydrates = calculate_dish_carbohydrates(self.dict_products, weight) 
+        self.result_100_gramm_calories = calculate_dish_calories(self.dict_products, weight) 
      
         if os.path.exists('json\saved_dishes.json') == FALSE:
             self.create_json()
