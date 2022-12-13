@@ -47,11 +47,10 @@ def get_service_recommendations(product_name: str):
         return http_err
 
     soup = BeautifulSoup(response.text, 'lxml')
-    service_recommendations = {}
+    service_recommendations = []
     i = 0
     for child in soup.body.children:
-        child_text = child.get_text()
-        service_recommendations[child_text] = 'https://foodstruct.com/ru/food/' + '-'.join(child_text.split())
+        service_recommendations.append(child.get_text())
         if (i == 9):
             break
         i += 1
