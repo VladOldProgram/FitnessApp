@@ -236,8 +236,23 @@ class Dish_nutrients_form(tk.Frame):
             self3['fg'] = 'Black'
             self3.delete(0, tk.END)
 
+
     # Метод записывает название готового блюда и его КБЖУ на 100 грамм в файл saved_dishes.json 
     def save_dish(self):
+
+        rows = self.dish_ingredients_table.get_children()
+        #if len(rows) == 0 or self.full_dish_weight_stepper_input.get() == '' or self.dish_name_text_input == 'Введите название блюда' or self.dish_name_text_input == '':
+        if len(rows) == 0:
+            mb.showinfo('Уведомление', 'Заполните таблицу!')
+            return
+        elif self.full_dish_weight_stepper_input.get() == '':
+            mb.showinfo('Уведомление', 'Введите вес готового блюда!')
+            return
+        elif self.dish_name_text_input.get() == 'Введите название блюда' or self.dish_name_text_input.get() == '':
+            mb.showinfo('Уведомление', 'Введите название блюда!')
+            return
+        
+
         self.results_dish_calories11.config(text=self.full_dish_weight_stepper_input.get())
         self.s = str(self.dish_name_text_input.get())
         #print(self.s)
@@ -309,7 +324,13 @@ class Dish_nutrients_form(tk.Frame):
         self.results_dish_calories_label.config(text = round(self.result_100_gramm_calories, 2))
         self.results_dish_proteins_label.config(text = round(self.result_100_gramm_proteins,2))
         self.results_dish_fats_label.config(text = round(self.result_100_gramm_fats,2))
-        self.results_dish_carbohydrates_label.config(text = round(self.result_100_gramm_carbohydrates,2) )
+        self.results_dish_carbohydrates_label.config(text = round(self.result_100_gramm_carbohydrates,2))
+
+        mb.showinfo('Сохранение', 'Блюдо сохранено!')
+
+
+
+
 
         #self.full_dish_weight_stepper_input.delete(0, tk.END)
 
@@ -346,9 +367,10 @@ class Dish_nutrients_form(tk.Frame):
 
     # Метод вывода рекомендаций на интерфейс
     def recommendations(self, event):
-        self.cur_row = self.dish_ingredients_table2.focus()
+        self.cur_row = self.dish_ingredients_table2.selection()
+        
         self.vals = self.dish_ingredients_table2.item(self.cur_row, "values")
-        #print("Продукт = ", str(self.vals[0]))
+        print("Продукт = ", str(self.vals[0]))
         self.product_data = get_product_nutrients_data(str(self.vals[0]))
         print("Данные о продукте - ",self.product_data)
         # print(get.get(vals[0])) # ссылка на выбранный продукт
@@ -362,15 +384,17 @@ class Dish_nutrients_form(tk.Frame):
     
     # Метод поиска продукта и рекомендаций
     def search_products(self):
-        self.get = get_service_recommendations('stroka')  # получаем словарь продуктов
-        self.dish_ingredients_table2 = ttk.Treeview(self, columns=('1'), height=14, show="")
-        self.dish_ingredients_table2.place(x=28, y=50)
-        self.dish_ingredients_table2.column("1", width=429)
+        if self.search_line.get() == 'Поиск продуктов' or self.search_line.get() == '':
+            return
+        self.get = get_service_recommendations(self.search_line.get())  # получаем словарь продуктов
+        self.dish_ingredients_table2 = ttk.Treeview(self, columns=('1'), height=10, show="")
+        self.dish_ingredients_table2.place(x=49, y=30)
+        self.dish_ingredients_table2.column("1", width=299)
         self.dish_ingredients_table2.delete(*self.dish_ingredients_table2.get_children())
         for x in self.get.keys():  # проходимся по всем рекомендациям
             self.dish_ingredients_table2.insert('', 'end', values=[x]) # выводим рекомендации на интерфейс в виде таблицы
         # по двойному щелчку вызуваем функцию recommendations
-        self.dish_ingredients_table2.bind("<Double-Button-1>", self.recommendations)
+        self.dish_ingredients_table2.bind("<Button-1>", self.recommendations)
 
 
     # Добавляет продукт и его КБЖУ в таблицу ингредиентов готового блюда
