@@ -45,7 +45,6 @@ class Dish_nutrients_form(tk.Frame):
         # Поле ввода веса продукта для добавления в список
         self.product_weight_stepper_input = ttk.Entry(self.frame_info_product, font=('Arial', 10), width=10, validate='key')
         self.product_weight_stepper_input['validatecommand'] = (self.product_weight_stepper_input.register(self.value_is_float), '%P', '%d')
-
         self.product_weight_stepper_input.place(x=160, y=55)
 
         # Лейбл с названием продукта
@@ -212,6 +211,7 @@ class Dish_nutrients_form(tk.Frame):
         self.results_dish_calories11 = tk.Label(self.frame_info_dish, text='', font=('Arial', 10))
         self.results_dish_calories11.place(x=200, y=60)
 
+
     def value_is_float(self, P, d):
         if d == '1':
             try:
@@ -228,6 +228,7 @@ class Dish_nutrients_form(tk.Frame):
                 return False
             return True
 
+            
     # Удаляет все строки таблицы ингредиентов блюда
     def clear_table(self):
         if len(self.dish_ingredients_table.get_children()) == 0:
@@ -385,11 +386,13 @@ class Dish_nutrients_form(tk.Frame):
         }
         data = json.load(open('json\saved_dishes.json'))
         data.append(self.dish)
-        with open('json\saved_dishes.json', 'w+') as file:
+        with open('json\saved_dishes.json', 'w+', encoding='utf-8') as file:
             json.dump(data, file, indent=2, ensure_ascii=False)
 
     # Метод вывода рекомендаций на интерфейс
     def get_selected_product_nutrients_data(self, event):
+        self.search_line.delete(0, tk.END)
+            
         focus = self.service_recommendations_list.focus()
         self.selected_product = self.service_recommendations_list.item(focus)
         self.selected_product_name = self.selected_product['values'][0]
