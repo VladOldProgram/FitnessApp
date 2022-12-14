@@ -243,7 +243,11 @@ class Food_diary_form(tk.Frame):
 
     def add_saved_dish_to_diary(self):
         if not self.saved_dishes_table.selection():
-            mb.showinfo('Выберите из списка сохраненных блюд')
+            mb.showerror('Ошибка','Выберите из списка сохраненных блюд!')
+            return
+        elif self.saved_dish_weight_stepper_input.get() == '':
+            mb.showerror('Ошибка' , 'Введите вес сохраненного блюда!')
+            return
         else:
             selection = self.saved_dishes_table.selection()
             current_line = self.saved_dishes_table.item(selection)["values"]
@@ -409,6 +413,12 @@ class Food_diary_form(tk.Frame):
     
     # Добавляет продукт и его КБЖУ в таблицу ингредиентов готового блюда
     def add_product(self):
+        if self.found_product_name_label.cget('text') == '':
+            mb.showerror('Ошибка' , 'Вы не выбрали продукт/блюдо для добавления!')
+            return
+        elif self.foodstruct_product_weight_stepper_input.get() == '':
+            mb.showerror('Ошибка' , 'Вы не ввели вес продукта/блюда!')
+            return
 
         m1 = self.selected_product_name # название продукт выбранного (нового для добавления)
         rows = self.diary_table.get_children()
