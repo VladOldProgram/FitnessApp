@@ -6,6 +6,8 @@ from json import JSONDecodeError
 import json
 from tkinter import messagebox as mb
 
+
+''' Описывает структуру и работу второй экранной формы Подсчет среднесуточной нормы калорий '''
 class Daily_calories_standart(tk.Frame):
     daily_calories_standart = 0.0
 
@@ -24,10 +26,12 @@ class Daily_calories_standart(tk.Frame):
         self.selected_sex_image = tk.Label(self, image=self.image_male)
         self.selected_sex_image.place(x=80, y=80)
 
+        '''Кнопка переключения пола на женский'''
         self.switch_female_button = tk.Button(self, image=self.image_female_button)
         self.switch_female_button.place(x=450, y=30)
         self.switch_female_button.bind('<Button-1>', self.switch_female)
 
+        '''Кнопка переключения пола на мужской'''
         self.switch_male_button = tk.Button(self, image=self.image_male_button)
         self.switch_male_button.place(x=750, y=30)
         self.switch_male_button.bind('<Button-1>', self.switch_male)
@@ -107,30 +111,42 @@ class Daily_calories_standart(tk.Frame):
             value=4)
         self.activity_level_vertical_menu.place(x=670, y=340)
 
+
         self.height_label = tk.Label(self, text='Рост (см.)', font=("Arial", 10))
         self.height_label.place(x=320, y=280)
+
         self.weight_label = tk.Label(self, text='Вес (кг.)', font=("Arial", 10))
         self.weight_label.place(x=120, y=520)
+
         self.age_label_1 = tk.Label(self, text='Возраст', font=("Arial", 10))
         self.age_label_1.place(x=330, y=546)
+
         self.age_label_2 = tk.Label(self, text='лет', font=("Arial", 10))
         self.age_label_2.place(x=510, y=546)
 
-        self.height_entry = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
-        self.height_entry['validatecommand'] = (self.height_entry.register(self.value_is_float), '%P', '%d')
-        self.height_entry.place(x=300, y=260)
-        self.weight_entry = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
-        self.weight_entry['validatecommand'] = (self.weight_entry.register(self.value_is_float), '%P', '%d')
-        self.weight_entry.place(x=100, y=490)
-        self.age_entry = tk.Entry(self, font=("Arial", 10), width=11, validate='key')
-        self.age_entry['validatecommand'] = (self.weight_entry.register(self.value_is_int), '%P', '%d')
-        self.age_entry.place(x=400, y=550)
+        '''Поле ввода роста'''
+        self.height_text_input = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
+        self.height_text_input['validatecommand'] = (self.height_text_input.register(self.value_is_float), '%P', '%d')
+        self.height_text_input.place(x=300, y=260)
+
+        '''Поле ввода веса'''
+        self.weight_text_input = tk.Entry(self, font=("Arial", 10), width=15, validate='key')
+        self.weight_text_input['validatecommand'] = (self.weight_text_input.register(self.value_is_float), '%P', '%d')
+        self.weight_text_input.place(x=100, y=490)
+        
+        '''Поле ввода возраста'''
+        self.age_text_input = tk.Entry(self, font=("Arial", 10), width=11, validate='key')
+        self.age_text_input['validatecommand'] = (self.weight_text_input.register(self.value_is_int), '%P', '%d')
+        self.age_text_input.place(x=400, y=550)
 
         self.label_frame = tk.LabelFrame(self, width=165, height=50, text='Суточная норма калорий', font=("Arial", 10))
         self.label_frame.place(x=120, y=640)
         self.label_frame.pack_propagate(False)
+
+        '''Лейбл с подсчитанной суточной нормой калорий'''
         self.daily_calories_standart_label = tk.Label(self.label_frame, text=self.daily_calories_standart, font=("Arial", 10))
 
+        ''' Кнопка расчета и сохранения в json-файл суточной нормы калорий'''
         self.calculate_daily_calories_standart_button = tk.Button(
             self,
             text='Рассчитать', 
@@ -147,6 +163,7 @@ class Daily_calories_standart(tk.Frame):
         )
         self.clear_inputs_button.place(x=100, y=730)
 
+
     def get_daily_calories_standart(self):
         try:
             with open('json\daily_calories_standart.json', 'r') as my_file:
@@ -157,6 +174,7 @@ class Daily_calories_standart(tk.Frame):
                     return 0.0
         except FileNotFoundError:
             return 0.0
+
 
     def value_is_float(self, P, d):
         if d == '1':
@@ -181,8 +199,7 @@ class Daily_calories_standart(tk.Frame):
             except ValueError:
                 return False
         return True
-  
-
+ 
     def switch_female(self, event):
         self.sex = False
         self.selected_sex_image.configure(image=self.image_female)
@@ -200,16 +217,16 @@ class Daily_calories_standart(tk.Frame):
 
     def calculate_and_save_daily_calories_standart(self):
 
-        if self.height_entry.get() == '' and self.weight_entry.get() == '' and self.age_entry.get() == '':
+        if self.height_text_input.get() == '' and self.weight_text_input.get() == '' and self.age_text_input.get() == '':
             mb.showinfo('Уведомление', 'Введите все параметры!')
             return
-        elif self.height_entry.get() == '':
+        elif self.height_text_input.get() == '':
             mb.showinfo('Уведомление', 'Введите рост!')
             return
-        elif self.weight_entry.get() == '':
+        elif self.weight_text_input.get() == '':
             mb.showinfo('Уведомление', 'Введите вес!')
             return
-        elif self.age_entry.get() == '': 
+        elif self.age_text_input.get() == '': 
             mb.showinfo('Уведомление', 'Введите возраст!')
             return
 
@@ -219,9 +236,9 @@ class Daily_calories_standart(tk.Frame):
         activity_level_coefficient = activity_level_coefficients[i]
         
         try:
-            height_f = float(self.height_entry.get())
-            weight_f = float(self.weight_entry.get())
-            age_i = int(self.age_entry.get())
+            height_f = float(self.height_text_input.get())
+            weight_f = float(self.weight_text_input.get())
+            age_i = int(self.age_text_input.get())
         except:
             return
 
@@ -250,9 +267,9 @@ class Daily_calories_standart(tk.Frame):
         data = {
             'daily_calories_standart': self.daily_calories_standart,
             'sex': self.sex,
-            'height': float(self.height_entry.get()),
-            'weight': float(self.weight_entry.get()),
-            'age': int(self.age_entry.get()),
+            'height': float(self.height_text_input.get()),
+            'weight': float(self.weight_text_input.get()),
+            'age': int(self.age_text_input.get()),
             'activity_level': int(self.selected_activity_level.get())
         }
         
@@ -260,9 +277,9 @@ class Daily_calories_standart(tk.Frame):
             json.dump(data, outfile)
 
     def clear_inputs(self):
-        self.height_entry.delete('0', tk.END)
-        self.weight_entry.delete('0', tk.END)
-        self.age_entry.delete('0', tk.END)
+        self.height_text_input.delete('0', tk.END)
+        self.weight_text_input.delete('0', tk.END)
+        self.age_text_input.delete('0', tk.END)
         self.selected_activity_level.set(0)
         self.activity_level_description_text.configure(state=tk.NORMAL)
         self.activity_level_description_text.delete(1.0, tk.END)
