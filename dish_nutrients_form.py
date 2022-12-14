@@ -171,13 +171,13 @@ class Dish_nutrients_form(tk.Frame):
         self.dish_ingredients_table = ttk.Treeview(
             self.frame, 
             columns=(
-                'txtProductName', 
-                'txtProductCalories', 
-                'txtProductProteins', 
-                'txtProductFats', 
-                'txtProductCarbohydrates', 
+                'txtProductName',
+                'txtProductCalories',
+                'txtProductProteins',
+                'txtProductFats',
+                'txtProductCarbohydrates',
                 'txtProductWeight'
-            ), 
+            ),
             height=34, 
             show='headings')
         self.dish_ingredients_table.column('txtProductName', width=150, anchor=tk.CENTER)
@@ -228,7 +228,7 @@ class Dish_nutrients_form(tk.Frame):
                 return False
             return True
 
-            
+
     # Удаляет все строки таблицы ингредиентов блюда
     def clear_table(self):
         if len(self.dish_ingredients_table.get_children()) == 0:
@@ -311,7 +311,7 @@ class Dish_nutrients_form(tk.Frame):
                     'fats': float(self.dish_ingredients_table.item(rows[i])['values'][3]) + float(self.dict_products_zapacnoy[self.dish_ingredients_table.item(rows[i])['values'][0]]['fats']), 
                     'carbohydrates': float(self.dish_ingredients_table.item(rows[i])['values'][4]) + float(self.dict_products_zapacnoy[self.dish_ingredients_table.item(rows[i])['values'][0]]['carbohydrates']), 
                     'weight': float(self.dish_ingredients_table.item(rows[i])['values'][5]) + float(self.dict_products_zapacnoy[self.dish_ingredients_table.item(rows[i])['values'][0]]['weight'])
-                    } 
+                    }
 
                 print('ЗАПАСНОЙ СЛОВАРЬ', self.dict_products_zapacnoy)
                 self.dict_products_zapacnoy = {}
@@ -320,10 +320,10 @@ class Dish_nutrients_form(tk.Frame):
             else: # иначе добавляем в словарь
                 print('Добавили 1 раз')
                 self.dict_products[self.dish_ingredients_table.item(rows[i])['values'][0]] = {
-                    'calories': float(self.dish_ingredients_table.item(rows[i])['values'][1]) , 
-                    'proteins': float(self.dish_ingredients_table.item(rows[i])['values'][2]) , 
-                    'fats': float(self.dish_ingredients_table.item(rows[i])['values'][3]) , 
-                    'carbohydrates': float(self.dish_ingredients_table.item(rows[i])['values'][4]) , 
+                    'calories': float(self.dish_ingredients_table.item(rows[i])['values'][1]),
+                    'proteins': float(self.dish_ingredients_table.item(rows[i])['values'][2]),
+                    'fats': float(self.dish_ingredients_table.item(rows[i])['values'][3]),
+                    'carbohydrates': float(self.dish_ingredients_table.item(rows[i])['values'][4]),
                     'weight': float(self.dish_ingredients_table.item(rows[i])['values'][5])
                     }
                 print('Словарь 1 раз =', self.dict_products)
@@ -358,7 +358,9 @@ class Dish_nutrients_form(tk.Frame):
 
         mb.showinfo('Сохранение', 'Блюдо сохранено!')
 
-    #self.full_dish_weight_stepper_input.delete(0, tk.END)
+        
+        self.full_dish_weight_stepper_input.delete(0, tk.END)
+        self.dish_name_text_input.delete(0, tk.END)
 
     # Метод создание json файл, для сохранения в него блюда   
     def create_json(self):      
@@ -372,7 +374,7 @@ class Dish_nutrients_form(tk.Frame):
         }]
 
         with open('json\saved_dishes.json', 'w') as file:
-            file.write(json.dumps(self.dish, indent=2, ensure_ascii=False))
+            file.write(json.dumps(self.dish, indent=2, ensure_ascii=True))
 
     # Метод добавление в json файл блюда, которое пользователь хочет сохранить        
     def add_to_json(self):
@@ -387,7 +389,7 @@ class Dish_nutrients_form(tk.Frame):
         data = json.load(open('json\saved_dishes.json'))
         data.append(self.dish)
         with open('json\saved_dishes.json', 'w+', encoding='utf-8') as file:
-            json.dump(data, file, indent=2, ensure_ascii=False)
+            json.dump(data, file, indent=2, ensure_ascii=True)
 
     # Метод вывода рекомендаций на интерфейс
     def get_selected_product_nutrients_data(self, event):
@@ -427,7 +429,6 @@ class Dish_nutrients_form(tk.Frame):
         m3 = round(float(self.selected_product_nutrients_data['proteins']) * m6 / 100, 2)
         m4 = round(float(self.selected_product_nutrients_data['fats']) * m6 / 100, 2)
         m5 = round(float(self.selected_product_nutrients_data['carbohydrates']) * m6 / 100, 2)
-
         self.dish_ingredients_table.insert('', 'end', values=(m1, m2, m3, m4, m5, m6))
         self.product_weight_stepper_input.delete(0, tk.END)
     
