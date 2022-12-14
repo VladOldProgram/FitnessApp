@@ -53,10 +53,10 @@ def update_daily_calories_standart():
 
 if __name__ == '__main__':
     root = MainInterface()
-    #schedule.every().day.at('23:59:50').do(reset_diary)
+    schedule.every().day.at('23:59:50').do(root.food_diary_tab.clear_diary)
     schedule.every(1).seconds.do(update_daily_calories_standart)
-    schedule.every(2).seconds.do(root.food_diary_tab.update_table_dish)
     checker_thread = threading.Thread(target=checker, daemon=True)
     checker_thread.start()
 
     root.window.mainloop()
+
