@@ -68,111 +68,119 @@ class Test_unit_tests(unittest.TestCase):
         self.assertEqual(expected_result, result)
 
     def test_M4(self):
-        expected_result = 365.0
+        expected_result = 73.0 ##############
         products = {
             'Огурец': {
                 'weight': 300.0,
-                'calories': 15.0,
-                'proteins': 0.65,
-                'fats': 0.11,
-                'carbohydrates': 3.63
+                'calories': 45.0,
+                'proteins': 1.95,
+                'fats': 0.33,
+                'carbohydrates': 10.89
             },
             'Авокадо': {
                 'weight': 200.0,
-                'calories': 160.0,
-                'proteins': 2.0,
-                'fats': 14.66,
-                'carbohydrates': 8.53
+                'calories': 320.0,
+                'proteins': 4.0,
+                'fats': 29.32,
+                'carbohydrates': 17.06
             }
         }
-        result = calculate_dish_calories(products)
+        dish_weight = 500  ##########
+        result = calculate_dish_calories(products, dish_weight) ###########
         self.assertEqual(expected_result, result)
 
     def test_M5(self):
         expected_result = TypeError
         products = 'stroka'
-        result = calculate_dish_calories(products)
+        dish_weight = 300
+        result = calculate_dish_calories(products, dish_weight)
         self.assertEqual(expected_result, result)
 
     def test_M6(self):
-        expected_result = 5.95
+        expected_result = 1.19
         products = {
             'Огурец': {
                 'weight': 300.0,
-                'calories': 15.0,
-                'proteins': 0.65,
-                'fats': 0.11,
-                'carbohydrates': 3.63
+                'calories': 45.0,
+                'proteins': 1.95,
+                'fats': 0.33,
+                'carbohydrates': 10.89
             },
             'Авокадо': {
                 'weight': 200.0,
-                'calories': 160.0,
-                'proteins': 2.0,
-                'fats': 14.66,
-                'carbohydrates': 8.53
+                'calories': 320.0,
+                'proteins': 4.0,
+                'fats': 29.32,
+                'carbohydrates': 17.06
             }
         }
-        result = calculate_dish_proteins(products)
+        dish_weight = 500
+        result = calculate_dish_proteins(products, dish_weight)
         self.assertEqual(expected_result, result)
 
     def test_M7(self):
         expected_result = TypeError
         products = 'stroka'
-        result = calculate_dish_proteins(products)
+        dish_weight = 300
+        result = calculate_dish_proteins(products, dish_weight)
         self.assertEqual(expected_result, result)
 
     def test_M8(self):
-        expected_result = 29.65
+        expected_result = 5.93
         products = {
             'Огурец': {
                 'weight': 300.0,
-                'calories': 15.0,
-                'proteins': 0.65,
-                'fats': 0.11,
-                'carbohydrates': 3.63
+                'calories': 45.0,
+                'proteins': 1.95,
+                'fats': 0.33,
+                'carbohydrates': 10.89
             },
             'Авокадо': {
                 'weight': 200.0,
-                'calories': 160.0,
-                'proteins': 2.0,
-                'fats': 14.66,
-                'carbohydrates': 8.53
+                'calories': 320.0,
+                'proteins': 4.0,
+                'fats': 29.32,
+                'carbohydrates': 17.06
             }
         }
-        result = calculate_dish_fats(products)
+        dish_weight = 500
+        result = calculate_dish_fats(products, dish_weight)
         self.assertEqual(expected_result, result)
 
     def test_M9(self):
         expected_result = TypeError
         products = 'stroka'
-        result = calculate_dish_fats(products)
+        dish_weight = 300
+        result = calculate_dish_fats(products, dish_weight)
         self.assertEqual(expected_result, result)
 
     def test_M10(self):
-        expected_result = 27.95
+        expected_result = 5.59
         products = {
             'Огурец': {
                 'weight': 300.0,
-                'calories': 15.0,
-                'proteins': 0.65,
-                'fats': 0.11,
-                'carbohydrates': 3.63
+                'calories': 45.0,
+                'proteins': 1.95,
+                'fats': 0.33,
+                'carbohydrates': 10.89
             },
             'Авокадо': {
                 'weight': 200.0,
-                'calories': 160.0,
-                'proteins': 2.0,
-                'fats': 14.66,
-                'carbohydrates': 8.53
+                'calories': 320.0,
+                'proteins': 4.0,
+                'fats': 29.32,
+                'carbohydrates': 17.06
             }
         }
-        result = calculate_dish_carbohydrates(products)
+        dish_weight = 500
+        result = calculate_dish_carbohydrates(products, dish_weight)
         self.assertEqual(expected_result, result)
 
     def test_M11(self):
         expected_result = TypeError
         products = 'stroka'
-        result = calculate_dish_carbohydrates(products)
+        dish_weight = 300
+        result = calculate_dish_carbohydrates(products, dish_weight)
         self.assertEqual(expected_result, result)
 
     def test_M12(self):
@@ -198,5 +206,56 @@ class Test_unit_tests(unittest.TestCase):
         result = get_product_nutrients_data(product_name)
         self.assertEqual(expected_result, result)
 
+    def test_M15(self):
+        product_name = 'Авокадо'
+        expected_result = [
+            'Авокадо', 
+            'Масло авокадо', 
+            'Американский сыр', 
+            'Абрикос', 
+            'Аннона сетчатая', 
+            'Апельсин', 
+            'Апельсиновый сок', 
+            'Ананас', 
+            'Айва', 
+            'Арбуз']
+        result = get_service_recommendations(product_name)
+        self.assertEqual(expected_result, result)
+
+    def test_M16(self):
+        product_name = 'Булка'
+        expected_result = [
+            'Бри (сыр)', 
+            'Бруност', 
+            'Бадьян настоящий', 
+            'Бэзил', 
+            'Бальзамический уксус', 
+            'Бабассу', 
+            'Бульон', 
+            'Бешамель', 
+            'Бефстроганов', 
+            'Боквурст']
+        result = get_service_recommendations(product_name)
+        self.assertEqual(expected_result, result)
+
+    #def test_M17(self):
+
+
+    #def test_M18(self):
+
+
+    #def test_M19(self):
+
+
+    #def test_M20(self):
+
+
+    #def test_M21(self):
+
+
+    #def test_M22(self):
+
+
+    
 if (__name__ == '__main__'):
     unittest.main()
