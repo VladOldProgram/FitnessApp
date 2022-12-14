@@ -16,10 +16,10 @@ class Food_diary_form(tk.Frame):
         # поле для добавления продукта/блюда
         self.frame_foodstruct_add_saved_dish_to_diary = tk.LabelFrame(self, width=430, height=230)
         self.frame_foodstruct_add_saved_dish_to_diary.place(x=30, y=10)
-        self.image_loupa = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
+        self.image_loupa = ImageTk.PhotoImage(file='assets\images\loupa_small.png')
         self.loupa = Label(self.frame_foodstruct_add_saved_dish_to_diary, image=self.image_loupa)
         self.loupa.place(x=15, y=37)
-        self.label_foodstruct_add_saved_dish_to_diary = tk.Label(self.frame_foodstruct_add_saved_dish_to_diary, text='Добавление продукта/блюда', font=("Arial", 10))
+        self.label_foodstruct_add_saved_dish_to_diary = tk.Label(self.frame_foodstruct_add_saved_dish_to_diary, text='Добавление продукта/блюда', font=('Arial', 10))
         self.label_foodstruct_add_saved_dish_to_diary.place(x=100, y=10)
         self.label_foodstruct_add_saved_dish_to_diary.focus()
 
@@ -27,42 +27,45 @@ class Food_diary_form(tk.Frame):
         self.foodstruct_show_service_recommendations_line = tk.Entry(self.frame_foodstruct_add_saved_dish_to_diary, fg='Grey')
         self.entry_text2 = 'Поиск продуктов/блюд'
         self.foodstruct_show_service_recommendations_line.insert(0, self.entry_text2)
-        self.foodstruct_show_service_recommendations_line.bind("<FocusIn>", lambda args: self.focus_in_entry_box(self.foodstruct_show_service_recommendations_line))
-        self.foodstruct_show_service_recommendations_line.bind("<FocusOut>", lambda args: self.focus_out_entry_box(self.foodstruct_show_service_recommendations_line, self.entry_text2))
+        self.foodstruct_show_service_recommendations_line.bind('<FocusIn>', lambda args: self.focus_in_entry_box(self.foodstruct_show_service_recommendations_line))
+        self.foodstruct_show_service_recommendations_line.bind('<FocusOut>', lambda args: self.focus_out_entry_box(self.foodstruct_show_service_recommendations_line, self.entry_text2))
         self.foodstruct_show_service_recommendations_line.place(x=40, y=40, width=300)
 
-        self.show_service_recommendationsbtn = tk.Button(self.frame_foodstruct_add_saved_dish_to_diary, text="Найти", font=("Arial", 10), command = self.show_service_recommendations)
+        self.show_service_recommendationsbtn = tk.Button(self.frame_foodstruct_add_saved_dish_to_diary, text='Найти', font=('Arial', 10), command = self.show_service_recommendations)
         self.show_service_recommendationsbtn.place(x=360, y=35)
 
-        self.foodstruct_product_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_saved_dish_to_diary, font=("Arial", 10), width=10, validate='key')
+        self.foodstruct_product_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_saved_dish_to_diary, font=('Arial', 10), width=10, validate='key')
         self.foodstruct_product_weight_stepper_input['validatecommand'] = (self.foodstruct_product_weight_stepper_input.register(self.value_is_float), '%P', '%d')
         self.foodstruct_product_weight_stepper_input.place(x=320, y=105)
 
         self.found_product_name_label = Label(self.frame_foodstruct_add_saved_dish_to_diary, text='')
         self.found_product_name_label.place(x=20, y=103)
 
-        self.foodstruct_add_saved_dish_to_diary_button = tk.Button(self.frame_foodstruct_add_saved_dish_to_diary, text="Добавить в дневник питания", font=("Arial", 10), command = self.add_product)
+        self.foodstruct_add_saved_dish_to_diary_button = tk.Button(self.frame_foodstruct_add_saved_dish_to_diary, text='Добавить в дневник питания', font=('Arial', 10), command = self.add_product)
         self.foodstruct_add_saved_dish_to_diary_button.place(x=210, y=170)
 
         # поле для добавления сохраненного блюда
         self.frame_foodstruct_add_dish = tk.LabelFrame(self, width=430, height=540)
         self.frame_foodstruct_add_dish.place(x=30, y=260)
-        self.image_loupa2 = ImageTk.PhotoImage(file="assets\images\loupa_small.png")
+        self.image_loupa2 = ImageTk.PhotoImage(file='assets\images\loupa_small.png')
         self.loupa2 = Label(self.frame_foodstruct_add_dish, image=self.image_loupa2)
         self.loupa2.place(x=15, y=37)
-        self.label_foodstruct_add_dish = tk.Label(self.frame_foodstruct_add_dish, text='Добавление сохраненного блюда', font=("Arial", 10))
+        self.label_foodstruct_add_dish = tk.Label(self.frame_foodstruct_add_dish, text='Добавление сохраненного блюда', font=('Arial', 10))
         self.label_foodstruct_add_dish.place(x=100, y=10)
 
         # поисковая строка сохраненных блюд
         self.saved_dishes_show_service_recommendations_line  = tk.Entry(self.frame_foodstruct_add_dish, fg='Grey')
         self.entry_text3 = 'Поиск сохраненных блюд'
         self.saved_dishes_show_service_recommendations_line.insert(0, self.entry_text3)
-        self.saved_dishes_show_service_recommendations_line.bind("<FocusIn>", lambda args: self.focus_in_entry_box(self.saved_dishes_show_service_recommendations_line))
-        self.saved_dishes_show_service_recommendations_line.bind("<FocusOut>", lambda args: self.focus_out_entry_box(self.saved_dishes_show_service_recommendations_line , self.entry_text3))
+        self.saved_dishes_show_service_recommendations_line.bind('<FocusIn>', lambda args: self.focus_in_entry_box(self.saved_dishes_show_service_recommendations_line))
+        self.saved_dishes_show_service_recommendations_line.bind('<FocusOut>', lambda args: self.focus_out_entry_box(self.saved_dishes_show_service_recommendations_line , self.entry_text3))
         self.saved_dishes_show_service_recommendations_line.place(x=40, y=40, width=300)
 
-        self.show_service_recommendationsbtn2 = tk.Button(self.frame_foodstruct_add_dish, text="Найти", font=("Arial", 10), command = self.show_input_hints_2)
+        self.show_service_recommendationsbtn2 = tk.Button(self.frame_foodstruct_add_dish, text='Найти', font=('Arial', 10), command = self.show_input_hints_2)
         self.show_service_recommendationsbtn2.place(x=360, y=35)
+
+        self.refresh_saved_dish_table_button = tk.Button(self.frame_foodstruct_add_dish, text='Обновить', font=('Arial', 10), command = self.update_table_dish)
+        self.refresh_saved_dish_table_button.place(x=350, y=5)
 
         # таблица сохраненных блюд
         self.frame_dish = ttk.Frame(self.frame_foodstruct_add_dish)
@@ -89,7 +92,7 @@ class Food_diary_form(tk.Frame):
 
         self.saved_dishes_table.pack()
 
-        self.dish_weight_stepper_label = tk.Label(self.frame_foodstruct_add_dish, text='Введите вес блюда в граммах', font=("Arial", 10))
+        self.dish_weight_stepper_label = tk.Label(self.frame_foodstruct_add_dish, text='Введите вес блюда в граммах', font=('Arial', 10))
         self.dish_weight_stepper_label.place(x=10, y=430)
         self.saved_dish_weight_stepper_input = ttk.Entry(self.frame_foodstruct_add_dish, validate='key')
         self.saved_dish_weight_stepper_input['validatecommand'] = (self.saved_dish_weight_stepper_input.register(self.value_is_float), '%P', '%d')
@@ -131,13 +134,13 @@ class Food_diary_form(tk.Frame):
 
         self.diary_table.pack()
 
-        self.result_calories_label = tk.Label(self, text='Суммарное количество калорий', font=("Arial", 10))
+        self.result_calories_label = tk.Label(self, text='Суммарное количество калорий', font=('Arial', 10))
         self.result_calories_label.place(x=500, y=750)
-        self.result_calories_label2 = tk.Label(self, text='0.0', font=("Arial", 10))
+        self.result_calories_label2 = tk.Label(self, text='0.0', font=('Arial', 10))
         self.result_calories_label2.place(x=540, y=770)
-        self.result_calories_label3 = tk.Label(self, text='из', font=("Arial", 10))
+        self.result_calories_label3 = tk.Label(self, text='из', font=('Arial', 10))
         self.result_calories_label3.place(x=600, y=770)
-        self.result_calories_label4 = tk.Label(self, text ='', font=("Arial", 10))
+        self.result_calories_label4 = tk.Label(self, text ='', font=('Arial', 10))
         self.result_calories_label4.place(x=620, y=770)
         self.result_calories_label4.config(text=self.get_daily_calories_standart())
     
@@ -192,11 +195,11 @@ class Food_diary_form(tk.Frame):
                 try:
                     data = json.loads(f)
                     for key in data.keys():
-                        proteins = data[key]["proteins"]
-                        fats = data[key]["fats"]
-                        carbohydrates = data[key]["carbohydrates"]
-                        calories = data[key]["calories"]
-                        weight = data[key]["weight"]
+                        proteins = data[key]['proteins']
+                        fats = data[key]['fats']
+                        carbohydrates = data[key]['carbohydrates']
+                        calories = data[key]['calories']
+                        weight = data[key]['weight']
                         self.diary_table.insert('', 'end', values=(key, calories , proteins, fats, carbohydrates, weight))
                 except JSONDecodeError:
                     return 
@@ -208,38 +211,38 @@ class Food_diary_form(tk.Frame):
         self.dict_products_zapacnoy = {}
         rows = self.diary_table.get_children()
         for i in range(len(rows)):
-            self.current_name = self.diary_table.item(rows[i])["values"][0]
+            self.current_name = self.diary_table.item(rows[i])['values'][0]
 
             # если продукт из таблицы содержаться в словаре
-            if self.diary_table.item(rows[i])["values"][0] in self.dict_products.keys():
+            if self.diary_table.item(rows[i])['values'][0] in self.dict_products.keys():
                 # создаем запасной словарь
-                self.dict_products_zapacnoy[self.diary_table.item(rows[i])["values"][0]] = {
-                    "calories": float(self.dict_products[self.diary_table.item(rows[i])["values"][0]]["calories"]),
-                    "proteins": float(self.dict_products[self.diary_table.item(rows[i])["values"][0]]["proteins"]),
-                    "fats": float(self.dict_products[self.diary_table.item(rows[i])["values"][0]]["fats"]),
-                    "carbohydrates": float(self.dict_products[self.diary_table.item(rows[i])["values"][0]]["carbohydrates"]),
-                    "weight": float(self.dict_products[self.diary_table.item(rows[i])["values"][0]]["weight"])
+                self.dict_products_zapacnoy[self.diary_table.item(rows[i])['values'][0]] = {
+                    'calories': float(self.dict_products[self.diary_table.item(rows[i])['values'][0]]['calories']),
+                    'proteins': float(self.dict_products[self.diary_table.item(rows[i])['values'][0]]['proteins']),
+                    'fats': float(self.dict_products[self.diary_table.item(rows[i])['values'][0]]['fats']),
+                    'carbohydrates': float(self.dict_products[self.diary_table.item(rows[i])['values'][0]]['carbohydrates']),
+                    'weight': float(self.dict_products[self.diary_table.item(rows[i])['values'][0]]['weight'])
                 }
                     
-                self.dict_products[self.diary_table.item(rows[i])["values"][0]] = {
-                    "calories": round(float(self.diary_table.item(rows[i])["values"][1]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])["values"][0]]["calories"]), 2), 
-                    "proteins": round(float(self.diary_table.item(rows[i])["values"][2]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])["values"][0]]["proteins"]), 2), 
-                    "fats": round(float(self.diary_table.item(rows[i])["values"][3]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])["values"][0]]["fats"]), 2), 
-                    "carbohydrates": round(float(self.diary_table.item(rows[i])["values"][4]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])["values"][0]]["carbohydrates"]), 2), 
-                    "weight": round(float(self.diary_table.item(rows[i])["values"][5]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])["values"][0]]["weight"]), 2)
+                self.dict_products[self.diary_table.item(rows[i])['values'][0]] = {
+                    'calories': round(float(self.diary_table.item(rows[i])['values'][1]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])['values'][0]]['calories']), 2), 
+                    'proteins': round(float(self.diary_table.item(rows[i])['values'][2]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])['values'][0]]['proteins']), 2), 
+                    'fats': round(float(self.diary_table.item(rows[i])['values'][3]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])['values'][0]]['fats']), 2), 
+                    'carbohydrates': round(float(self.diary_table.item(rows[i])['values'][4]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])['values'][0]]['carbohydrates']), 2), 
+                    'weight': round(float(self.diary_table.item(rows[i])['values'][5]) + float(self.dict_products_zapacnoy[self.diary_table.item(rows[i])['values'][0]]['weight']), 2)
                 } 
                 self.dict_products_zapacnoy = {}
             else: # иначе добавляем в словарь
-                self.dict_products[self.diary_table.item(rows[i])["values"][0]] = {
-                    "calories": round(float(self.diary_table.item(rows[i])["values"][1]), 2), 
-                    "proteins": round(float(self.diary_table.item(rows[i])["values"][2]), 2), 
-                    "fats": round(float(self.diary_table.item(rows[i])["values"][3]), 2), 
-                    "carbohydrates": round(float(self.diary_table.item(rows[i])["values"][4]), 2), 
-                    "weight": round(float(self.diary_table.item(rows[i])["values"][5]), 2)
+                self.dict_products[self.diary_table.item(rows[i])['values'][0]] = {
+                    'calories': round(float(self.diary_table.item(rows[i])['values'][1]), 2), 
+                    'proteins': round(float(self.diary_table.item(rows[i])['values'][2]), 2), 
+                    'fats': round(float(self.diary_table.item(rows[i])['values'][3]), 2), 
+                    'carbohydrates': round(float(self.diary_table.item(rows[i])['values'][4]), 2), 
+                    'weight': round(float(self.diary_table.item(rows[i])['values'][5]), 2)
                 }
 
-        with open("json\diary.json", "w+", encoding="utf-8") as file:
-            json.dump(self.dict_products, file, indent=2, ensure_ascii=True)
+        with open('json\diary.json', 'w', encoding='utf-8') as f:
+            json.dump(self.dict_products, f, indent=2, ensure_ascii=True)
 
     def add_saved_dish_to_diary(self):
         if not self.saved_dishes_table.selection():
@@ -250,7 +253,7 @@ class Food_diary_form(tk.Frame):
             return
         else:
             selection = self.saved_dishes_table.selection()
-            current_line = self.saved_dishes_table.item(selection)["values"]
+            current_line = self.saved_dishes_table.item(selection)['values']
             m1 = current_line[0] # навание блюда
 
             rows = self.diary_table.get_children()
@@ -258,13 +261,13 @@ class Food_diary_form(tk.Frame):
 
             if len(rows) != 0:
                 for i in range(len(rows)):
-                    current_name = self.diary_table.item(rows[i])["values"][0] # Продукты из таблицы
+                    current_name = self.diary_table.item(rows[i])['values'][0] # Продукты из таблицы
                     if m1 == current_name:
-                        m6 = float(self.saved_dish_weight_stepper_input.get()) + float(self.diary_table.item(rows[i])["values"][5])
-                        m2 = float(current_line[1]) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][1])
-                        m3 = float(current_line[2]) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][2])
-                        m4 = float(current_line[3]) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][3])
-                        m5 = float(current_line[4]) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][4])
+                        m6 = float(self.saved_dish_weight_stepper_input.get()) + float(self.diary_table.item(rows[i])['values'][5])
+                        m2 = float(current_line[1]) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][1])
+                        m3 = float(current_line[2]) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][2])
+                        m4 = float(current_line[3]) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][3])
+                        m5 = float(current_line[4]) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][4])
 
                         self.diary_table.set(rows[i], 1, round(m2, 2))
                         self.diary_table.set(rows[i], 2, round(m3, 2))
@@ -277,7 +280,6 @@ class Food_diary_form(tk.Frame):
 
             if not_product == False:
                 m6 = float(self.saved_dish_weight_stepper_input.get()) # вес
-
                 m2 = round(float(current_line[1]) * m6 / 100, 2) #Б
                 m3 = round(float(current_line[2]) * m6 / 100, 2) #Ж
                 m4 = round(float(current_line[3]) * m6 / 100, 2) #У
@@ -290,8 +292,6 @@ class Food_diary_form(tk.Frame):
             self.saved_dish_weight_stepper_input.delete(0, tk.END)
 
     def update_table_dish(self):
-        if (self.saved_dishes_table.selection()):
-            return
         self.saved_dishes_table.delete(*self.saved_dishes_table.get_children())
         try:
             with open('json\saved_dishes.json', 'r', encoding='utf-8') as f:
@@ -300,11 +300,11 @@ class Food_diary_form(tk.Frame):
                     for i in range(len(result)):
                         dish = list(result[i].keys())
                         dish_name = dish[0]
-                        proteins = result[i][dish_name]["proteins"]
-                        fats = result[i][dish_name]["fats"]
-                        carbohydrates = result[i][dish_name]["carbohydrates"]
-                        calories = result[i][dish_name]["calories"]
-                        self.saved_dishes_table.insert('', 'end', values=(dish_name, proteins, fats, carbohydrates, calories))
+                        proteins = result[i][dish_name]['proteins']
+                        fats = result[i][dish_name]['fats']
+                        carbohydrates = result[i][dish_name]['carbohydrates']
+                        calories = result[i][dish_name]['calories']
+                        self.saved_dishes_table.insert('', index=i, values=(dish_name, proteins, fats, carbohydrates, calories))
                 except JSONDecodeError:
                     return 
         except FileNotFoundError:
@@ -312,7 +312,7 @@ class Food_diary_form(tk.Frame):
 
     def show_input_hints(self, event):
         focus = self.table2.focus()
-        self.vals = self.table2.item(focus, "values")
+        self.vals = self.table2.item(focus, 'values')
         self.product_data = get_product_nutrients_data(str(self.vals[0]))
         self.table2.place(x=20000, y=20000)
         self.found_product_name_label.config(text=self.vals[0])
@@ -346,7 +346,7 @@ class Food_diary_form(tk.Frame):
                 self.result_calories_label2.config(text = '')
                 self.diary_table.delete(*self.diary_table.get_children())
                 self.update_label_sum_calories()
-                with open("json\diary.json", "w+") as f:
+                with open('json\diary.json', 'w+') as f:
                     pass
                 mb.showinfo(message='Список продуктов очищен.')
 
@@ -369,11 +369,38 @@ class Food_diary_form(tk.Frame):
         else:
             answer = mb.askyesno(message='Вы уверены, что хотите удалить данные о продукте/блюде?')
             if answer:
-                item = self.saved_dishes_table.selection()[0]
-                self.saved_dishes_table.delete(item)
-                self.saved_dishes_table.config(height=14)
-                self.save_diary_to_json()
-                mb.showinfo(message='Данные удалены.')
+                try:
+                    with open('json\saved_dishes.json') as f:
+                        try:
+                            data = json.load(f)
+                            selection = self.saved_dishes_table.selection()
+                            
+                            id16str = str(selection[0])[1:]
+                            id10int = int(self.convert_base(id16str, from_base=16, to_base=10))
+
+                            data.pop(id10int - 1)
+                            item = self.saved_dishes_table.selection()[0]
+                            self.saved_dishes_table.delete(item)
+                            self.saved_dishes_table.config(height=14)
+                            mb.showinfo(message='Данные удалены.')
+
+                            with open('json\saved_dishes.json', 'w+') as file:
+                                json.dump(data, file, ensure_ascii=True)
+                        except JSONDecodeError:
+                            return 
+                except FileNotFoundError:
+                    return
+
+    def convert_base(self, num, to_base=10, from_base=16):
+        if isinstance(num, str):
+            n = int(num, from_base)
+        else:
+            n = int(num)
+        alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        if n < to_base:
+            return alphabet[n]
+        else:
+            return self.convert_base(n // to_base, to_base) + alphabet[n % to_base]
 
     def get_daily_calories_standart(self):
         try:
@@ -426,15 +453,14 @@ class Food_diary_form(tk.Frame):
 
         if  len(rows) != 0:
             for i in range(len(rows)):
-                self.current_name = self.diary_table.item(rows[i])["values"][0] # Продукты из таблицы
-                
+                self.current_name = self.diary_table.item(rows[i])['values'][0] # Продукты из таблицы
                 if m1 == self.current_name:
 
-                    m6 = float(self.foodstruct_product_weight_stepper_input.get()) + float(self.diary_table.item(rows[i])["values"][5])
-                    m2 = float(self.selected_product_nutrients_data['calories']) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][1])
-                    m3 = float(self.selected_product_nutrients_data['proteins']) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][2])
-                    m4 = float(self.selected_product_nutrients_data['fats']) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][3])
-                    m5 = float(self.selected_product_nutrients_data['carbohydrates']) * m6 / 100 + float(self.diary_table.item(rows[i])["values"][4])
+                    m6 = float(self.foodstruct_product_weight_stepper_input.get()) + float(self.diary_table.item(rows[i])['values'][5])
+                    m2 = float(self.selected_product_nutrients_data['calories']) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][1])
+                    m3 = float(self.selected_product_nutrients_data['proteins']) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][2])
+                    m4 = float(self.selected_product_nutrients_data['fats']) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][3])
+                    m5 = float(self.selected_product_nutrients_data['carbohydrates']) * m6 / 100 + float(self.diary_table.item(rows[i])['values'][4])
 
                     self.diary_table.set(rows[i], 1, round(m2, 2))
                     self.diary_table.set(rows[i], 2, round(m3, 2))
