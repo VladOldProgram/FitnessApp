@@ -1,3 +1,6 @@
+import json
+from json import JSONDecodeError
+
 def calculate_daily_calories_standart(
     height: float, 
     weight: float, 
@@ -95,3 +98,46 @@ def calculate_dish_carbohydrates(products: dict[str, dict[str, float]], w):
         return 0.0
     return dish_carbohydrates
 
+def calculate_and_save_daily_calories(
+    sex: bool,
+    height: float,
+    weight: float,
+    age: int,
+    activity_level: int
+):
+    activity_level_coefficients = [1.2, 1.375, 1.55, 1.7, 1.9]
+    activity_level_coefficient = activity_level_coefficients[activity_level]
+        
+    daily_calories_standart = calculate_daily_calories_standart(
+        height, 
+        weight, 
+        age, 
+        sex, 
+        activity_level_coefficient
+    )
+    daily_calories_standart = round(daily_calories_standart, 2)
+
+    data = {
+        'daily_calories_standart': daily_calories_standart,
+        'sex': sex,
+        'height': height,
+        'weight': weight,
+        'age': age,
+        'activity_level': activity_level
+    }
+        
+    with open('json\daily_calories_standart.json', 'w+') as outfile:
+        json.dump(data, outfile)
+
+    return daily_calories_standart
+
+def get_daily_calories_standart():
+    try:
+        with open('json\daily_calories_standart.json', 'r') as my_file:
+            f = my_file.read()
+            try:
+                return json.loads(f)['daily_calories_standart']
+            except JSONDecodeError:
+                return 0.0
+    except FileNotFoundError:
+        return 0.0
