@@ -16,8 +16,10 @@ class Daily_calories_standart(tk.Frame):
 
         self.daily_calories_standart = self.get_daily_calories_standart()
 
+        ''' Логический тип данных - пол, изначально True - Мужской пол'''
         self.sex = True
 
+        ''' Загружаются картинки'''
         self.image_female_button = tk.PhotoImage(file='assets\\images\\female_button.png')
         self.image_male_button = tk.PhotoImage(file='assets\\images\\male_button.png')
         self.image_female = tk.PhotoImage(file='assets\\images\\female.png')
@@ -36,6 +38,7 @@ class Daily_calories_standart(tk.Frame):
         self.switch_male_button.place(x=750, y=30)
         self.switch_male_button.bind('<Button-1>', self.switch_male)
 
+        '''Массив описаний всех уровней физической активности'''
         self.activity_level_descriptions = [
             'Малоподвижный образ жизни, сидячая работа, отсутствие физических нагрузок.',
             'Интенсивные упражнения не менее 20 минут от 1 до 3 раз в неделю. Например, езда на велосипеде, бег трусцой, баскетбол, плавание, катание на коньках, и т.д. Или если часто приходится ходить в течение длительных периодов времени при отсутствии тренировок.',
@@ -48,10 +51,13 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_description_text.insert(1.0, self.activity_level_descriptions[0])
         self.activity_level_description_text.configure(state=tk.DISABLED)
 
+        '''Выбранный уровень физической активности'''
         self.selected_activity_level = tk.IntVar()
         self.selected_activity_level.set(0)
         self.activity_level_label = tk.Label(self, text='Уровень активности:', font=("Arial", 10))
         self.activity_level_label.place(x=743, y=215)
+        
+        '''Меню выбора уровня физической активности'''
         self.activity_level_vertical_menu = tk.Radiobutton(
             self, 
             text='Минимальный', 
@@ -155,6 +161,7 @@ class Daily_calories_standart(tk.Frame):
         )
         self.calculate_daily_calories_standart_button.place(x=320, y=655)
 
+        '''Кнопка очистки всех полей ввода страницы'''
         self.clear_inputs_button = tk.Button(
             self, 
             text='Очистить \n поля ввода', 
@@ -174,7 +181,6 @@ class Daily_calories_standart(tk.Frame):
                     return 0.0
         except FileNotFoundError:
             return 0.0
-
 
     def value_is_float(self, P, d):
         if d == '1':
@@ -201,14 +207,21 @@ class Daily_calories_standart(tk.Frame):
         return True
  
     def switch_female(self, event):
+        '''Устанавливает sex = False и устанавливает картинку силуэта человека на женский. 
+        Ничего не возвращает.'''
         self.sex = False
         self.selected_sex_image.configure(image=self.image_female)
 
     def switch_male(self, event):
+        '''Устанавливает sex = True и устанавливает картинку силуэта человека на мужской. 
+        Ничего не возвращает'''
         self.sex = True
         self.selected_sex_image.configure(image=self.image_male)
 
     def switch_activity_level_description(self):
+        '''Изменяет текст activity_level_description_label по выбору текущего уровня физической активности 
+        (элемент массива activity_level_descriptions). 
+        Ничего не возвращает.'''
         self.activity_level_description_text.configure(state=tk.NORMAL)
         self.activity_level_description_text.delete(1.0, tk.END)
         i = self.selected_activity_level.get()
@@ -216,7 +229,9 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_description_text.configure(state=tk.DISABLED)
 
     def calculate_and_save_daily_calories_standart(self):
-
+        '''Вызывает метод calculate_daily_calorie_standart() и 
+        записывает суточную норму калорий в файл daily_calorie_standart.json. 
+        Ничего не возвращает.'''
         if self.height_text_input.get() == '' and self.weight_text_input.get() == '' and self.age_text_input.get() == '':
             mb.showinfo('Уведомление', 'Введите все параметры!')
             return
@@ -230,7 +245,6 @@ class Daily_calories_standart(tk.Frame):
             mb.showinfo('Уведомление', 'Введите возраст!')
             return
 
-        
         i = self.selected_activity_level.get()
         activity_level_coefficients = [1.2, 1.375, 1.55, 1.7, 1.9]
         activity_level_coefficient = activity_level_coefficients[i]
@@ -242,7 +256,7 @@ class Daily_calories_standart(tk.Frame):
         except:
             return
 
-        #Проверка введенных значений
+        '''Проверка введенных значений'''
         if height_f < 120 or height_f > 272:
             mb.showinfo('Уведомление', 'Рост должен быть в диапазоне от 120 до 272!')
             return
@@ -277,6 +291,9 @@ class Daily_calories_standart(tk.Frame):
             json.dump(data, outfile)
 
     def clear_inputs(self):
+        ''' Очищает поля ввода height_text_input, weight_text_input, age_text_input 
+        и устанавливает первое состояние для activity_level_vertical_menu. 
+        Ничего не возвращает.'''
         self.height_text_input.delete('0', tk.END)
         self.weight_text_input.delete('0', tk.END)
         self.age_text_input.delete('0', tk.END)
