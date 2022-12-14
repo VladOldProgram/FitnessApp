@@ -365,7 +365,7 @@ class Test_unit_tests(unittest.TestCase):
     '''
     #def test_M22(self):
     
-   def test_I0(self):
+    def test_I0(self):
         sex = False
         height = 164.0
         weight = 51.0
@@ -376,7 +376,7 @@ class Test_unit_tests(unittest.TestCase):
         result = get_daily_calories_standart()
         self.assertEqual(expected_result, result)
         
-   def test_I1(self):
+    def test_I1(self):
         sex = False
         height = 'stroka'
         weight = []
