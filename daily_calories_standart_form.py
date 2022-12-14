@@ -245,14 +245,11 @@ class Daily_calories_standart(tk.Frame):
             mb.showinfo('Уведомление', 'Введите возраст!')
             return
 
-        i = self.selected_activity_level.get()
-        activity_level_coefficients = [1.2, 1.375, 1.55, 1.7, 1.9]
-        activity_level_coefficient = activity_level_coefficients[i]
-        
         try:
             height_f = float(self.height_text_input.get())
             weight_f = float(self.weight_text_input.get())
             age_i = int(self.age_text_input.get())
+            activity_level = int(self.selected_activity_level.get())
         except:
             return
 
@@ -267,28 +264,10 @@ class Daily_calories_standart(tk.Frame):
             mb.showinfo('Уведомление', 'Возраст должен быть в диапазоне от 14 до 80!')
             return
 
-        self.daily_calories_standart = calculate_daily_calories_standart(
-             height_f, 
-             weight_f, 
-             age_i, 
-             self.sex, 
-             activity_level_coefficient
-        )
-        self.daily_calories_standart = round(self.daily_calories_standart, 2)
-        
+        self.daily_calories_standart = calculate_and_save_daily_calories(self.sex, height_f, weight_f, age_i, activity_level)
+
         self.daily_calories_standart_label.configure(text=self.daily_calories_standart)
         self.daily_calories_standart_label.pack()
-        data = {
-            'daily_calories_standart': self.daily_calories_standart,
-            'sex': self.sex,
-            'height': float(self.height_text_input.get()),
-            'weight': float(self.weight_text_input.get()),
-            'age': int(self.age_text_input.get()),
-            'activity_level': int(self.selected_activity_level.get())
-        }
-        
-        with open('json\daily_calories_standart.json', 'w+') as outfile:
-            json.dump(data, outfile)
 
     def clear_inputs(self):
         ''' Очищает поля ввода height_text_input, weight_text_input, age_text_input 
