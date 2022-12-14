@@ -142,7 +142,7 @@ class Food_diary_form(tk.Frame):
         self.result_calories_label3.place(x=600, y=770)
         self.result_calories_label4 = tk.Label(self, text ='', font=('Arial', 10))
         self.result_calories_label4.place(x=620, y=770)
-        self.result_calories_label4.config(text=self.get_daily_calories_standart())
+        self.result_calories_label4.config(text=get_daily_calories_standart())
     
         self.delete_from_diary_button = tk.Button(self, text='Удалить из дневника питания', command=self.delete_from_diary)
         self.delete_from_diary_button.place(x=900, y=770)
@@ -401,17 +401,6 @@ class Food_diary_form(tk.Frame):
             return alphabet[n]
         else:
             return self.convert_base(n // to_base, to_base) + alphabet[n % to_base]
-
-    def get_daily_calories_standart(self):
-        try:
-            with open('json\daily_calories_standart.json', 'r') as my_file:
-                f = my_file.read()
-                try:
-                    return json.loads(f)['daily_calories_standart']
-                except JSONDecodeError:
-                    return 0.0
-        except FileNotFoundError:
-            return 0.0
 
     # Метод вывода рекомендаций на интерфейс
     def get_selected_product_nutrients_data(self, event):
