@@ -365,13 +365,24 @@ class Test_unit_tests(unittest.TestCase):
     '''
     #def test_M22(self):
     
-    def test_I0(self):
+   def test_I0(self):
         sex = False
         height = 164.0
         weight = 51.0
         age = 23
         activity_level = 1
         expected_result = 1831.09
+        calculate_and_save_daily_calories(sex, height, weight, age, activity_level)
+        result = get_daily_calories_standart()
+        self.assertEqual(expected_result, result)
+        
+   def test_I1(self):
+        sex = False
+        height = 'stroka'
+        weight = []
+        age = -23
+        activity_level = 10
+        expected_result = 0.0
         calculate_and_save_daily_calories(sex, height, weight, age, activity_level)
         result = get_daily_calories_standart()
         self.assertEqual(expected_result, result)
