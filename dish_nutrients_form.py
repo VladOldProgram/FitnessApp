@@ -410,11 +410,35 @@ class Dish_nutrients_form(tk.Frame):
             return
 
         m1 = self.selected_product_name # название продукт
-        m6 = float(self.product_weight_stepper_input.get()) # вес продукта
-        m2 = round(float(self.selected_product_nutrients_data['calories']) * m6 / 100, 2)
-        m3 = round(float(self.selected_product_nutrients_data['proteins']) * m6 / 100, 2)
-        m4 = round(float(self.selected_product_nutrients_data['fats']) * m6 / 100, 2)
-        m5 = round(float(self.selected_product_nutrients_data['carbohydrates']) * m6 / 100, 2)
-        self.dish_ingredients_table.insert('', 'end', values=(m1, m2, m3, m4, m5, m6))
+        rows = self.dish_ingredients_table.get_children()
+        not_product = False
+
+        if len(rows) != 0:
+            for i in range(len(rows)):
+                self.current_name = self.dish_ingredients_table.item(rows[i])['values'][0] # Продукты из таблицы
+                if m1 == self.current_name:
+                    m6 = float(self.product_weight_stepper_input.get()) + float(self.dish_ingredients_table.item(rows[i])['values'][5])
+                    m2 = float(self.selected_product_nutrients_data['calories']) * m6 / 100 + float(self.dish_ingredients_table.item(rows[i])['values'][1])
+                    m3 = float(self.selected_product_nutrients_data['proteins']) * m6 / 100 + float(self.dish_ingredients_table.item(rows[i])['values'][2])
+                    m4 = float(self.selected_product_nutrients_data['fats']) * m6 / 100 + float(self.dish_ingredients_table.item(rows[i])['values'][3])
+                    m5 = float(self.selected_product_nutrients_data['carbohydrates']) * m6 / 100 + float(self.dish_ingredients_table.item(rows[i])['values'][4])
+
+                    self.dish_ingredients_table.set(rows[i], 1, round(m2, 2))
+                    self.dish_ingredients_table.set(rows[i], 2, round(m3, 2))
+                    self.dish_ingredients_table.set(rows[i], 3, round(m4, 2))
+                    self.dish_ingredients_table.set(rows[i], 4, round(m5, 2))
+                    self.dish_ingredients_table.set(rows[i], 5, round(m6, 2))
+
+                    not_product = True
+                    break
+
+        if not_product == False:
+            m6 = round(float(self.product_weight_stepper_input.get()), 2) # вес продукта
+            m2 = round(float(self.selected_product_nutrients_data['calories']) * m6 / 100, 2)
+            m3 = round(float(self.selected_product_nutrients_data['proteins']) * m6 / 100, 2)
+            m4 = round(float(self.selected_product_nutrients_data['fats']) * m6 / 100, 2)
+            m5 = round(float(self.selected_product_nutrients_data['carbohydrates']) * m6 / 100, 2)
+
+            self.dish_ingredients_table.insert('', 'end', values=(m1, m2, m3, m4, m5, m6))
+
         self.product_weight_stepper_input.delete(0, tk.END)
-    
