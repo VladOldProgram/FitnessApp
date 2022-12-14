@@ -14,7 +14,11 @@ def get_product_nutrients_data(product_name: str):
         response = requests.get(url)
         response.raise_for_status()
     except HTTPError as http_err:
-        return http_err
+        try: 
+            response = requests.get(url + '-')
+            response.raise_for_status()
+        except HTTPError as http_err:
+            return http_err
 
     soup = BeautifulSoup(response.text, 'lxml')
     product_nutrients_table = soup.find('table', id='all-nutrients')
