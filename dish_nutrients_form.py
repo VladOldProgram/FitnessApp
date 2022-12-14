@@ -13,6 +13,9 @@ class Dish_nutrients_form(tk.Frame):
     def __init__(self, parent: ttk.Notebook):
         super().__init__(parent)
 
+        self.selected_product_nutrients_data = {}
+        self.selected_product_name = ''
+        
         self.image_loupa = ImageTk.PhotoImage(file='assets\images\loupa_small.png')
         self.loupa = Label(self, image=self.image_loupa)
         self.loupa.place(x=26, y=6)
