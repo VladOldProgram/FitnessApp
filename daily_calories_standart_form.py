@@ -158,7 +158,6 @@ class Daily_calories_standart(tk.Frame):
         except FileNotFoundError:
             return 0.0
 
-    
     def value_is_float(self, P, d):
         if d == '1':
             try:
@@ -200,6 +199,21 @@ class Daily_calories_standart(tk.Frame):
         self.activity_level_description_text.configure(state=tk.DISABLED)
 
     def calculate_and_save_daily_calories_standart(self):
+
+        if self.height_entry.get() == '' and self.weight_entry.get() == '' and self.age_entry.get() == '':
+            mb.showinfo('Уведомление', 'Введите все параметры!')
+            return
+        elif self.height_entry.get() == '':
+            mb.showinfo('Уведомление', 'Введите рост!')
+            return
+        elif self.weight_entry.get() == '':
+            mb.showinfo('Уведомление', 'Введите вес!')
+            return
+        elif self.age_entry.get() == '': 
+            mb.showinfo('Уведомление', 'Введите возраст!')
+            return
+
+        
         i = self.selected_activity_level.get()
         activity_level_coefficients = [1.2, 1.375, 1.55, 1.7, 1.9]
         activity_level_coefficient = activity_level_coefficients[i]
