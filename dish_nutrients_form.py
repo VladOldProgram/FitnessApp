@@ -1,12 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
-from PIL import ImageTk, Image
+from PIL import ImageTk
 from tkinter import *
 from foodstruct import *
 from calculate import *
 import json
-import os.path
 
 
 # Описывает структуру и работу первой экранной формы Подсчет КБЖУ готового блюда
@@ -187,7 +186,7 @@ class Dish_nutrients_form(tk.Frame):
         self.dish_ingredients_table.column('txtProductCarbohydrates',width=80, anchor=tk.CENTER)
         self.dish_ingredients_table.column('txtProductWeight', width=80, anchor=tk.CENTER)
         self.dish_ingredients_table.heading('txtProductName', text='Продукт')
-        self.dish_ingredients_table.heading('txtProductCalories', text='Калории, ккал.')
+        self.dish_ingredients_table.heading('txtProductCalories', text='Калории')
         self.dish_ingredients_table.heading('txtProductProteins', text='Белки, гр.')
         self.dish_ingredients_table.heading('txtProductFats', text='Жиры, гр.')
         self.dish_ingredients_table.heading('txtProductCarbohydrates', text='Углеводы, гр.')
@@ -211,7 +210,6 @@ class Dish_nutrients_form(tk.Frame):
         self.results_dish_calories11 = tk.Label(self.frame_info_dish, text='', font=('Arial', 10))
         self.results_dish_calories11.place(x=200, y=60)
 
-
     def value_is_float(self, P, d):
         if d == '1':
             try:
@@ -227,7 +225,6 @@ class Dish_nutrients_form(tk.Frame):
             except ValueError:
                 return False
             return True
-
 
     # Удаляет все строки таблицы ингредиентов блюда
     def clear_table(self):
@@ -270,7 +267,6 @@ class Dish_nutrients_form(tk.Frame):
     # Метод записывает название готового блюда и его КБЖУ на 100 грамм в файл saved_dishes.json 
     def save_dish(self):
         rows = self.dish_ingredients_table.get_children()
-        #if len(rows) == 0 or self.full_dish_weight_stepper_input.get() == '' or self.dish_name_text_input == 'Введите название блюда' or self.dish_name_text_input == '':
         if len(rows) == 0:
             mb.showinfo('Уведомление', 'Заполните таблицу!')
             return
@@ -283,7 +279,6 @@ class Dish_nutrients_form(tk.Frame):
 
         self.results_dish_calories11.config(text=self.full_dish_weight_stepper_input.get())
         self.s = str(self.dish_name_text_input.get())
-        #print(self.s)
 
         self.dict_products = {}
         self.dict_products_zapacnoy = {}
@@ -294,7 +289,7 @@ class Dish_nutrients_form(tk.Frame):
             print('Продукт = ', self.dish_ingredients_table.item(rows[i])['values'][0])
 
             # если продукт из таблицы содержаться в словаре
-            if self.dish_ingredients_table.item(rows[i])['values'][0] in self.dict_products.keys():
+            if str(self.dish_ingredients_table.item(rows[i])['values'][0]) in self.dict_products.keys():
                 # создаем запасной словарь
                 print('Сделали запасной')
                 self.dict_products_zapacnoy[self.dish_ingredients_table.item(rows[i])['values'][0]] = {
@@ -330,21 +325,35 @@ class Dish_nutrients_form(tk.Frame):
 
         print('словарь таблица - ', self.dict_products)
 
-        weight = self.full_dish_weight_stepper_input.get()
+        weight = float(self.full_dish_weight_stepper_input.get())
 
         self.result_100_gramm_proteins = calculate_dish_proteins(self.dict_products, weight) 
         self.result_100_gramm_fats = calculate_dish_fats(self.dict_products, weight)
         self.result_100_gramm_carbohydrates = calculate_dish_carbohydrates(self.dict_products, weight) 
         self.result_100_gramm_calories = calculate_dish_calories(self.dict_products, weight) 
-     
-        if os.path.exists('json\saved_dishes.json') == FALSE:
-            self.create_json()
-        else:
-            self.add_to_json()
 
+        self.dish = {
+            self.s: {
+            'proteins': self.result_100_gramm_proteins,
+            'fats': self.result_100_gramm_fats,
+            'carbohydrates': self.result_100_gramm_carbohydrates,
+            'calories': self.result_100_gramm_calories,
+            }
+        }
 
-        print(float(self.full_dish_weight_stepper_input.get()))
+        data = []
+        try:
+            with open('json\saved_dishes.json', 'r', encoding='utf-8') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    data = []
+        except FileNotFoundError:
+            data = []
 
+        data.append(self.dish)
+        with open('json\saved_dishes.json', 'w+', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=True)
 
         self.results_full_dish_calories_label.config(text = round(self.result_100_gramm_calories * float(self.full_dish_weight_stepper_input.get()) / 100, 2))
         self.results_full_dish_proteins_label.config(text = round(self.result_100_gramm_proteins * float(self.full_dish_weight_stepper_input.get()) / 100,2))
@@ -356,40 +365,10 @@ class Dish_nutrients_form(tk.Frame):
         self.results_dish_fats_label.config(text = round(self.result_100_gramm_fats,2))
         self.results_dish_carbohydrates_label.config(text = round(self.result_100_gramm_carbohydrates,2))
 
-        mb.showinfo('Сохранение', 'Блюдо сохранено!')
-
-        
         self.full_dish_weight_stepper_input.delete(0, tk.END)
         self.dish_name_text_input.delete(0, tk.END)
 
-    # Метод создание json файл, для сохранения в него блюда   
-    def create_json(self):      
-        self.dish = [{
-            self.s: {
-                'proteins': self.result_100_gramm_proteins,
-                'fats': self.result_100_gramm_fats,
-                'carbohydrates': self.result_100_gramm_carbohydrates,
-                'calories': self.result_100_gramm_calories
-            }
-        }]
-
-        with open('json\saved_dishes.json', 'w') as file:
-            file.write(json.dumps(self.dish, indent=2, ensure_ascii=True))
-
-    # Метод добавление в json файл блюда, которое пользователь хочет сохранить        
-    def add_to_json(self):
-        self.dish = {
-            self.s: {
-            'proteins': self.result_100_gramm_proteins,
-            'fats': self.result_100_gramm_fats,
-            'carbohydrates': self.result_100_gramm_carbohydrates,
-            'calories': self.result_100_gramm_calories,
-            }
-        }
-        data = json.load(open('json\saved_dishes.json'))
-        data.append(self.dish)
-        with open('json\saved_dishes.json', 'w+', encoding='utf-8') as file:
-            json.dump(data, file, indent=2, ensure_ascii=True)
+        mb.showinfo('Сохранение', 'Блюдо сохранено!')
 
     # Метод вывода рекомендаций на интерфейс
     def get_selected_product_nutrients_data(self, event):
