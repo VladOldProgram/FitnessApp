@@ -13,9 +13,6 @@ class Dish_nutrients_form(tk.Frame):
     def __init__(self, parent: ttk.Notebook):
         super().__init__(parent)
 
-        self.selected_product_nutrients_data = {}
-        self.selected_product_name = ''
-        
         self.image_loupa = ImageTk.PhotoImage(file='assets\images\loupa_small.png')
         self.loupa = Label(self, image=self.image_loupa)
         self.loupa.place(x=26, y=6)
@@ -334,29 +331,8 @@ class Dish_nutrients_form(tk.Frame):
         self.result_100_gramm_fats = calculate_dish_fats(self.dict_products, weight)
         self.result_100_gramm_carbohydrates = calculate_dish_carbohydrates(self.dict_products, weight) 
         self.result_100_gramm_calories = calculate_dish_calories(self.dict_products, weight) 
-
-        self.dish = {
-            self.s: {
-            'proteins': self.result_100_gramm_proteins,
-            'fats': self.result_100_gramm_fats,
-            'carbohydrates': self.result_100_gramm_carbohydrates,
-            'calories': self.result_100_gramm_calories,
-            }
-        }
-
-        data = []
-        try:
-            with open('json\saved_dishes.json', 'r', encoding='utf-8') as f:
-                try:
-                    data = json.load(f)
-                except json.JSONDecodeError:
-                    data = []
-        except FileNotFoundError:
-            data = []
-
-        data.append(self.dish)
-        with open('json\saved_dishes.json', 'w+', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=True)
+        
+        save_100_gramm_dish_nutriens(self.s, self.result_100_gramm_proteins, self.result_100_gramm_fats, self.result_100_gramm_carbohydrates, self.result_100_gramm_calories)
 
         self.results_full_dish_calories_label.config(text = round(self.result_100_gramm_calories * float(self.full_dish_weight_stepper_input.get()) / 100, 2))
         self.results_full_dish_proteins_label.config(text = round(self.result_100_gramm_proteins * float(self.full_dish_weight_stepper_input.get()) / 100,2))
