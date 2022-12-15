@@ -8,12 +8,12 @@ from calculate import *
 import json
 from json import JSONDecodeError
 
-
+'''Описывает структуру и работу третьей экранной формы Дневник питания'''
 class Food_diary_form(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        # поле для добавления продукта/блюда
+        '''Поле для добавления продукта/блюда'''
         self.frame_foodstruct_add_saved_dish_to_diary = tk.LabelFrame(self, width=430, height=230)
         self.frame_foodstruct_add_saved_dish_to_diary.place(x=30, y=10)
         self.image_loupa = ImageTk.PhotoImage(file='assets\images\loupa_small.png')
@@ -23,7 +23,7 @@ class Food_diary_form(tk.Frame):
         self.label_foodstruct_add_saved_dish_to_diary.place(x=100, y=10)
         self.label_foodstruct_add_saved_dish_to_diary.focus()
 
-        # поисковая строка продуктов/блюд
+        '''Поисковая строка продуктов/блюд'''
         self.foodstruct_show_service_recommendations_line = tk.Entry(self.frame_foodstruct_add_saved_dish_to_diary, fg='Grey')
         self.entry_text2 = 'Поиск продуктов/блюд'
         self.foodstruct_show_service_recommendations_line.insert(0, self.entry_text2)
@@ -44,7 +44,7 @@ class Food_diary_form(tk.Frame):
         self.foodstruct_add_saved_dish_to_diary_button = tk.Button(self.frame_foodstruct_add_saved_dish_to_diary, text='Добавить в дневник питания', font=('Arial', 10), command = self.add_product)
         self.foodstruct_add_saved_dish_to_diary_button.place(x=210, y=170)
 
-        # поле для добавления сохраненного блюда
+        '''Поле для добавления сохраненного блюда'''
         self.frame_foodstruct_add_dish = tk.LabelFrame(self, width=430, height=540)
         self.frame_foodstruct_add_dish.place(x=30, y=260)
         self.image_loupa2 = ImageTk.PhotoImage(file='assets\images\loupa_small.png')
@@ -53,7 +53,7 @@ class Food_diary_form(tk.Frame):
         self.label_foodstruct_add_dish = tk.Label(self.frame_foodstruct_add_dish, text='Добавление сохраненного блюда', font=('Arial', 10))
         self.label_foodstruct_add_dish.place(x=100, y=10)
 
-        # поисковая строка сохраненных блюд
+        '''Поисковая строка сохраненных блюд'''
         self.saved_dishes_show_service_recommendations_line  = tk.Entry(self.frame_foodstruct_add_dish, fg='Grey')
         self.entry_text3 = 'Поиск сохраненных блюд'
         self.saved_dishes_show_service_recommendations_line.insert(0, self.entry_text3)
@@ -67,7 +67,7 @@ class Food_diary_form(tk.Frame):
         self.refresh_saved_dish_table_button = tk.Button(self.frame_foodstruct_add_dish, text='Обновить', font=('Arial', 10), command = self.update_table_dish)
         self.refresh_saved_dish_table_button.place(x=350, y=5)
 
-        # таблица сохраненных блюд
+        '''Таблица сохраненных блюд'''
         self.frame_dish = ttk.Frame(self.frame_foodstruct_add_dish)
         self.frame_dish.place(x=15, y=80)
 
@@ -104,7 +104,7 @@ class Food_diary_form(tk.Frame):
         self.add_saved_dish_button = tk.Button(self.frame_foodstruct_add_dish, text='Добавить в дневник\n питания', command=self.add_saved_dish_to_diary)
         self.add_saved_dish_button.place(x=295, y=475)
 
-        # таблица дневника питания
+        '''Таблица дневника питания'''
         self.label_txtMealWeight = tk.Label(self, text='Дневник питания', font='Arial 15 bold')
         self.label_txtMealWeight.place(x=710, y=0)
 
@@ -155,6 +155,7 @@ class Food_diary_form(tk.Frame):
         self.update_label_sum_calories()      
 
     def value_is_float(self, P, d):
+        '''Валидатор обработки полей ввода'''
         if d == '1':
             try:
                 float(P)
@@ -189,6 +190,7 @@ class Food_diary_form(tk.Frame):
             self.saved_dishes_table.insert('', 'end', values=e)     
 
     def upload_diary_table(self):
+    '''Загружает дневник питания в таблицу'''
         try:
             with open('json\diary.json', 'r', encoding='utf-8') as my_file:
                 f = my_file.read()
@@ -207,6 +209,7 @@ class Food_diary_form(tk.Frame):
             return
 
     def save_diary_to_json(self):
+        ''' Метод загрузки дневника питания в Json'''
         self.dict_products = {}
         self.dict_products_zapacnoy = {}
         rows = self.diary_table.get_children()
@@ -245,6 +248,7 @@ class Food_diary_form(tk.Frame):
             json.dump(self.dict_products, f, indent=2, ensure_ascii=True)
 
     def add_saved_dish_to_diary(self):
+        '''Метод добавления сохраненного блюда в дневник питания'''
         if not self.saved_dishes_table.selection():
             mb.showerror('Ошибка','Выберите из списка сохраненных блюд!')
             return
@@ -292,6 +296,7 @@ class Food_diary_form(tk.Frame):
             self.saved_dish_weight_stepper_input.delete(0, tk.END)
 
     def update_table_dish(self):
+        '''Метод обновления дневника питания в таблице'''
         self.saved_dishes_table.delete(*self.saved_dishes_table.get_children())
         result = get_saved_dish()
         print("expected result", result)
@@ -305,6 +310,7 @@ class Food_diary_form(tk.Frame):
             self.saved_dishes_table.insert('', index=i, values=(dish_name, proteins, fats, carbohydrates, calories))
 
     def show_input_hints(self, event):
+        '''Метод закрытия таблицы рекомендаций'''
         focus = self.table2.focus()
         self.vals = self.table2.item(focus, 'values')
         self.product_data = get_product_nutrients_data(str(self.vals[0]))
@@ -323,6 +329,7 @@ class Food_diary_form(tk.Frame):
             self1.insert(0, self_text)
 
     def update_label_sum_calories(self):
+        ''' Метод подсчета суммы калорий из таблицы дневника питания '''
         sum_calories = 0.0
         rows = self.diary_table.get_children()
         for i in range(len(rows)):
@@ -330,6 +337,7 @@ class Food_diary_form(tk.Frame):
         self.result_calories_label2.config(text = round(sum_calories, 2))
 
     def clear_diary(self):
+        '''Метод очищения таблицы дневника питания'''
         if self.diary_table == '':
             mb.showinfo('Удаление', 'Дневник питания пуст.')
         else:
@@ -345,6 +353,7 @@ class Food_diary_form(tk.Frame):
                 mb.showinfo(message='Список продуктов очищен.')
 
     def delete_from_diary(self):
+        '''Метод удаления конкретной строки из дневника питания'''
         if not self.diary_table.selection():
             mb.showinfo('Удаление', 'Данные для удаления не найдены.')
         else:
@@ -358,6 +367,7 @@ class Food_diary_form(tk.Frame):
                 mb.showinfo(message='Данные удалены.')
     
     def delete_saved_dish(self):
+        '''Метод удаления конкретной строки из таблицы сохраненных блюд'''
         if not self.saved_dishes_table.selection():
             mb.showinfo('Удаление', 'Данные для удаления не найдены.')
         else:
@@ -386,6 +396,7 @@ class Food_diary_form(tk.Frame):
                     return
 
     def convert_base(self, num, to_base=10, from_base=16):
+        '''Метод перевода номера строки из 16-ричной системы счисления в 10'''
         if isinstance(num, str):
             n = int(num, from_base)
         else:
@@ -395,9 +406,9 @@ class Food_diary_form(tk.Frame):
             return alphabet[n]
         else:
             return self.convert_base(n // to_base, to_base) + alphabet[n % to_base]
-
-    # Метод вывода рекомендаций на интерфейс
+    
     def get_selected_product_nutrients_data(self, event):
+        '''Метод вывода рекомендаций на интерфейс'''
         self.foodstruct_show_service_recommendations_line.delete(0, tk.END)
             
         focus = self.service_recommendations_list.focus()
@@ -407,8 +418,8 @@ class Food_diary_form(tk.Frame):
         self.service_recommendations_list.place(x=2000, y=2000)
         self.found_product_name_label.config(text=self.selected_product_name)
     
-    # Метод поиска продукта и рекомендаций
     def show_service_recommendations(self):
+        '''Метод поиска продукта и рекомендаций'''
         if self.foodstruct_show_service_recommendations_line.get() == 'Поиск продуктов' or self.foodstruct_show_service_recommendations_line.get() == '':
             return
         service_recommendations = get_service_recommendations(self.foodstruct_show_service_recommendations_line.get())  # получаем словарь продуктов
@@ -421,8 +432,8 @@ class Food_diary_form(tk.Frame):
         # по двойному щелчку вызуваем функцию recommendations
         self.service_recommendations_list.bind('<ButtonRelease-1>', self.get_selected_product_nutrients_data)
     
-    # Добавляет продукт и его КБЖУ в таблицу ингредиентов готового блюда
     def add_product(self):
+        ''' Метод добавления продукта и его КБЖУ в таблицу ингредиентов готового блюда'''
         if self.found_product_name_label.cget('text') == '':
             mb.showerror('Ошибка' , 'Вы не выбрали продукт/блюдо для добавления!')
             return
