@@ -386,6 +386,17 @@ class Test_unit_tests(unittest.TestCase):
         calculate_and_save_daily_calories(sex, height, weight, age, activity_level)
         result = get_daily_calories_standart()
         self.assertEqual(expected_result, result)
+        
+    def test_I2(self):
+        name_dish = 'Суп из чечевицы'
+        result_100_gramm_proteins = 1.3
+        result_100_gramm_fats = 1.3
+        result_100_gramm_carbohydrates = 7.26
+        result_100_gramm_calories = 30.0
+        expected_result = [{'Суп из чечевицы': {'proteins': 1.3, 'fats': 1.3, 'carbohydrates': 7.26, 'calories': 30.0}}]
+        save_100_gramm_dish_nutriens(name_dish, result_100_gramm_proteins, result_100_gramm_fats, result_100_gramm_carbohydrates, result_100_gramm_calories)
+        result = get_saved_dish()
+        self.assertEqual(expected_result, result)
 
 
     
