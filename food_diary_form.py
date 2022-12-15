@@ -190,7 +190,7 @@ class Food_diary_form(tk.Frame):
             self.saved_dishes_table.insert('', 'end', values=e)     
 
     def upload_diary_table(self):
-    '''Загружает дневник питания в таблицу'''
+        '''Загружает дневник питания в таблицу'''
         try:
             with open('json\diary.json', 'r', encoding='utf-8') as my_file:
                 f = my_file.read()
