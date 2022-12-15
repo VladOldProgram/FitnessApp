@@ -293,22 +293,16 @@ class Food_diary_form(tk.Frame):
 
     def update_table_dish(self):
         self.saved_dishes_table.delete(*self.saved_dishes_table.get_children())
-        try:
-            with open('json\saved_dishes.json', 'r', encoding='utf-8') as f:
-                try:
-                    result = json.load(f)
-                    for i in range(len(result)):
-                        dish = list(result[i].keys())
-                        dish_name = dish[0]
-                        proteins = result[i][dish_name]['proteins']
-                        fats = result[i][dish_name]['fats']
-                        carbohydrates = result[i][dish_name]['carbohydrates']
-                        calories = result[i][dish_name]['calories']
-                        self.saved_dishes_table.insert('', index=i, values=(dish_name, proteins, fats, carbohydrates, calories))
-                except JSONDecodeError:
-                    return 
-        except FileNotFoundError:
-            return
+        result = get_saved_dish()
+        print("expected result", result)
+        for i in range(len(result)):
+            dish = list(result[i].keys())
+            dish_name = dish[0]
+            proteins = result[i][dish_name]['proteins']
+            fats = result[i][dish_name]['fats']
+            carbohydrates = result[i][dish_name]['carbohydrates']
+            calories = result[i][dish_name]['calories']
+            self.saved_dishes_table.insert('', index=i, values=(dish_name, proteins, fats, carbohydrates, calories))
 
     def show_input_hints(self, event):
         focus = self.table2.focus()
