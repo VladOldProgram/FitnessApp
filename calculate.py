@@ -141,3 +141,42 @@ def get_daily_calories_standart():
                 return 0.0
     except FileNotFoundError:
         return 0.0
+    
+def save_100_gramm_dish_nutriens(name_dish, result_100_gramm_proteins, result_100_gramm_fats, result_100_gramm_carbohydrates, result_100_gramm_calories):
+        
+        dish = {
+            name_dish: {
+            'proteins': result_100_gramm_proteins,
+            'fats': result_100_gramm_fats,
+            'carbohydrates': result_100_gramm_carbohydrates,
+            'calories': result_100_gramm_calories,
+            }
+        }
+
+        data = []
+        try:
+            with open('json\saved_dishes.json', 'r', encoding='utf-8') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    data = []
+        except FileNotFoundError:
+            data = []
+
+        data.append(dish)
+        with open('json\saved_dishes.json', 'w+', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=True)
+
+        return data
+
+
+def get_saved_dish():
+    try:
+        with open('json\saved_dishes.json', 'r', encoding='utf-8') as f:
+            try:
+                result = json.load(f)
+                return result
+            except JSONDecodeError:
+                return 
+    except FileNotFoundError:
+        return
