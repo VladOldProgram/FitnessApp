@@ -8,7 +8,7 @@ from calculate import *
 import json
 
 
-# Описывает структуру и работу первой экранной формы Подсчет КБЖУ готового блюда
+''' Описывает структуру и работу первой экранной формы Подсчет КБЖУ готового блюда '''
 class Dish_nutrients_form(tk.Frame):
     def __init__(self, parent: ttk.Notebook):
         super().__init__(parent)
@@ -20,14 +20,14 @@ class Dish_nutrients_form(tk.Frame):
         self.label_txtMealWeight = tk.Label(self, text='КБЖУ готового блюда', font='Arial 15 bold')
         self.label_txtMealWeight.place(x=710, y=0)
 
-        # Кнопка сохранения блюда
+        ''' Кнопка сохранения блюда '''
         self.save_dish_button = tk.Button(self, text='Сохранить\n блюдо', font=('Arial', 10), command = self.save_dish)
         self.save_dish_button.place(x=400, y=750)
 
         self.searchbtn = tk.Button(self, text='Найти', font=('Arial', 10), command=self.show_service_recommendations)
         self.searchbtn.place(x=380, y=10)
              
-        # поисковая строка
+        ''' поисковая строка '''
         self.search_line = tk.Entry(self, fg='Grey')
         self.entry_text2 = 'Поиск продуктов'
         self.search_line.insert(0, self.entry_text2)
@@ -35,70 +35,71 @@ class Dish_nutrients_form(tk.Frame):
         self.search_line.bind('<FocusOut>', lambda args: self.focus_out_entry_box(self.search_line, self.entry_text2))
         self.search_line.place(x=50, y=10, width=300)
 
-        # поле для информации о продукте
+        ''' поле для информации о продукте '''
         self.frame_info_product = tk.LabelFrame(self, width=430, height=285)
         self.frame_info_product.place(x=30, y=50)
         self.label_info_product = tk.Label(self.frame_info_product, text='Информация о продукте в 100 граммах', font=('Arial', 10))
         self.label_info_product.place(x=90, y=10)
         
-        # Поле ввода веса продукта для добавления в список
+        ''' Поле ввода веса продукта для добавления в список '''
         self.product_weight_stepper_input = ttk.Entry(self.frame_info_product, font=('Arial', 10), width=10, validate='key')
         self.product_weight_stepper_input['validatecommand'] = (self.product_weight_stepper_input.register(self.value_is_float), '%P', '%d')
         self.product_weight_stepper_input.place(x=160, y=55)
 
-        # Лейбл с названием продукта
+        ''' Лейбл с названием продукта '''
         self.found_product_name_label = Label(self.frame_info_product, text='')
         self.found_product_name_label.place(x=20, y=53)
 
-        # Лейбл с информацией о количестве калорий в продукте
+        ''' Лейбл с информацией о количестве калорий в продукте '''
         self.found_product_calories_label = Label(self.frame_info_product, text='')
         self.found_product_calories_label.place(x=150, y=100)
 
-        # Лейбл с информацией о количестве белков в продукте
+        ''' Лейбл с информацией о количестве белков в продукте '''
         self.found_product_proteins_label = Label(self.frame_info_product, text='')
         self.found_product_proteins_label.place(x=150, y=150)
 
-        # Лейбл с информацией о количестве жиров в продукте
+        ''' Лейбл с информацией о количестве жиров в продукте '''
         self.found_product_fats_label = Label(self.frame_info_product, text='')
         self.found_product_fats_label.place(x=150, y=200)
 
-        # Лейбл с информацией о количестве углеводов в продукте
+        ''' Лейбл с информацией о количестве углеводов в продукте '''
         self.found_product_carbohydrates_label = Label(self.frame_info_product, text='')
         self.found_product_carbohydrates_label.place(x=150, y=250)
 
-        # Кнопка добавления продукта в список
+        ''' Кнопка добавления продукта в список '''
         self.add_product_button = tk.Button(self.frame_info_product, text='Добавить в список', font=('Arial', 10), command=self.add_product)
         self.add_product_button.place(x=270, y=50)
 
-        # Лейбл с информацией о количестве калорий в продукте
+        ''' Лейбл с информацией о количестве калорий в продукте '''
         self.found_product_calories = tk.Label(self.frame_info_product, text='Калорийность', font=('Arial', 10))
         self.found_product_calories.place(x=20, y=100)
 
-        # Лейбл с информацией о количестве белков в продукте
+        ''' Лейбл с информацией о количестве белков в продукте '''
         self.found_product_proteins = tk.Label(self.frame_info_product, text='Белки', font=('Arial', 10))
         self.found_product_proteins.place(x=20, y=150)
 
-        # Лейбл с информацией о количестве жиров в продукте
+        ''' Лейбл с информацией о количестве жиров в продукте '''
         self.found_product_fats = tk.Label(self.frame_info_product, text='Жиры', font=('Arial', 10))
         self.found_product_fats.place(x=20, y=200)
 
-        # Лейбл с информацией о количестве углеводов в продукте
+        ''' Лейбл с информацией о количестве углеводов в продукте '''
         self.found_product_carbohydrates = tk.Label(self.frame_info_product, text='Углеводы', font=('Arial', 10))
         self.found_product_carbohydrates.place(x=20, y=250)
 
-        # Лейбл для ввода веса готового блюда
+        ''' Лейбл для ввода веса готового блюда '''
         self.full_dish_weight_stepper_label = tk.Label(self, text='Введите вес готового блюда в граммах', font=('Arial', 10))
         self.full_dish_weight_stepper_label.place(x=50, y=360)
 
-        # Поле ввода веса готового блюда
+        ''' Поле ввода веса готового блюда '''
         self.full_dish_weight_stepper_input = ttk.Entry(self, validate='key')
         self.full_dish_weight_stepper_input['validatecommand'] = (self.full_dish_weight_stepper_input.register(self.value_is_float), '%P', '%d')
         self.full_dish_weight_stepper_input.place(x=300, y=360, width=60)
 
-        # поле для информации о КБЖУ готового блюда
+        ''' поле для информации о КБЖУ готового блюда '''
         self.frame_info_dish = tk.LabelFrame(self, width=430, height=290)
         self.frame_info_dish.place(x=30, y=450)
 
+        ''' лэйбл для информации о КБЖУ готового блюда '''
         self.label_info_dish = tk.Label(self.frame_info_dish, text='КБЖУ готового блюда', font=('Arial', 10))
         self.label_info_dish.place(x=140, y=10)
 
@@ -123,39 +124,39 @@ class Dish_nutrients_form(tk.Frame):
         self.results_dish_carbohydrates = tk.Label(self.frame_info_dish, text='Углеводы', font=('Arial', 10))
         self.results_dish_carbohydrates.place(x=20, y=250)
 
-        # Лейбл с информацией о количестве калорий в 100 граммах блюда
+        ''' Лейбл с информацией о количестве калорий в 100 граммах блюда '''
         self.results_dish_calories_label= Label(self.frame_info_dish, text='') 
         self.results_dish_calories_label.place(x=300, y=100) 
 
-        # Лейбл с информацией о количестве белков в 100 граммах блюда
+        ''' Лейбл с информацией о количестве белков в 100 граммах блюда '''
         self.results_dish_proteins_label = Label(self.frame_info_dish, text='') 
         self.results_dish_proteins_label.place(x=300, y=150)  
 
-        # Лейбл с информацией о количестве жиров в 100 граммах блюда
+        ''' Лейбл с информацией о количестве жиров в 100 граммах блюда '''
         self.results_dish_fats_label = Label(self.frame_info_dish, text='') 
         self.results_dish_fats_label.place(x=300, y=200)  
 
-        # Лейбл с информацией о количестве углеводов в 100 граммах блюда.
+        ''' Лейбл с информацией о количестве углеводов в 100 граммах блюда '''
         self.results_dish_carbohydrates_label = Label(self.frame_info_dish, text='')
         self.results_dish_carbohydrates_label.place(x=300, y=250) 
 
-        # Лейбл с информацией о количестве калорий в полном весе блюда
+        ''' Лейбл с информацией о количестве калорий в полном весе блюда '''
         self.results_full_dish_calories_label = Label(self.frame_info_dish, text='') 
         self.results_full_dish_calories_label.place(x=150, y=100) 
 
-        # Лейбл с информацией о количестве белков в полном весе блюда
+        ''' Лейбл с информацией о количестве белков в полном весе блюда '''
         self.results_full_dish_proteins_label = Label(self.frame_info_dish, text='') 
         self.results_full_dish_proteins_label.place(x=150, y=150)  
 
-        # Лейбл с информацией о количестве жиров в полном весе блюда
+        ''' Лейбл с информацией о количестве жиров в полном весе блюда '''
         self.results_full_dish_fats_label = Label(self.frame_info_dish, text='') 
         self.results_full_dish_fats_label.place(x=150, y=200)  
 
-        # Лейбл с информацией о количестве углеводов в полном весе блюда
+        ''' Лейбл с информацией о количестве углеводов в полном весе блюда '''
         self.results_full_dish_carbohydrates_label = Label(self.frame_info_dish, text='')
         self.results_full_dish_carbohydrates_label.place(x=150, y=250) 
 
-        # Поле ввода названия блюда для сохранения
+        ''' Поле ввода названия блюда для сохранения '''
         self.dish_name_text_input = tk.Entry(self, fg='Grey')
         self.entry_text = 'Введите название блюда'
         self.dish_name_text_input.insert(0, self.entry_text)
@@ -166,7 +167,7 @@ class Dish_nutrients_form(tk.Frame):
         self.frame = ttk.Frame(self)
         self.frame.place(x=500, y=40)
 
-        # Таблица ингредиентов блюда и информации о них
+        ''' Таблица ингредиентов блюда и информации о них '''
         self.dish_ingredients_table = ttk.Treeview(
             self.frame, 
             columns=(
@@ -192,18 +193,18 @@ class Dish_nutrients_form(tk.Frame):
         self.dish_ingredients_table.heading('txtProductCarbohydrates', text='Углеводы, гр.')
         self.dish_ingredients_table.heading('txtProductWeight', text='Вес, гр.')
 
-        # Линейка прокрутки для списка
+        ''' Линейка прокрутки для списка '''
         self.scroll = tk.Scrollbar(self.frame, command=self.dish_ingredients_table.yview)
         self.scroll.place(x=1560, y=50, height=695)
         self.dish_ingredients_table.config(yscrollcommand=self.scroll.set)
         self.scroll.pack(side=tk.RIGHT, fill=tk.Y)
         self.dish_ingredients_table.pack()
 
-        # Кнопка очистки таблицы ингредиентов блюда
+        ''' Кнопка очистки таблицы ингредиентов блюда '''
         self.clear_table_button  = tk.Button(self, text='Очистить таблицу', font=('Arial', 10), command=self.clear_table)
         self.clear_table_button .place(x=750, y=770)
 
-        # Кнопка удаления конкретного ингредиента блюда из таблицы
+        ''' Кнопка удаления конкретного ингредиента блюда из таблицы '''
         self.delete_line_button = tk.Button(self, text='Удалить запись из таблицы', font=('Arial', 10), command=self.delete_line)
         self.delete_line_button.place(x=900, y=770)
 
@@ -211,6 +212,7 @@ class Dish_nutrients_form(tk.Frame):
         self.results_dish_calories11.place(x=200, y=60)
 
     def value_is_float(self, P, d):
+        ''' Валидатор на поля ввода '''
         if d == '1':
             try:
                 float(P)
@@ -226,8 +228,8 @@ class Dish_nutrients_form(tk.Frame):
                 return False
             return True
 
-    # Удаляет все строки таблицы ингредиентов блюда
     def clear_table(self):
+    ''' Метод удаления всех строки таблицы ингредиентов блюда '''
         if len(self.dish_ingredients_table.get_children()) == 0:
             mb.showinfo('Удаление', 'Список продуктов пуст.')
         else:
@@ -238,8 +240,8 @@ class Dish_nutrients_form(tk.Frame):
                 self.dish_ingredients_table.delete(*self.dish_ingredients_table.get_children())
                 mb.showinfo(message = 'Список продуктов очищен.')
                 
-    # Удаляет выбранную пользователем строку из таблицы ингредиентов блюда
     def delete_line(self):
+    ''' Метод удаления выбранной пользователем строки из таблицы ингредиентов блюда '''
         if not self.dish_ingredients_table.selection():
             mb.showinfo('Удаление', 'Продукт для удаления не выбран.')
         else:
@@ -251,21 +253,21 @@ class Dish_nutrients_form(tk.Frame):
                 self.dish_ingredients_table.config(height=34)
                 mb.showinfo(message='Выбранный продукт удален.')
 
-    # Добавляет строку-заполнитель поисковой строки (название)
     def focus_out_entry_box(self, self1, self_text):
+    ''' Метод добавления строки-заполнителя поисковой строки (название) '''
         if self1['fg'] == 'Black' and len(self1.get()) == 0:
             self1.delete(0, tk.END)
             self1['fg'] = 'Grey'
             self1.insert(0, self_text)
 
-    # Убирает строку-заполнитель поисковой строки (название)
     def focus_in_entry_box(self, self3):
+    ''' Метод+, убирающий строку-заполнитель поисковой строки (название) '''
         if self3['fg'] == 'Grey':
             self3['fg'] = 'Black'
             self3.delete(0, tk.END)
 
-    # Метод записывает название готового блюда и его КБЖУ на 100 грамм в файл saved_dishes.json 
     def save_dish(self):
+    ''' Метод записывает название готового блюда и его КБЖУ на 100 грамм в файл saved_dishes.json '''
         rows = self.dish_ingredients_table.get_children()
         if len(rows) == 0:
             mb.showinfo('Уведомление', 'Заполните таблицу!')
@@ -349,7 +351,7 @@ class Dish_nutrients_form(tk.Frame):
 
         mb.showinfo('Сохранение', 'Блюдо сохранено!')
 
-    # Метод вывода рекомендаций на интерфейс
+    ''' Метод вывода рекомендаций на интерфейс '''
     def get_selected_product_nutrients_data(self, event):
         self.search_line.delete(0, tk.END)
             
@@ -365,7 +367,7 @@ class Dish_nutrients_form(tk.Frame):
         self.found_product_fats_label.config(text=self.selected_product_nutrients_data['fats'])
         self.found_product_carbohydrates_label.config(text=self.selected_product_nutrients_data['carbohydrates'])
     
-    # Метод поиска продукта и рекомендаций
+    ''' Метод поиска продукта и рекомендаций '''
     def show_service_recommendations(self):
         if self.search_line.get() == 'Поиск продуктов' or self.search_line.get() == '':
             return
@@ -376,10 +378,10 @@ class Dish_nutrients_form(tk.Frame):
         self.service_recommendations_list.delete(*self.service_recommendations_list.get_children())
         for e in service_recommendations:  # проходимся по всем рекомендациям
             self.service_recommendations_list.insert('', 'end', values=[e]) # выводим рекомендации на интерфейс в виде таблицы
-        # по двойному щелчку вызуваем функцию recommendations
+        # по двойному щелчку вызываем функцию recommendations
         self.service_recommendations_list.bind('<ButtonRelease-1>', self.get_selected_product_nutrients_data)
 
-    # Добавляет продукт и его КБЖУ в таблицу ингредиентов готового блюда
+    ''' Добавляет продукт и его КБЖУ в таблицу ингредиентов готового блюда '''
     def add_product(self):
         if self.found_product_name_label.cget('text') == '':
             mb.showerror('Ошибка' , 'Вы не выбрали продукт для добавления!')
