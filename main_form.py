@@ -33,7 +33,6 @@ class MainInterface:
         "TNotebook.Tab": {"configure": {"padding": [130, 130] }}})
 
         style.theme_use("MyStyle")
-        #по хорошему это тоже надо запихать в создание стиля, для красоты кода
         style.configure('lefttab.TNotebook', tabposition='ws') #отображение вкладок по левой стороне
         style.configure('TNotebook.Tab', background="White") #цвет вкладок
         style.map("TNotebook.Tab", background= [("selected", "Gray")])
